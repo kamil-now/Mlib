@@ -22,5 +22,17 @@ namespace Mlib.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MainLibrarySet {
+            get {
+                return ((bool)(this["MainLibrarySet"]));
+            }
+            set {
+                this["MainLibrarySet"] = value;
+            }
+        }
     }
 }

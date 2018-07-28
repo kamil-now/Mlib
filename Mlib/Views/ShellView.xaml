@@ -9,6 +9,9 @@
         Width="900"
         Height="600">
     <Grid Background="Black">
+        <Menu>
+            
+        </Menu>
         <local:MainView cal:Bind.Model="{Binding MainView}" />
     </Grid>
 </Window>
