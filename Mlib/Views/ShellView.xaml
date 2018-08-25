@@ -17,31 +17,69 @@
         <WindowChrome CaptionHeight="0"
                       ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    <Grid Background="Black" >
-        <local:MainView cal:Bind.Model="{Binding MainView}" />
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <local:MainView Grid.Row="1"
+                        cal:Bind.Model="{Binding MainView}" />
+        <Button Background="Black"
+                BorderThickness="0"
+                cal:Message.Attach="[PreviewMouseLeftButtonDown]=[Drag($view)]">
+
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="Black"
+                                        BorderThickness="0">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="&#x2630;"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource AdornerButton}" />
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Background="Black" Margin="0">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Background"
-                            Value="Black" />
-                    <Setter Property="Foreground"
-                            Value="White" />
-                    <Setter Property="Width"
-                            Value="40" />
-                    <Setter Property="Height"
-                            Value="30" />
-                    <Setter Property="FontSize"
-                            Value="12" />
-                    <Setter Property="BorderBrush"
-                            Value="Black" />
-                </Style>
-            </StackPanel.Resources>
-            <Button Content="&#x268A;" />
-            <Button Content="&#x1F7AA;"/>
+                    Background="Black"
+                    Margin="0">
+
+            <Button Content="&#x268A;"
+                    Style="{StaticResource AdornerButton}" />
+            <Button Content="&#x1F7AA;"
+                    cal:Message.Attach="[Click]=[Close]">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}"
+                           BasedOn="{StaticResource AdornerButton}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
-        
+
     </Grid>
 </Window>

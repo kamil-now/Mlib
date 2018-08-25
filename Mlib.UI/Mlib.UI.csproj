@@ -80,6 +80,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\GlobalStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DetailsView..xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

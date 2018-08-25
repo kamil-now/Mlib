@@ -8,6 +8,7 @@
                 <ResourceDictionary>
                     <local:AppBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Mlib.UI;component/Styles/GlobalStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
