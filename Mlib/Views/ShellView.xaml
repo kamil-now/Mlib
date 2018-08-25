@@ -6,12 +6,42 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:local="clr-namespace:Mlib.UI.Views;assembly=Mlib.UI"
         mc:Ignorable="d"
-        Width="900"
-        Height="600">
-    <Grid Background="Black">
-        <Menu>
-            
-        </Menu>
+        WindowStartupLocation="CenterScreen"
+        BorderThickness="0"
+        WindowStyle="None"
+        WindowState="Normal"
+        ResizeMode="CanResize"
+        AllowsTransparency="True"
+        cal:Message.Attach="[Loaded]=[OnLoad($view)]">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Grid Background="Black" >
         <local:MainView cal:Bind.Model="{Binding MainView}" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="Black" Margin="0">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background"
+                            Value="Black" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                    <Setter Property="Width"
+                            Value="40" />
+                    <Setter Property="Height"
+                            Value="30" />
+                    <Setter Property="FontSize"
+                            Value="12" />
+                    <Setter Property="BorderBrush"
+                            Value="Black" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="&#x268A;" />
+            <Button Content="&#x1F7AA;"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

@@ -1,13 +1,6 @@
 ﻿using Caliburn.Micro;
-using Mlib.Domain;
-using Mlib.Domain.Infrastracture;
-using Mlib.UI.ViewModels;
 using Mlib.UI.ViewModels.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace Mlib.ViewModels
 {
@@ -27,6 +20,17 @@ namespace Mlib.ViewModels
         {
             mainView = main;
         }
+        public void OnLoad(Window view)
+        {
+            var windowHeightScale = 0.8;//TODO external setting
+            var windowWidthScale = 0.8;//TODO external setting
+            var screenWidth = SystemParameters.PrimaryScreenWidth;
+            var screenHeight = SystemParameters.PrimaryScreenHeight;
+            view.Width = screenWidth * windowWidthScale;
+            view.Height = screenHeight * windowHeightScale ;
 
+            view.Left = (screenWidth / 2) - (view.Width / 2);
+            view.Top = (screenHeight / 2) - (view.Height / 2);
+        }
     }
 }
