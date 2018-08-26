@@ -11,15 +11,21 @@ namespace Mlib.UI.ViewModels
     public class DirectoryExplorerViewModel : Screen, IViewModel
     {
         IAudioPlayer audioPlayer;
-        string path = @"C:\Users\Kamil\Downloads";
         public BindableCollection<FileInfo> Files { get; set; }
         public DirectoryExplorerViewModel(IAudioPlayer audioPlayer)
         {
-            this.audioPlayer =audioPlayer;
-
-            DirectoryInfo taskDirectory = new DirectoryInfo(path);
-            Files = new BindableCollection<FileInfo>(taskDirectory.GetFiles("*.mp3"));
+            this.audioPlayer = audioPlayer;
+            Files = new BindableCollection<FileInfo>();
         }
+        public ICommand SelectDirectory => new Command(a =>
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.ShowDialog();
+                Files = new BindableCollection<FileInfo>(new DirectoryInfo(dialog.SelectedPath).GetFiles("*.mp3"));
+                NotifyOfPropertyChange(() => Files);
+            }
+        });
         public ICommand Select => new Command(fileInfo =>
            {
                audioPlayer.Play(fileInfo as FileInfo);
