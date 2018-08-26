@@ -26,7 +26,7 @@
                         cal:Bind.Model="{Binding MainView}" />
         <Button Background="Black"
                 BorderThickness="0"
-                cal:Message.Attach="[PreviewMouseLeftButtonDown]=[Drag($view)]">
+                cal:Message.Attach="[PreviewMouseLeftButtonDown]=[Drag()]">
 
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
@@ -63,6 +63,7 @@
                     Margin="0">
 
             <Button Content="&#x268A;"
+                    cal:Message.Attach="[Click]=[Minimize]"
                     Style="{StaticResource AdornerButton}" />
             <Button Content="&#x1F7AA;"
                     cal:Message.Attach="[Click]=[Close]">

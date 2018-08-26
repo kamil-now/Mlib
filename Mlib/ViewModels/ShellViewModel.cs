@@ -6,6 +6,7 @@ namespace Mlib.ViewModels
 {
     public class ShellViewModel : Screen
     {
+        private Window window;
         private IMainViewModel mainView;
         public IMainViewModel MainView
         {
@@ -20,47 +21,25 @@ namespace Mlib.ViewModels
         {
             mainView = main;
         }
-        public void OnLoad(Window view)
+        public void OnLoad(Window window)
         {
+            this.window = window;
             var windowHeightScale = 0.8;//TODO external setting
             var windowWidthScale = 0.8;//TODO external setting
             var screenWidth = SystemParameters.PrimaryScreenWidth;
             var screenHeight = SystemParameters.PrimaryScreenHeight;
-            view.Width = screenWidth * windowWidthScale;
-            view.Height = screenHeight * windowHeightScale;
+            window.Width = screenWidth * windowWidthScale;
+            window.Height = screenHeight * windowHeightScale;
 
-            view.Left = (screenWidth / 2) - (view.Width / 2);
-            view.Top = (screenHeight / 2) - (view.Height / 2);
+            window.Left = (screenWidth / 2) - (window.Width / 2);
+            window.Top = (screenHeight / 2) - (window.Height / 2);
         }
         public void Close()
         {
             Application.Current.Shutdown();
         }
-        private Point startPoint;
-        public void Drag(Window view)
-        {
-            view.DragMove();
-        }
-        //private void toggleButton_PreviewMouseLeftButtonDown(
-        //    object sender, MouseButtonEventArgs e)
-        //{
-        //    startPoint = e.GetPosition(toggleButton);
-        //}
+        public void Drag() => window.DragMove();
 
-        //private void toggleButton_PreviewMouseMove(object sender, MouseEventArgs e)
-        //{
-        //    var currentPoint = e.GetPosition(toggleButton);
-        //    if (e.LeftButton == MouseButtonState.Pressed &&
-        //        toggleButton.IsMouseCaptured &&
-        //        (Math.Abs(currentPoint.X - startPoint.X) >
-        //            SystemParameters.MinimumHorizontalDragDistance ||
-        //        Math.Abs(currentPoint.Y - startPoint.Y) >
-        //            SystemParameters.MinimumVerticalDragDistance))
-        //    {
-        //        // Prevent Click from firing
-        //        toggleButton.ReleaseMouseCapture();
-        //        DragMove();
-        //    }
-        //}
+        public void Minimize() => window.WindowState = WindowState.Minimized;
     }
 }

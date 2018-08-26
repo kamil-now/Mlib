@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Mlib.UI.Views"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:views="clr-namespace:Mlib.UI.Views"
              mc:Ignorable="d">
     <Grid Background="#212121">
         <Grid.ColumnDefinitions>
@@ -14,6 +15,8 @@
             <RowDefinition />
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
+        <views:DirectoryExplorerView DataContext="{Binding DirectoryExplorer}" />
+        <views:AudioControlsView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding AudioControls}" />
         <Rectangle VerticalAlignment="Stretch"
                    HorizontalAlignment="Right"
                    Width="1"
