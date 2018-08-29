@@ -15,7 +15,8 @@ namespace Mlib.UI.ViewModels
         public DirectoryExplorerViewModel(IAudioPlayer audioPlayer)
         {
             this.audioPlayer = audioPlayer;
-            Files = new BindableCollection<FileInfo>();
+            //Files = new BindableCollection<FileInfo>();
+            Files = new BindableCollection<FileInfo>(new DirectoryInfo(@"C:\Users\Kamil\Downloads").GetFiles("*.mp3"));
         }
         public ICommand SelectDirectory => new Command(a =>
         {
@@ -28,7 +29,7 @@ namespace Mlib.UI.ViewModels
         });
         public ICommand Select => new Command(fileInfo =>
            {
-               audioPlayer.Play(fileInfo as FileInfo);
+               audioPlayer.File = fileInfo as FileInfo;
                Debug.WriteLine((fileInfo as FileInfo).Name);
            });
     }

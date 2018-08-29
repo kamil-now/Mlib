@@ -67,6 +67,7 @@
     <Compile Include="Infrastructure\AudioPlayer.cs" />
     <Compile Include="Infrastructure\Interfaces\IAudioPlayer.cs" />
     <Compile Include="Infrastructure\Interfaces\IDatabaseEntity.cs" />
+    <Compile Include="Infrastructure\PropertyChangedBase.cs" />
     <Compile Include="Infrastructure\Track.cs" />
     <Compile Include="Infrastructure\DatabaseService.cs" />
     <Compile Include="Infrastructure\Interfaces\IDatabaseService.cs" />

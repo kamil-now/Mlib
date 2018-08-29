@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mlib.Domain.Infrastructure.Interfaces
 {
-    public interface IAudioPlayer
+    public interface IAudioPlayer : INotifyPropertyChanged
     {
-        void Play(FileInfo file);
+        bool IsPlaying { get; }
+        FileInfo File { get; set; }
+        void Play();// FileInfo file);
         void UnPause();
         void Pause();
         void Stop();

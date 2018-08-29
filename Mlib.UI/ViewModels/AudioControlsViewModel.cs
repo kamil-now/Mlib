@@ -14,10 +14,12 @@ namespace Mlib.UI.ViewModels
         public AudioControlsViewModel(IAudioPlayer audioPlayer)
         {
             this.audioPlayer= audioPlayer;
+            audioPlayer.PropertyChanged += (s, e) => NotifyOfPropertyChange(() => IsPlaying);
             StopCommand = new Command(q => audioPlayer.Stop());
-            PlayCommand = new Command(q => audioPlayer.UnPause());
+            PlayCommand = new Command(q => audioPlayer.Play());
             PauseCommand = new Command(q => audioPlayer.Pause());
         }
+        public bool IsPlaying => audioPlayer.IsPlaying;
         public ICommand StopCommand { get; }
         public ICommand PlayCommand { get; }
         public ICommand PauseCommand { get; }
