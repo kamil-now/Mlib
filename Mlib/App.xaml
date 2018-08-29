@@ -1,9 +1,12 @@
 ﻿<Application x:Class="Mlib.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Mlib">
+             xmlns:local="clr-namespace:Mlib"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         <ResourceDictionary>
+            <sys:Boolean x:Key="True">True</sys:Boolean>
+            <sys:Boolean x:Key="False">False</sys:Boolean>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <local:AppBootstrapper x:Key="bootstrapper" />

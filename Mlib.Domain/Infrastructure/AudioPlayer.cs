@@ -16,9 +16,7 @@ namespace Mlib.Domain.Infrastructure
             set
             {
                 file = value;
-                Mp3FileReader mp3 = new Mp3FileReader(value.FullName);
-
-                output.Init(mp3);
+                SetFile(file);
             }
         }
 
@@ -47,6 +45,26 @@ namespace Mlib.Domain.Infrastructure
         {
             output.Pause();
             NotifyOfPropertyChange();
+        }
+        void SetFile(FileInfo file)
+        {
+            Mp3FileReader mp3 = new Mp3FileReader(file.FullName);
+            if (output.PlaybackState == PlaybackState.Playing)
+            {
+                output.Stop();
+                output.Init(mp3);
+                output.Play();
+            }
+            else if (output.PlaybackState == PlaybackState.Paused)
+            {
+                output.Stop();
+                output.Init(mp3);
+            }
+            else
+            {
+                output.Init(mp3);
+            }
+
         }
     }
 }
