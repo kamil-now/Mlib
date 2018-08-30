@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Mlib.Domain;
+using Mlib.Domain.Infrastructure;
 using Mlib.Domain.Infrastructure.Interfaces;
 using Mlib.UI.ViewModels.Interfaces;
 using System.Diagnostics;
@@ -10,9 +11,9 @@ namespace Mlib.UI.ViewModels
 {
     public class DirectoryExplorerViewModel : Screen, IViewModel
     {
-        IAudioPlayer audioPlayer;
+        AudioPlayer audioPlayer;
         public BindableCollection<FileInfo> Files { get; set; }
-        public DirectoryExplorerViewModel(IAudioPlayer audioPlayer)
+        public DirectoryExplorerViewModel(AudioPlayer audioPlayer)
         {
             this.audioPlayer = audioPlayer;
             //Files = new BindableCollection<FileInfo>();
@@ -29,8 +30,7 @@ namespace Mlib.UI.ViewModels
         });
         public ICommand Select => new Command(fileInfo =>
            {
-               audioPlayer.File = fileInfo as FileInfo;
-               Debug.WriteLine((fileInfo as FileInfo).Name);
+               audioPlayer.SetFile(fileInfo as FileInfo);
            });
     }
 }

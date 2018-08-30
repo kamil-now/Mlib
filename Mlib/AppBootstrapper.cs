@@ -45,7 +45,7 @@ namespace Mlib
             builder.RegisterType<TracksViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<DirectoryExplorerViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<AudioControlsViewModel>().As<IViewModel>().AsSelf().SingleInstance();
-            builder.RegisterType<AudioPlayer>().As<IAudioPlayer>().AsSelf().SingleInstance();
+            builder.RegisterType<AudioPlayer>().As<AudioPlayer>().AsSelf().SingleInstance();
 
             builder.Register<IWindowManager>(c => new WindowManager()).InstancePerLifetimeScope();
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();

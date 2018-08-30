@@ -19,137 +19,23 @@
     </div>-->
     <UserControl.Resources>
         <conv:BoolToCollapsedConverter x:Key="b2c" />
-        <Style x:Key="PlayPauseToggle" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage UriSource="/Mlib.UI;component/Resources/play.png" />
-                            </Image.Source>
-                        </Image>
-                    </ControlTemplate>
-                </Setter.Value>
-
-            </Setter>
-            <Setter Property="Command"
-                    Value="{Binding PlayCommand}" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsPlaying}" Value="False">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Image>
-                                    <Image.Source>
-                                        <BitmapImage UriSource="/Mlib.UI;component/Resources/play.png" />
-                                    </Image.Source>
-                                </Image>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Command"
-                            Value="{Binding PlayCommand}" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IsPlaying}"
-                             Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Image>
-                                    <Image.Source>
-                                        <BitmapImage UriSource="/Mlib.UI;component/Resources/pause.png" />
-                                    </Image.Source>
-                                </Image>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Command"
-                            Value="{Binding PauseCommand}" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        
-
     </UserControl.Resources>
     <Grid>
-
-        <!--<Button Style="{StaticResource PlayPauseToggle}" />-->
-            <Button Command="{Binding PlayCommand}"
-                    Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource False}}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Height="50"
-                    Width="50">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Image>
-                                        <Image.Source>
-                                            <BitmapImage UriSource="/Mlib.UI;component/Resources/play.png" />
-                                        </Image.Source>
-                                    </Image>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/Mlib.UI;component/Resources/play_hover.png" />
-                                                </Image.Source>
-                                            </Image>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-        <Button Command="{Binding PauseCommand}"
+        <Button Command="{Binding TogglePlayPauseCommand}"
+                Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource False}}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Height="60"
+                Width="60"
+                Margin="5"
+                Style="{StaticResource PlayButton}"/>
+        <Button Command="{Binding TogglePlayPauseCommand}"
                 Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource True}}"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
-                Height="50"
-                Width="50">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Image>
-                                    <Image.Source>
-                                        <BitmapImage UriSource="/Mlib.UI;component/Resources/pause.png" />
-                                    </Image.Source>
-                                </Image>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Image>
-                                            <Image.Source>
-                                                <BitmapImage UriSource="/Mlib.UI;component/Resources/pause_hover.png" />
-                                            </Image.Source>
-                                        </Image>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+                Height="60"
+                Width="60"
+                Margin="5"
+                Style="{StaticResource PauseButton}" />
     </Grid>
 </UserControl>

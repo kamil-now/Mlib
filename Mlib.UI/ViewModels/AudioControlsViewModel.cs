@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Mlib.Domain;
+using Mlib.Domain.Infrastructure;
 using Mlib.Domain.Infrastructure.Interfaces;
 using Mlib.UI.ViewModels.Interfaces;
 using System;
@@ -10,18 +11,19 @@ namespace Mlib.UI.ViewModels
 {
     public class AudioControlsViewModel:Screen,IViewModel
     {
-        IAudioPlayer audioPlayer;
-        public AudioControlsViewModel(IAudioPlayer audioPlayer)
+        AudioPlayer audioPlayer;
+        public AudioControlsViewModel(AudioPlayer audioPlayer)
         {
             this.audioPlayer= audioPlayer;
-            audioPlayer.PropertyChanged += (s, e) => NotifyOfPropertyChange(() => IsPlaying);
-            StopCommand = new Command(q => audioPlayer.Stop());
-            PlayCommand = new Command(q => audioPlayer.Play());
-            PauseCommand = new Command(q => audioPlayer.Pause());
+            audioPlayer.PlaybackPaused += () => NotifyOfPropertyChange(() => IsPlaying);
+            audioPlayer.PlaybackResumed += () => NotifyOfPropertyChange(() => IsPlaying);
+            audioPlayer.PlaybackStopped += () => NotifyOfPropertyChange(() => IsPlaying);
+
+            TogglePlayPauseCommand = new Command(q => audioPlayer.TogglePlayPause(VolumeLevel));
+            
         }
+        public double VolumeLevel { get; set; } = 1;
         public bool IsPlaying => audioPlayer.IsPlaying;
-        public ICommand StopCommand { get; }
-        public ICommand PlayCommand { get; }
-        public ICommand PauseCommand { get; }
+        public ICommand TogglePlayPauseCommand { get; }
     }
 }
