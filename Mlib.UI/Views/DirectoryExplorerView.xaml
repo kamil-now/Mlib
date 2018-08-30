@@ -8,17 +8,18 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Background"
-                    Value="Transparent" />
-            <Setter Property="Foreground"
-                    Value="White" />
+        <Style TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize"
                     Value="12" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Left" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
 
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="10">
         <StackPanel>
             <Button VerticalAlignment="Top"
                 HorizontalAlignment="Center"

@@ -20,11 +20,10 @@
     <UserControl.Resources>
         <conv:BoolToCollapsedConverter x:Key="b2c" />
     </UserControl.Resources>
-    <Grid Margin="10 0">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -33,10 +32,10 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding NowPlaying}"
                    HorizontalAlignment="Center"
-                   Grid.Row="1"
+                   VerticalAlignment="Center"
+                   Grid.RowSpan="2"
                    FontSize="20" />
-        <Grid Grid.RowSpan="3"
-              Grid.Column="1">
+        <Grid Grid.Column="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -44,13 +43,20 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Button Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Height="20"
+                    Width="20"
+                    Margin="5"
+                    Style="{StaticResource PreviousTrackButton}" />
             <Button Grid.Column="2"
                     Command="{Binding TogglePlayPauseCommand}"
                     Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource False}}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="60"
-                    Width="60"
+                    Height="40"
+                    Width="40"
                     Margin="5"
                     Style="{StaticResource PlayButton}" />
             <Button Grid.Column="2"
@@ -58,10 +64,18 @@
                     Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource True}}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="60"
-                    Width="60"
+                    Height="40"
+                    Width="40"
                     Margin="5"
                     Style="{StaticResource PauseButton}" />
+            
+            <Button Grid.Column="3"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Height="20"
+                    Width="20"
+                    Margin="5"
+                    Style="{StaticResource NextTrackButton}" />
         </Grid>
     </Grid>
 </UserControl>

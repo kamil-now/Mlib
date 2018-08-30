@@ -25,7 +25,7 @@ namespace Mlib.ViewModels
         {
             this.window = window;
             var windowHeightScale = 0.8;//TODO external setting
-            var windowWidthScale = 0.8;//TODO external setting
+            var windowWidthScale = 0.82;//TODO external setting
             var screenWidth = SystemParameters.PrimaryScreenWidth;
             var screenHeight = SystemParameters.PrimaryScreenHeight;
             window.Width = screenWidth * windowWidthScale;

@@ -6,23 +6,31 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:views="clr-namespace:Mlib.UI.Views"
              mc:Ignorable="d">
-    <Grid Background="#212121">
+    <Grid Background="{StaticResource GlobalAccent}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="70" />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <views:DirectoryExplorerView DataContext="{Binding DirectoryExplorer}" />
-        <views:AudioControlsView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding AudioControls}" />
+        <views:DirectoryExplorerView Background="{StaticResource GlobalDark}"
+                                     DataContext="{Binding DirectoryExplorer}" />
+        <views:AudioControlsView Background="{StaticResource GlobalDim}"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 DataContext="{Binding AudioControls}" />
+        <Rectangle Fill="{StaticResource GlobalDimDark}"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch" />
         <Rectangle VerticalAlignment="Stretch"
                    HorizontalAlignment="Right"
                    Width="1"
                    Margin="1"
                    Stroke="Black" />
-
         <Separator BorderBrush="Black"
                    Grid.ColumnSpan="2"
                    BorderThickness="2"
