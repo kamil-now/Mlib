@@ -12,6 +12,7 @@
         WindowState="Normal"
         ResizeMode="CanResize"
         AllowsTransparency="True"
+        FontFamily="Circular"
         cal:Message.Attach="[Loaded]=[OnLoad($view)]">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"

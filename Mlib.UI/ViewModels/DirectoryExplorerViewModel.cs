@@ -11,6 +11,7 @@ namespace Mlib.UI.ViewModels
 {
     public class DirectoryExplorerViewModel : Screen, IViewModel
     {
+        public event System.Action SelectionChanged;
         AudioPlayer audioPlayer;
         public BindableCollection<FileInfo> Files { get; set; }
         public DirectoryExplorerViewModel(AudioPlayer audioPlayer)
@@ -31,6 +32,7 @@ namespace Mlib.UI.ViewModels
         public ICommand Select => new Command(fileInfo =>
            {
                audioPlayer.SetFile(fileInfo as FileInfo);
+               SelectionChanged?.Invoke();
            });
     }
 }

@@ -6,32 +6,32 @@ namespace Mlib.Domain.Infrastructure
 {
     public class AudioPlayer : PropertyChangedBase
     {
-        public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
         public enum PlaybackStopTypes
         {
             PlaybackStoppedByUser,
             PlaybackStoppedReachingEndOfFile
         }
-
-        public PlaybackStopTypes PlaybackStopType { get; set; }
-
-        private AudioFileReader audioFileReader;
-
-        private DirectSoundOut output;
-
-        private FileInfo nowPlaying;
-
-        public event Action PlaybackResumed;
-        public event Action PlaybackStopped;
-        public event Action PlaybackPaused;
-
         public AudioPlayer()
         {
             PlaybackStopType = PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
         }
+        private AudioFileReader audioFileReader;
+        private DirectSoundOut output;
+        public event Action PlaybackResumed;
+        public event Action PlaybackStopped;
+        public event Action PlaybackPaused;
+        public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
+        
+
+        public PlaybackStopTypes PlaybackStopType { get; set; }
+
+        public FileInfo NowPlaying { get; private set; }
+        
+
+        
         public void SetFile(FileInfo file)
         {
-            if(output==null)
+            if (output == null)
             {
                 output = new DirectSoundOut(200);
                 output.PlaybackStopped += (s, e) =>
@@ -40,8 +40,8 @@ namespace Mlib.Domain.Infrastructure
                     PlaybackStopped?.Invoke();
                 };
             }
-            nowPlaying = file;
-            audioFileReader = new AudioFileReader(nowPlaying.FullName) { Volume = GetVolume() };
+            NowPlaying = file;
+            audioFileReader = new AudioFileReader(NowPlaying.FullName) { Volume = GetVolume() };
             var wc = new WaveChannel32(audioFileReader);
             wc.PadWithZeroes = false;
 
