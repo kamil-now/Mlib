@@ -1,41 +1,60 @@
-﻿using Mlib.Domain.Infrastructure.Interfaces;
+﻿using Mlib.Domain.Infrastructure;
+using Mlib.Domain.Infrastructure.Interfaces;
 using SQLite;
-using System;
+using SQLiteNetExtensions.Extensions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mlib.Domain.Infrastracture
 {
     public class DatabaseService : IDatabaseService
     {
-        private readonly SQLiteAsyncConnection database;
+        private readonly SQLiteAsyncConnection asyncDb;
+        private readonly SQLiteConnection db;
 
         public DatabaseService()
         {
-            database = new SQLiteAsyncConnection(ConnectionStrings.DatabaseFilePath);
+            asyncDb = new SQLiteAsyncConnection(ConnectionStrings.DatabaseFilePath);
+            db = new SQLiteConnection(ConnectionStrings.DatabaseFilePath);
             InitializeDatabase();
         }
         private void InitializeDatabase()
         {
-        }
+            asyncDb.CreateTableAsync<Track>().Wait();
+            asyncDb.CreateTableAsync<Playlist>().Wait();
+            asyncDb.CreateTableAsync<PlaylistData>().Wait();
 
+        }
+        Task<List<Track>> GetAllTracksAsync() => asyncDb.Table<Track>().ToListAsync();
+        
+        public void SavePlaylist(Playlist playlist)
+        {
+            SaveItemAsync(playlist);
+            playlist.Tracks.ForEach(n => SaveItemAsync(n));
+
+            
+        }
         public Task<int> SaveItemAsync(IDatabaseEntity item)
         {
+
             if (item.ID != 0)
             {
-                return database.UpdateAsync(item);
+                return asyncDb.UpdateAsync(item);
             }
             else
             {
-                return database.InsertAsync(item);
+                return asyncDb.InsertAsync(item);
             }
         }
 
         public Task<int> DeleteItemAsync(IDatabaseEntity item)
         {
-            return database.DeleteAsync(item);
+            return asyncDb.DeleteAsync(item);
+        }
+
+        public void Update(IDatabaseEntity entity)
+        {
+            db.UpdateWithChildren(entity);
         }
     }
 }

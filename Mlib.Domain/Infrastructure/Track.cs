@@ -1,4 +1,7 @@
 ﻿using Mlib.Domain.Infrastructure.Interfaces;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,13 +9,17 @@ namespace Mlib.Domain.Infrastructure
 {
     public class Track : IDatabaseEntity
     {
+        [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        [ManyToMany(typeof(PlaylistData))]
+        List<Playlist> Playlists { get; set; }
 
-        public string Title { get; }
-        public string Artist { get; }
-        public string Album { get; }
-        public uint Year { get; }
-        public long Length { get; }
+        public string Title { get; private set; }
+        public string Artist { get; private set; }
+        public string Album { get; private set; }
+        public uint Year { get; private set; }
+        public long Length { get; private set; }
+        
 
         public Track(FileInfo mp3File)
         {
@@ -23,6 +30,18 @@ namespace Mlib.Domain.Infrastructure
             Year = taggedFile.Tag.Year;
             Length = taggedFile.Length;
         }
-
+        public Track() { }
+        public Track Copy()
+        {
+            return new Track()
+            {
+                ID = -1,
+                Title = Title,
+                Artist = Artist,
+                Album = Album,
+                Year = Year,
+                Length = Length
+            };
+        }
     }
 }

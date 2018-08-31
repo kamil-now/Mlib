@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace Mlib.Domain.Infrastructure
+namespace Mlib.Domain
 {
     public abstract class PropertyChangedBase : INotifyPropertyChanged
     {
