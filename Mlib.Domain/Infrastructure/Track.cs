@@ -1,16 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mlib.Domain.Infrastructure.Interfaces;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mlib.Domain.Infrastructure
 {
-    public class Track
+    public class Track : IDatabaseEntity
     {
-        public Track(string path)
-        {
+        public int ID { get; set; }
 
+        public string Title { get; }
+        public string Artist { get; }
+        public string Album { get; }
+        public uint Year { get; }
+        public long Length { get; }
+
+        public Track(FileInfo mp3File)
+        {
+            TagLib.File taggedFile = TagLib.File.Create(mp3File.FullName);
+            Title = taggedFile.Tag.Title;
+            Artist = taggedFile.Tag.AlbumArtists.FirstOrDefault();
+            Album = taggedFile.Tag.Album;
+            Year = taggedFile.Tag.Year;
+            Length = taggedFile.Length;
         }
+
     }
 }
