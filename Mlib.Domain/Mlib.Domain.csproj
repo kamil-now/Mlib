@@ -75,6 +75,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
     <Compile Include="Infrastructure\Interfaces\IDatabaseEntity.cs" />
+    <Compile Include="Infrastructure\M3UReader.cs" />
     <Compile Include="Infrastructure\PlaylistCreator.cs" />
     <Compile Include="Infrastructure\PlaylistData.cs" />
     <Compile Include="PropertyChangedBase.cs" />

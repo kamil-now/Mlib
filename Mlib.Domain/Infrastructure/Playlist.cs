@@ -1,4 +1,5 @@
-﻿using Mlib.Domain.Infrastructure.Interfaces;
+﻿using Mlib.Domain.Extensions;
+using Mlib.Domain.Infrastructure.Interfaces;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
@@ -21,11 +22,6 @@ namespace Mlib.Domain.Infrastructure
         }
         public Playlist(FileInfo file) : this()
         {
-            if (file.Extension == "m3u")
-            {
-
-            }
-
         }
         
     }
