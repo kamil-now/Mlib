@@ -15,7 +15,6 @@ namespace Mlib.Domain.Infrastructure
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
-
                         while ((line = reader.ReadLine()) != null)
                         {
                             retval = GetFile(line);
@@ -32,9 +31,11 @@ namespace Mlib.Domain.Infrastructure
         static FileInfo GetFile(string path)
         {
             var retval = new FileInfo(path);
+           
             if (!retval.Exists)
                 retval = FindMatchingFile(path);
-            return retval.Exists ? retval : null;
+
+            return retval ;
         }
         static FileInfo FindMatchingFile(string path)
         {

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Mlib.UI.Views
 {
     /// <summary>
-    /// Interaction logic for Playlists.xaml
+    /// Interaction logic for PlaylistView.xaml
     /// </summary>
-    public partial class Playlists : UserControl
+    public partial class PlaylistView : UserControl
     {
-        public Playlists()
+        public PlaylistView()
         {
             InitializeComponent();
         }

@@ -10,9 +10,9 @@ namespace Mlib.UI.ViewModels
     public class AudioControlsViewModel : Screen, IViewModel
     {
         AudioPlayer audioPlayer;
-        public AudioControlsViewModel(AudioPlayer audioPlayer, DirectoryExplorerViewModel explorer)
+        public AudioControlsViewModel(AudioPlayer audioPlayer)
         {
-            explorer.SelectionChanged += () => NotifyOfPropertyChange(() => NowPlaying);
+            audioPlayer.TrackChanged += () => NotifyOfPropertyChange(() => NowPlaying);
             this.audioPlayer = audioPlayer;
             audioPlayer.PlaybackPaused += () => NotifyOfPropertyChange(() => IsPlaying);
             audioPlayer.PlaybackResumed += () => NotifyOfPropertyChange(() => IsPlaying);
@@ -21,7 +21,7 @@ namespace Mlib.UI.ViewModels
             TogglePlayPauseCommand = new Command(q => audioPlayer.TogglePlayPause(VolumeLevel));
         }
         public double VolumeLevel { get; set; } = 1;
-        public string NowPlaying => audioPlayer.NowPlaying?.Name;
+        public Track NowPlaying => audioPlayer.NowPlaying;
         public bool IsPlaying => audioPlayer.IsPlaying;
         public ICommand TogglePlayPauseCommand { get; }
     }

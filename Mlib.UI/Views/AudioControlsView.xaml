@@ -30,11 +30,18 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding NowPlaying}"
+        <TextBlock Text="{Binding NowPlaying.Title}"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Grid.RowSpan="2"
+                   VerticalAlignment="Bottom"
+                   FontWeight="Bold"
+                   Typography.Capitals="AllSmallCaps"
+                   Foreground="{StaticResource GlobalAccent}"
                    FontSize="20" />
+        <TextBlock Text="{Binding NowPlaying.Artist}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Grid.Row="1"
+                   FontSize="14" />
         <Grid Grid.Column="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

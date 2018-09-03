@@ -19,7 +19,9 @@ namespace Mlib.Domain.Infrastructure
         public string Album { get; private set; }
         public uint Year { get; private set; }
         public long Length { get; private set; }
-        
+        public string FullPath { get; private set; }
+        [Ignore]
+        public bool IsCopy => ID == -1;
 
         public Track(FileInfo mp3File)
         {
@@ -29,6 +31,7 @@ namespace Mlib.Domain.Infrastructure
             Album = taggedFile.Tag.Album;
             Year = taggedFile.Tag.Year;
             Length = taggedFile.Length;
+            FullPath = mp3File.FullName;
         }
         public Track() { }
         public Track Copy()

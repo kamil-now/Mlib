@@ -41,7 +41,7 @@ namespace Mlib
 
             builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();
-            builder.RegisterType<PlaylistsViewModel>().As<IViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<PlaylistViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<TracksViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<DirectoryExplorerViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<AudioControlsViewModel>().As<IViewModel>().AsSelf().SingleInstance();

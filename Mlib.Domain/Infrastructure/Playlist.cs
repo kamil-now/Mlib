@@ -4,6 +4,7 @@ using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Mlib.Domain.Infrastructure
 {
@@ -12,6 +13,7 @@ namespace Mlib.Domain.Infrastructure
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public int Length => Tracks?.Count ?? 0;
+        public string Name { get; set; } = "New Playlist";
         [ManyToMany(typeof(PlaylistData))]
         public List<Track> Tracks { get; set; }
 
@@ -22,6 +24,7 @@ namespace Mlib.Domain.Infrastructure
         }
         public Playlist(FileInfo file) : this()
         {
+            Tracks =  M3UReader.GetFiles(file).Select(n=>new Track(n)).ToList();
         }
         
     }

@@ -1,11 +1,11 @@
 ﻿using NAudio.Wave;
 using System;
-using System.IO;
 
 namespace Mlib.Domain.Infrastructure
 {
     public class AudioPlayer : PropertyChangedBase
     {
+        public event Action TrackChanged;
         public enum PlaybackStopTypes
         {
             PlaybackStoppedByUser,
@@ -16,20 +16,20 @@ namespace Mlib.Domain.Infrastructure
             PlaybackStopType = PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
         }
         private AudioFileReader audioFileReader;
+
+        private Playlist currentPlaylist;
         private DirectSoundOut output;
         public event Action PlaybackResumed;
         public event Action PlaybackStopped;
         public event Action PlaybackPaused;
         public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
-        
+
 
         public PlaybackStopTypes PlaybackStopType { get; set; }
 
-        public FileInfo NowPlaying { get; private set; }
-        
+        public Track NowPlaying { get; private set; }
 
-        
-        public void SetFile(FileInfo file)
+        public void SetNowPlaying(Track track)
         {
             if (output == null)
             {
@@ -40,16 +40,17 @@ namespace Mlib.Domain.Infrastructure
                     PlaybackStopped?.Invoke();
                 };
             }
-            NowPlaying = file;
-            audioFileReader = new AudioFileReader(NowPlaying.FullName) { Volume = GetVolume() };
+            NowPlaying = track;
+            audioFileReader = new AudioFileReader(NowPlaying.FullPath) { Volume = GetVolume() };
             var wc = new WaveChannel32(audioFileReader);
             wc.PadWithZeroes = false;
 
             output.Init(wc);
+            TrackChanged?.Invoke();
         }
-        public void Play(FileInfo file, double currentVolumeLevel)
+        public void Play(Track track, double currentVolumeLevel)
         {
-            SetFile(file);
+            SetNowPlaying(track);
             Play(currentVolumeLevel);
 
         }

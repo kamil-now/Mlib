@@ -11,28 +11,29 @@ namespace Mlib.UI.ViewModels
 {
     public class DirectoryExplorerViewModel : Screen, IViewModel
     {
-        public event System.Action SelectionChanged;
         AudioPlayer audioPlayer;
+        PlaylistViewModel playlistVM;
         public BindableCollection<FileInfo> Files { get; set; }
-        public DirectoryExplorerViewModel(AudioPlayer audioPlayer)
+        public DirectoryExplorerViewModel(AudioPlayer audioPlayer,PlaylistViewModel playlistVM)
         {
             this.audioPlayer = audioPlayer;
-            //Files = new BindableCollection<FileInfo>();
-            Files = new BindableCollection<FileInfo>(new DirectoryInfo(@"C:\Users\Kamil\Downloads").GetFiles("*.mp3"));
+            this.playlistVM = playlistVM;
+            Files = new BindableCollection<FileInfo>(new DirectoryInfo(@"D:\MBLibrary\Playlists").GetFiles("*.m3u"));
         }
         public ICommand SelectDirectory => new Command(a =>
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
                 dialog.ShowDialog();
-                Files = new BindableCollection<FileInfo>(new DirectoryInfo(dialog.SelectedPath).GetFiles("*.mp3"));
+                Files = new BindableCollection<FileInfo>(new DirectoryInfo(dialog.SelectedPath).GetFiles("*.m3u"));
                 NotifyOfPropertyChange(() => Files);
             }
         });
         public ICommand Select => new Command(fileInfo =>
            {
-               audioPlayer.SetFile(fileInfo as FileInfo);
-               SelectionChanged?.Invoke();
+               playlistVM.SetPlaylist(new Playlist(fileInfo as FileInfo));
+               //audioPlayer.SetNowPlaying(fileInfo as FileInfo);
+               
            });
     }
 }

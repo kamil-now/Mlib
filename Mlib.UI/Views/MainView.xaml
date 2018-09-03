@@ -21,11 +21,14 @@
                                  Grid.Row="1"
                                  Grid.ColumnSpan="2"
                                  DataContext="{Binding AudioControls}" />
-        <Rectangle Fill="{StaticResource GlobalDimDark}"
-                   Grid.Row="0"
-                   Grid.Column="1"
+        <views:PlaylistView Background="{StaticResource GlobalDimDark}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            DataContext="{Binding Playlist}"/>
+        <!--<Rectangle Fill="{StaticResource GlobalDimDark}"
+                   
                    HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch" />
+                   VerticalAlignment="Stretch" />-->
         <Rectangle VerticalAlignment="Stretch"
                    HorizontalAlignment="Right"
                    Width="1"
