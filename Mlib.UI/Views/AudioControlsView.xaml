@@ -56,6 +56,7 @@
                     Height="20"
                     Width="20"
                     Margin="5"
+                    Command="{Binding PreviousTrackCommand}"
                     Style="{StaticResource PreviousTrackButton}" />
             <Button Grid.Column="2"
                     Command="{Binding TogglePlayPauseCommand}"
@@ -82,6 +83,7 @@
                     Height="20"
                     Width="20"
                     Margin="5"
+                    Command="{Binding NextTrackCommand}"
                     Style="{StaticResource NextTrackButton}" />
         </Grid>
     </Grid>

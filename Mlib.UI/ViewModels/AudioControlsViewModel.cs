@@ -19,10 +19,14 @@ namespace Mlib.UI.ViewModels
             audioPlayer.PlaybackStopped += () => NotifyOfPropertyChange(() => IsPlaying);
 
             TogglePlayPauseCommand = new Command(q => audioPlayer.TogglePlayPause(VolumeLevel));
+            NextTrackCommand = new Command(q => audioPlayer.NextTrack());
+            PreviousTrackCommand = new Command(q => audioPlayer.PreviousTrack());
         }
         public double VolumeLevel { get; set; } = 1;
         public Track NowPlaying => audioPlayer.NowPlaying;
         public bool IsPlaying => audioPlayer.IsPlaying;
         public ICommand TogglePlayPauseCommand { get; }
+        public ICommand PreviousTrackCommand { get; }
+        public ICommand NextTrackCommand { get; }
     }
 }

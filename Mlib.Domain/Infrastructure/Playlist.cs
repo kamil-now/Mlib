@@ -13,7 +13,7 @@ namespace Mlib.Domain.Infrastructure
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public int Length => Tracks?.Count ?? 0;
-        public string Name { get; set; } = "New Playlist";
+        public string Name { get; set; } 
         [ManyToMany(typeof(PlaylistData))]
         public List<Track> Tracks { get; set; }
 
@@ -24,6 +24,7 @@ namespace Mlib.Domain.Infrastructure
         }
         public Playlist(FileInfo file) : this()
         {
+            Name =  file.Name.Substring(0,file.Name.LastIndexOf('.'));
             Tracks =  M3UReader.GetFiles(file).Select(n=>new Track(n)).ToList();
         }
         

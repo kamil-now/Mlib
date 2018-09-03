@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using System;
+using System.Linq;
 
 namespace Mlib.Domain.Infrastructure
 {
@@ -14,6 +15,7 @@ namespace Mlib.Domain.Infrastructure
         public AudioPlayer()
         {
             PlaybackStopType = PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
+            
         }
         private AudioFileReader audioFileReader;
 
@@ -28,16 +30,48 @@ namespace Mlib.Domain.Infrastructure
         public PlaybackStopTypes PlaybackStopType { get; set; }
 
         public Track NowPlaying { get; private set; }
+        int trackNumber;
+        public void NextTrack()
+        {
+            if (trackNumber > 0)
+            {
+                if (trackNumber == currentPlaylist.Tracks.Count)
+                    trackNumber = 1;
+                else
+                    trackNumber++;
+                SetNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
+            }
+        }
+        public void PreviousTrack()
+        {
+            if (trackNumber > 0)
+            {
+                if (trackNumber == 1)
+                    trackNumber = currentPlaylist.Tracks.Count;
+                else
+                    trackNumber--;
+                SetNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
+            }
+        }
+        public void SetCurrentPlaylist(Playlist playlist)
+        {
+            currentPlaylist = playlist;
 
+            SetNowPlaying(currentPlaylist.Tracks.First());
+            Play(output.Volume);
+        }
         public void SetNowPlaying(Track track)
         {
+            trackNumber = currentPlaylist?.Tracks?.IndexOf(track) + 1 ?? -1;
             if (output == null)
             {
                 output = new DirectSoundOut(200);
                 output.PlaybackStopped += (s, e) =>
                 {
-                    Dispose();
-                    PlaybackStopped?.Invoke();
+                    NextTrack();
+                    Play(output.Volume);
+                    //Dispose();
+                    //PlaybackStopped?.Invoke();
                 };
             }
             NowPlaying = track;

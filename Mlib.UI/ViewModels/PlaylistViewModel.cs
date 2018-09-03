@@ -22,6 +22,7 @@ namespace Mlib.UI.ViewModels
         public void SetPlaylist(Playlist playlist)
         {
             SelectedPlaylist = playlist;
+            audioPlayer.SetCurrentPlaylist(SelectedPlaylist);
             NotifyOfPropertyChange(() => SelectedPlaylist);
         }
     }
