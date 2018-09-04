@@ -74,7 +74,11 @@
     <Compile Include="ConnectionStrings.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
+    <Compile Include="Infrastructure\Interfaces\ICurrentTrackObserver.cs" />
+    <Compile Include="Infrastructure\Interfaces\ICurrentTrackSubject.cs" />
     <Compile Include="Infrastructure\Interfaces\IDatabaseEntity.cs" />
+    <Compile Include="Infrastructure\Interfaces\IPlaybackStateObserver.cs" />
+    <Compile Include="Infrastructure\Interfaces\IPlaybackStateSubject.cs" />
     <Compile Include="Infrastructure\M3UReader.cs" />
     <Compile Include="Infrastructure\PlaylistCreator.cs" />
     <Compile Include="Infrastructure\PlaylistData.cs" />

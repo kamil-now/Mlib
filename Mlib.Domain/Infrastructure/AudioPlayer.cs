@@ -1,36 +1,31 @@
-﻿using NAudio.Wave;
+﻿using Mlib.Domain.Infrastructure.Interfaces;
+using NAudio.Wave;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Mlib.Domain.Infrastructure
 {
-    public class AudioPlayer : PropertyChangedBase
+    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
     {
-        public event Action TrackChanged;
-        public enum PlaybackStopTypes
-        {
-            PlaybackStoppedByUser,
-            PlaybackStoppedReachingEndOfFile
-        }
-        public AudioPlayer()
-        {
-            PlaybackStopType = PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
-            
-        }
-        private AudioFileReader audioFileReader;
-
+        private WaveStream audioFileReader;
         private Playlist currentPlaylist;
-        private DirectSoundOut output;
-        public event Action PlaybackResumed;
-        public event Action PlaybackStopped;
-        public event Action PlaybackPaused;
+        private IWavePlayer output;
+        private int trackNumber;
+        private List<IPlaybackStateObserver> playbackStateObservers = new List<IPlaybackStateObserver>();
+        private List<ICurrentTrackObserver> currentTrackObservers = new List<ICurrentTrackObserver>();
+
         public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
-
-
-        public PlaybackStopTypes PlaybackStopType { get; set; }
-
         public Track NowPlaying { get; private set; }
-        int trackNumber;
+
+        public void SetNowPlaying(Track track)
+        {
+            NowPlaying = track;
+            trackNumber = currentPlaylist?.Tracks?.IndexOf(track) + 1 ?? -1;
+
+            NotifyOfCurrentTrackChange();
+        }
+
         public void NextTrack()
         {
             if (trackNumber > 0)
@@ -39,7 +34,9 @@ namespace Mlib.Domain.Infrastructure
                     trackNumber = 1;
                 else
                     trackNumber++;
-                SetNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
+
+                ChangeNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
+
             }
         }
         public void PreviousTrack()
@@ -50,125 +47,36 @@ namespace Mlib.Domain.Infrastructure
                     trackNumber = currentPlaylist.Tracks.Count;
                 else
                     trackNumber--;
-                SetNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
+
+                ChangeNowPlaying(currentPlaylist.Tracks.ElementAt(trackNumber - 1));
             }
         }
-        public void SetCurrentPlaylist(Playlist playlist)
+        public void Play(Track track, Playlist playlist)
         {
             currentPlaylist = playlist;
-
-            SetNowPlaying(currentPlaylist.Tracks.First());
-            Play(output.Volume);
-        }
-        public void SetNowPlaying(Track track)
-        {
-            trackNumber = currentPlaylist?.Tracks?.IndexOf(track) + 1 ?? -1;
-            if (output == null)
-            {
-                output = new DirectSoundOut(200);
-                output.PlaybackStopped += (s, e) =>
-                {
-                    NextTrack();
-                    Play(output.Volume);
-                    //Dispose();
-                    //PlaybackStopped?.Invoke();
-                };
-            }
-            NowPlaying = track;
-            audioFileReader = new AudioFileReader(NowPlaying.FullPath) { Volume = GetVolume() };
-            var wc = new WaveChannel32(audioFileReader);
-            wc.PadWithZeroes = false;
-
-            output.Init(wc);
-            TrackChanged?.Invoke();
-        }
-        public void Play(Track track, double currentVolumeLevel)
-        {
             SetNowPlaying(track);
-            Play(currentVolumeLevel);
-
+            Play();
         }
-        public void Play(double currentVolumeLevel)
+        public void Stop()
         {
-            if (output?.PlaybackState == PlaybackState.Stopped || output?.PlaybackState == PlaybackState.Paused)
-            {
-                output.Play();
-            }
-            SetVolume((float)currentVolumeLevel);
-
-            PlaybackResumed?.Invoke();
+            DisposeWavePlayer();
+            NotifyOfPlaybackStateChange();
         }
-
-
-        public void Stop() => output?.Stop();
-
         public void Pause()
         {
-            if (output != null)
-            {
-                output.Pause();
-
-                PlaybackPaused?.Invoke();
-            }
+            output?.Pause();
+            NotifyOfPlaybackStateChange();
         }
-
         public void TogglePlayPause(double currentVolumeLevel)
         {
-            if (output != null)
+            if (output?.PlaybackState == PlaybackState.Playing)
             {
-                if (output.PlaybackState == PlaybackState.Playing)
-                {
-                    Pause();
-                }
-                else
-                {
-                    Play(currentVolumeLevel);
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            if (output != null)
-            {
-                if (output.PlaybackState == PlaybackState.Playing)
-                {
-                    output.Stop();
-                }
-                output.Dispose();
-                output = null;
-            }
-            if (audioFileReader != null)
-            {
-                audioFileReader.Dispose();
-                audioFileReader = null;
-            }
-        }
-
-        public double GetLenghtInSeconds()
-        {
-            if (audioFileReader != null)
-            {
-                return audioFileReader.TotalTime.TotalSeconds;
+                Pause();
             }
             else
             {
-                return 0;
+                Play();
             }
-        }
-
-        public double GetPositionInSeconds()
-        {
-            return audioFileReader != null ? audioFileReader.CurrentTime.TotalSeconds : 0;
-        }
-
-        public float GetVolume()
-        {
-            if (audioFileReader != null)
-            {
-                return audioFileReader.Volume;
-            }
-            return 1;
         }
 
         public void SetPosition(double value)
@@ -179,12 +87,98 @@ namespace Mlib.Domain.Infrastructure
             }
         }
 
-        public void SetVolume(float value)
+        public double GetLenghtInSeconds() => audioFileReader?.TotalTime.TotalSeconds ?? 0;
+
+        public double GetPositionInSeconds() => audioFileReader?.CurrentTime.TotalSeconds ?? 0;
+
+        private void ChangeNowPlaying(Track track)
         {
-            if (output != null && audioFileReader != null)
+            SetNowPlaying(track);
+            if (IsPlaying)
+                Play();
+            else
+                DisposeWavePlayer();
+        }
+        private void Play()
+        {
+            if (output?.PlaybackState == PlaybackState.Paused)
             {
-                audioFileReader.Volume = value;
+                output.Play();
             }
+            else if (NowPlaying != null)
+            {
+                DisposeWavePlayer();
+                InitOutput();
+                output.Play();
+            }
+            NotifyOfPlaybackStateChange();
+        }
+        private void DisposeWavePlayer()
+        {
+            if (output != null)
+            {
+                if (output.PlaybackState == PlaybackState.Playing)
+                {
+                    output.Stop(); ;
+                }
+                output.Dispose();
+                output = null;
+            }
+            if (audioFileReader != null)
+            {
+                audioFileReader.Dispose();
+                audioFileReader = null;
+            }
+        }
+        private void InitOutput()
+        {
+            output = new WaveOut();
+            output.PlaybackStopped += (s, e) =>
+            {
+                NextTrack();
+                Play();
+            };
+
+            audioFileReader = new MediaFoundationReader(NowPlaying.FullPath);
+
+            var wc = new WaveChannel32(audioFileReader);
+
+            output.Init(wc);
+        }
+
+        public void Attach(IPlaybackStateObserver observer)
+        {
+            if (!playbackStateObservers.Contains(observer))
+                playbackStateObservers.Add(observer);
+        }
+
+        public void Detach(IPlaybackStateObserver observer)
+        {
+            if (playbackStateObservers.Contains(observer))
+                playbackStateObservers.Remove(observer);
+        }
+
+        public void NotifyOfPlaybackStateChange()
+        {
+            if (output != null)
+                playbackStateObservers.ForEach(n => n.UpdatePlaybackState(output.PlaybackState));
+        }
+
+        public void Attach(ICurrentTrackObserver observer)
+        {
+            if (!currentTrackObservers.Contains(observer))
+                currentTrackObservers.Add(observer);
+        }
+
+        public void Detach(ICurrentTrackObserver observer)
+        {
+            if (currentTrackObservers.Contains(observer))
+                currentTrackObservers.Remove(observer);
+        }
+
+        public void NotifyOfCurrentTrackChange()
+        {
+            currentTrackObservers.ForEach(n => n.UpdateCurrentTrack(NowPlaying));
         }
     }
 }

@@ -1,32 +1,43 @@
 ﻿using Caliburn.Micro;
 using Mlib.Domain;
 using Mlib.Domain.Infrastructure;
+using Mlib.Domain.Infrastructure.Interfaces;
 using Mlib.UI.ViewModels.Interfaces;
-
+using NAudio.Wave;
 using System.Windows.Input;
 
 namespace Mlib.UI.ViewModels
 {
-    public class AudioControlsViewModel : Screen, IViewModel
+    public class AudioControlsViewModel : Screen, IViewModel, IPlaybackStateObserver, ICurrentTrackObserver
     {
-        AudioPlayer audioPlayer;
         public AudioControlsViewModel(AudioPlayer audioPlayer)
         {
-            audioPlayer.TrackChanged += () => NotifyOfPropertyChange(() => NowPlaying);
             this.audioPlayer = audioPlayer;
-            audioPlayer.PlaybackPaused += () => NotifyOfPropertyChange(() => IsPlaying);
-            audioPlayer.PlaybackResumed += () => NotifyOfPropertyChange(() => IsPlaying);
-            audioPlayer.PlaybackStopped += () => NotifyOfPropertyChange(() => IsPlaying);
+            audioPlayer.Attach(this as IPlaybackStateObserver);
+            audioPlayer.Attach(this as ICurrentTrackObserver);
 
             TogglePlayPauseCommand = new Command(q => audioPlayer.TogglePlayPause(VolumeLevel));
             NextTrackCommand = new Command(q => audioPlayer.NextTrack());
             PreviousTrackCommand = new Command(q => audioPlayer.PreviousTrack());
         }
+
+        AudioPlayer audioPlayer;
         public double VolumeLevel { get; set; } = 1;
         public Track NowPlaying => audioPlayer.NowPlaying;
         public bool IsPlaying => audioPlayer.IsPlaying;
+
         public ICommand TogglePlayPauseCommand { get; }
         public ICommand PreviousTrackCommand { get; }
         public ICommand NextTrackCommand { get; }
+
+        public void UpdateCurrentTrack(Track currentTrack)
+        {
+            NotifyOfPropertyChange(() => NowPlaying);
+        }
+
+        public void UpdatePlaybackState(PlaybackState currentPlaybackState)
+        {
+            NotifyOfPropertyChange(() => IsPlaying);
+        }
     }
 }

@@ -17,12 +17,11 @@ namespace Mlib.UI.ViewModels
         }
         public ICommand Select => new Command(track =>
         {
-            audioPlayer.SetNowPlaying(track as Track);
+            audioPlayer.Play(track as Track, SelectedPlaylist);
         });
         public void SetPlaylist(Playlist playlist)
         {
             SelectedPlaylist = playlist;
-            audioPlayer.SetCurrentPlaylist(SelectedPlaylist);
             NotifyOfPropertyChange(() => SelectedPlaylist);
         }
     }
