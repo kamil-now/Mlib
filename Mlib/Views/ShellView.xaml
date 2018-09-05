@@ -25,52 +25,55 @@
         </Grid.RowDefinitions>
         <local:MainView Grid.Row="1"
                         cal:Bind.Model="{Binding MainView}" />
-        <Button Background="Black"
-                BorderThickness="0"
-                cal:Message.Attach="[PreviewMouseLeftButtonDown]=[Drag()]">
+        <Grid Background="Black"
+              Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="&#x2630;"
+                    FontFamily="Tahoma"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource MarlettButton}" />
+            <Rectangle Grid.Column="1"
+                       Fill="Black"
+                       cal:Message.Attach="[Event PreviewMouseLeftButtonDown]=[Action Drag($eventArgs)];
+                       [PreviewMouseMove]=[MouseMove($eventArgs)];
+                       [PreviewMouseLeftButtonUp]=[MouseUp()]" />
 
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="Black"
-                                        BorderThickness="0">
-                                    <ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="Black" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button Content="&#x2630;"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Style="{StaticResource AdornerButton}" />
+        </Grid>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Background="Black"
                     Margin="0">
 
-            <Button Content="&#x268A;"
+            <Button Content="&#x1F5D5;"
+                    FontFamily="Tahoma"
                     cal:Message.Attach="[Click]=[Minimize]"
-                    Style="{StaticResource AdornerButton}" />
-            <Button Content="&#x1F7AA;"
+                    Style="{StaticResource MarlettButton}" />
+            <Button cal:Message.Attach="[Click]=[ToggleWindowState]">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}"
+                           BasedOn="{StaticResource MarlettButton}">
+                        <Setter Property="Content"
+                                Value="1" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMaximized}"
+                                         Value="True">
+                                <Setter Property="Content"
+                                        Value="2" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="r"
                     cal:Message.Attach="[Click]=[Close]">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}"
-                           BasedOn="{StaticResource AdornerButton}">
+                           BasedOn="{StaticResource MarlettButton}">
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver"
                                      Value="True">

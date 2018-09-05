@@ -15,6 +15,12 @@
                      Color="#b3b3b3" />
     <SolidColorBrush x:Key="GlobalBright"
                      Color="#b3b3b3" />
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="FontSize"
+                Value="18" />
+        <Setter Property="FontFamily"
+                Value="Tahoma" />
+    </Style>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground"
                 Value="{StaticResource GlobalLight}" />
