@@ -7,13 +7,11 @@
         xmlns:local="clr-namespace:Mlib.UI.Views;assembly=Mlib.UI"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        BorderThickness="5"
         BorderBrush="Transparent"
         WindowStyle="None"
         WindowState="Normal"
         ResizeMode="CanResize"
         AllowsTransparency="True"
-        FontFamily="Arial"
         cal:Message.Attach="[Loaded]=[OnLoad($view)]">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"

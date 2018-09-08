@@ -35,23 +35,28 @@
                    FontWeight="Bold"
                    FontSize="20"
                    Foreground="{StaticResource GlobalAccent}" />
-        <ItemsControl ItemsSource="{Binding SelectedPlaylist.Tracks}"
+        <ListView ItemsSource="{Binding SelectedPlaylist.Tracks}"
                       Grid.Row="1"
                       Grid.Column="1"
                       VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch">
-            <ItemsControl.ItemsPanel>
+                      HorizontalAlignment="Left">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical" />
                 </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate>
+                    <StackPanel>
+                        
                     <Button Content="{Binding Title}"
                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
                             CommandParameter="{Binding}" />
+                        <Separator BorderThickness="2"
+                                   BorderBrush="{StaticResource GlobalLight}" />
+                    </StackPanel>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

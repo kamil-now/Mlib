@@ -7,6 +7,8 @@ namespace Mlib.ViewModels
 {
     public class ShellViewModel : Screen
     {
+        private static readonly int maximizedWindowBorderThickness = 5;
+        private static readonly int minimizedWindowBorderThickness = 0;
         private bool mRestoreForDragMove;
         private Window window;
         private IMainViewModel mainView;
@@ -26,7 +28,7 @@ namespace Mlib.ViewModels
         {
             mainView = main;
         }
-      
+
         public void OnLoad(Window window)
         {
             this.window = window;
@@ -35,7 +37,11 @@ namespace Mlib.ViewModels
             SetWindowSize();
             SetWindowMargin();
 
-            window.StateChanged += (s, e) => NotifyOfPropertyChange(() => IsMaximized);
+            window.StateChanged += (s, e) =>
+            {
+                window.BorderThickness = IsMaximized ? new Thickness(maximizedWindowBorderThickness) : new Thickness(minimizedWindowBorderThickness);
+                NotifyOfPropertyChange(() => IsMaximized);
+            };
         }
 
         public void Drag(MouseButtonEventArgs e)
@@ -85,9 +91,12 @@ namespace Mlib.ViewModels
 
             window.Width = SystemParameters.PrimaryScreenWidth * windowWidthScale;
             window.Height = SystemParameters.PrimaryScreenHeight * windowHeightScale;
+            window.MinHeight = window.Height * 0.7;
+            window.MinWidth = window.Width * 0.7;
         }
         private void SetWindowMargin()
         {
+            //TODO external setting - last position and size on close
             window.Left = (SystemParameters.PrimaryScreenWidth / 2) - (window.Width / 2);
             window.Top = (SystemParameters.PrimaryScreenHeight / 2) - (window.Height / 2);
         }
