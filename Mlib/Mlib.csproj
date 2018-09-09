@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>clef_icon.ico</ApplicationIcon>
+    <ApplicationIcon>newicon_ilq_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -121,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="clef_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="newicon_ilq_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

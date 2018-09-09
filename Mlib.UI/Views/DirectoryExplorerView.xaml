@@ -20,25 +20,36 @@
         </Style>
     </UserControl.Resources>
     <Grid Margin="10">
-        <StackPanel>
-            <Button VerticalAlignment="Top"
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Button VerticalAlignment="Top"
                 HorizontalAlignment="Center"
-                Content="Change directory" Margin="10"
-                Command="{Binding SelectDirectory}"/>
-            <ItemsControl ItemsSource="{Binding Files}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding Name}"
-                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
-                                CommandParameter="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+                Content="Change directory"
+                Margin="10"
+                Command="{Binding SelectDirectory}" />
+        <ListView ItemsSource="{Binding Files}"
+                  Grid.Row="1"
+                  FlowDirection="RightToLeft"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Name}"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
+                            CommandParameter="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

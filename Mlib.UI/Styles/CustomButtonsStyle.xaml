@@ -106,7 +106,7 @@
 		<Setter Property="Background"
 				Value="{StaticResource GlobalDimDark}" />
 		<Setter Property="Foreground"
-				Value="White" />
+				Value="{StaticResource GlobalLight}" />
 		<Setter Property="Width"
 				Value="50" />
 		<Setter Property="Height"

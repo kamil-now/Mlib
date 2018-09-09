@@ -25,34 +25,36 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="14*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="14*" />
-        </Grid.ColumnDefinitions>
+
         <TextBlock Text="{Binding SelectedPlaylist.Name}"
-                   Grid.ColumnSpan="2"
                    Typography.Capitals="AllSmallCaps"
+                   Grid.ColumnSpan="2"
                    FontWeight="Bold"
                    FontSize="20"
                    Foreground="{StaticResource GlobalAccent}" />
         <ListView ItemsSource="{Binding SelectedPlaylist.Tracks}"
-                      Grid.Row="1"
-                      Grid.Column="1"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Left">
+                  Grid.Row="1"
+                  FlowDirection="RightToLeft"
+                  HorizontalContentAlignment="Right"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" />
+                    <StackPanel Orientation="Vertical"
+                                Margin="20,0" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        
-                    <Button Content="{Binding Title}"
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
-                            CommandParameter="{Binding}" />
+                    <StackPanel >
+
+                        <Button Content="{Binding Title}"
+                                HorizontalAlignment="Left"
+                                HorizontalContentAlignment="Left"
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
+                                CommandParameter="{Binding}" />
                         <Separator BorderThickness="2"
+                                   Width="200"
                                    BorderBrush="{StaticResource GlobalLight}" />
                     </StackPanel>
                 </DataTemplate>
