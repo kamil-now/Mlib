@@ -6,10 +6,12 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:views="clr-namespace:Mlib.UI.Views"
              mc:Ignorable="d">
-    <Grid Background="{StaticResource GlobalAccent}">
+    <!--Background="{StaticResource GlobalAccent}"-->
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -19,16 +21,12 @@
                                      DataContext="{Binding DirectoryExplorer}" />
         <views:AudioControlsView Background="{StaticResource GlobalDim}"
                                  Grid.Row="1"
-                                 Grid.ColumnSpan="2"
+                                 Grid.ColumnSpan="3"
                                  DataContext="{Binding AudioControls}" />
         <views:PlaylistView Background="{StaticResource GlobalDimDark}"
                             Grid.Row="0"
                             Grid.Column="1"
-                            DataContext="{Binding Playlist}"/>
-        <!--<Rectangle Fill="{StaticResource GlobalDimDark}"
-                   
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch" />-->
+                            DataContext="{Binding Playlist}" />
         <Rectangle VerticalAlignment="Stretch"
                    HorizontalAlignment="Right"
                    Width="1"

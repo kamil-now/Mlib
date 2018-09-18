@@ -7,19 +7,6 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <UserControl.Resources>
-
-        <Style TargetType="{x:Type Button}"
-               BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize"
-                    Value="12" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Left" />
-            <Setter Property="HorizontalAlignment"
-                    Value="Left" />
-
-        </Style>
-    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -33,29 +20,16 @@
                    FontSize="20"
                    Foreground="{StaticResource GlobalAccent}" />
         <ListView ItemsSource="{Binding SelectedPlaylist.Tracks}"
-                  Grid.Row="1"
-                  FlowDirection="RightToLeft"
-                  HorizontalContentAlignment="Right"
-                  VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"
-                                Margin="20,0" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                  Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel >
+                    <StackPanel Margin="0,0,20,0" HorizontalAlignment="Right">
 
                         <Button Content="{Binding Title}"
-                                HorizontalAlignment="Left"
-                                HorizontalContentAlignment="Left"
                                 Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
                                 CommandParameter="{Binding}" />
                         <Separator BorderThickness="2"
-                                   Width="200"
-                                   BorderBrush="{StaticResource GlobalLight}" />
+                                   BorderBrush="{StaticResource GlobalLightDim}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -13,8 +13,18 @@ namespace Mlib.UI.ViewModels
     {
         AudioPlayer audioPlayer;
         PlaylistViewModel playlistVM;
+        private FileInfo selected;
+
         public BindableCollection<FileInfo> Files { get; set; }
-        public DirectoryExplorerViewModel(AudioPlayer audioPlayer,PlaylistViewModel playlistVM)
+        public FileInfo Selected
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                Select.Execute(selected);
+            } }
+        public DirectoryExplorerViewModel(AudioPlayer audioPlayer, PlaylistViewModel playlistVM)
         {
             this.audioPlayer = audioPlayer;
             this.playlistVM = playlistVM;
@@ -33,7 +43,7 @@ namespace Mlib.UI.ViewModels
            {
                playlistVM.SetPlaylist(new Playlist(fileInfo as FileInfo));
                //audioPlayer.SetNowPlaying(fileInfo as FileInfo);
-               
+
            });
     }
 }

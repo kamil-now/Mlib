@@ -4,7 +4,7 @@
 
     <!--icon font: DFPOP1-W9-->
 
-    <sys:Double x:Key="DefaultFontSize">18</sys:Double>
+    <sys:Double x:Key="DefaultFontSize">14</sys:Double>
     <SolidColorBrush x:Key="GlobalAccent"
                      Color="#FD4928" />
     <SolidColorBrush x:Key="GlobalDark"
@@ -32,15 +32,13 @@
                 Value="{StaticResource GlobalLight}" />
         <Setter Property="Background"
                 Value="Transparent" />
+        <Setter Property="Margin"
+                Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="Black"
-                            BorderThickness="1">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center" />
-                    </Border>
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -51,44 +49,72 @@
                         Value="{StaticResource GlobalBright}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type ListViewItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0"
+                                                        To="#d9d7ec"
+                                                        Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                                                        Storyboard.TargetName="listItem1" />
+                                        <ColorAnimation Duration="0"
+                                                        To="Black"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Storyboard.TargetName="Content1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0"
+                                                        To="#d9d7ec"
+                                                        Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                                                        Storyboard.TargetName="listItem1" />
+                                        <ColorAnimation Duration="0"
+                                                        To="Black"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Storyboard.TargetName="Content1" />
 
+                                    </Storyboard>
+
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid>
+                            <Rectangle x:Name="listItem1"
+                                       Stroke="Transparent"
+                                       Fill="Transparent" />
+                            <ContentControl x:Name="Content1"
+                                            Foreground="Gray"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-    <Style TargetType="{x:Type ListBox}">
-        <Style.Resources>
-            <!-- Background of selected item when focussed -->
-            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
-                             Color="Red" />
-            <!-- Background of selected item when not focussed -->
-            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}"
-                             Color="Green" />
-        </Style.Resources>
-    </Style>
+
     <Style TargetType="{x:Type ListView}">
-        
+
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
                 Value="Hidden" />
         <Setter Property="BorderThickness"
                 Value="0" />
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-
-                <Style TargetType="ListViewItem">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter    Property="Foreground"
-                                       Value="{StaticResource GlobalAccent}" />
-                            <Setter Property="Background"
-                                    Value="{StaticResource GlobalLight}" />
-                            <Setter Property="BorderThickness"
-                                    Value="0" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
-
+        <Setter Property="FlowDirection"
+                Value="RightToLeft" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Right" />
     </Style>
 </ResourceDictionary>

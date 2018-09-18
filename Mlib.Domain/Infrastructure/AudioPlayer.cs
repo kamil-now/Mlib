@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Mlib.Domain.Infrastructure
 {
-    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
+    public class AudioPlayer :  IPlaybackStateSubject, ICurrentTrackSubject
     {
         private WaveStream audioFileReader;
         private Playlist currentPlaylist;
