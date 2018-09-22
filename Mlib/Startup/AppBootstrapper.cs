@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using Caliburn.Micro;
-using Mlib.Domain;
-using Mlib.Domain.Infrastracture;
-using Mlib.Domain.Infrastructure;
-using Mlib.Domain.Infrastructure.Interfaces;
+using Mlib.Data;
+using Mlib.Infrastructure;
+using Mlib.Interfaces;
 using Mlib.Properties;
 using Mlib.UI.ViewModels;
 using Mlib.UI.ViewModels.Interfaces;

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Mlib.UI.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:views="clr-namespace:Mlib.UI.Views"
+             mc:Ignorable="d">
+    <!--Background="{StaticResource GlobalAccent}"-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <views:DirectoryExplorerView Background="{StaticResource GlobalDark}"
+                                     DataContext="{Binding DirectoryExplorer}" />
+        <views:AudioControlsView Background="{StaticResource GlobalDim}"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="3"
+                                 DataContext="{Binding AudioControls}" />
+        <views:PlaylistView Background="{StaticResource GlobalDimDark}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            DataContext="{Binding Playlist}" />
+        <Rectangle VerticalAlignment="Stretch"
+                   HorizontalAlignment="Right"
+                   Width="1"
+                   Margin="1"
+                   Stroke="Black" />
+        <Separator BorderBrush="Black"
+                   Grid.ColumnSpan="2"
+                   BorderThickness="2"
+                   VerticalAlignment="Bottom" />
+    </Grid>
+</UserControl>
