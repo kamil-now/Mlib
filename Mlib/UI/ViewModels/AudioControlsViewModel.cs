@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using Mlib.Data.Models;
 using Mlib.Infrastructure;
-using Mlib.Interfaces;
 using Mlib.UI.ViewModels.Interfaces;
 using NAudio.Wave;
 using System.Windows.Input;

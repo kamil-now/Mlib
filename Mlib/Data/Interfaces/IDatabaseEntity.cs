@@ -1,4 +1,4 @@
-﻿using Mlib.Interfaces;
+﻿using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Mlib.Data
 {
-    public interface IDatabaseService
+    public interface IDataEntity
     {
-        void Update(IDatabaseEntity entity);
+        [PrimaryKey, AutoIncrement]
+        int ID { get; set; }
+        string Id { get; }
     }
 }

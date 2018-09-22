@@ -1,6 +1,5 @@
 ﻿using Mlib.Extensions;
 using Mlib.Infrastructure;
-using Mlib.Interfaces;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
@@ -9,13 +8,12 @@ using System.Linq;
 
 namespace Mlib.Data.Models
 {
-    public class Playlist : IDatabaseEntity
+    public class Playlist : IDataEntity
     {
-        [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public string Id => ID.ToString();
         public int Length => Tracks?.Count ?? 0;
         public string Name { get; set; } 
-        [ManyToMany(typeof(PlaylistData))]
         public List<Track> Tracks { get; set; }
 
         public Playlist()

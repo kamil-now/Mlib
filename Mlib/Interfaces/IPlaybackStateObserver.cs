@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace Mlib.Interfaces
+namespace Mlib
 {
     public interface IPlaybackStateObserver
     {

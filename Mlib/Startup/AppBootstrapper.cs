@@ -2,7 +2,6 @@
 using Caliburn.Micro;
 using Mlib.Data;
 using Mlib.Infrastructure;
-using Mlib.Interfaces;
 using Mlib.Properties;
 using Mlib.UI.ViewModels;
 using Mlib.UI.ViewModels.Interfaces;
@@ -10,6 +9,7 @@ using Mlib.ViewModels;
 using Mlib.Views;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -31,12 +31,20 @@ namespace Mlib
             Container = BuildContainer();
 
             Initialize();
+
+            Database.SetInitializer(new CreateDatabaseIfNotExists<MlibData>());
+            using (var context = new MlibData())
+            {
+                context.Database.CreateIfNotExists();
+            }
+
         }
         private IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<DatabaseService>().As<IDatabaseService>().SingleInstance();
 
+            builder.RegisterType<MlibData>().As<DbContext>().SingleInstance();
+            builder.RegisterType<UnitOfWork>().AsSelf().SingleInstance();
 
             builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();

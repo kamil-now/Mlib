@@ -1,18 +1,20 @@
 ﻿using Mlib.Data;
 using Mlib.Data.Models;
+using System.Data.Entity;
+
 namespace Mlib.Infrastructure
 {
     public class PlaylistCreator
     {
-        IDatabaseService database;
-        public PlaylistCreator(IDatabaseService database)
+        UnitOfWork unitOfWork;
+        public PlaylistCreator(UnitOfWork unitOfWork)
         {
-            this.database = database;
+            this.unitOfWork = unitOfWork;
         }
         public void AddTrack(Playlist playlist, Track track)
         {
-            playlist.Tracks.Add(track);
-            database.Update(playlist);
+            //playlist.Tracks.Add(track);
+            //database.Update(playlist);
         }
     }
 }

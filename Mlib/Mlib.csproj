@@ -51,6 +51,12 @@
     <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
     </Reference>
@@ -79,6 +85,7 @@
       <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.11\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -146,22 +153,25 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\GenericRepository.cs" />
+    <Compile Include="Data\Interfaces\IGenericRepository.cs" />
+    <Compile Include="Data\Interfaces\IRepository.cs" />
+    <Compile Include="Data\MlibData.cs" />
+    <Compile Include="Data\PlaylistRepository.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
-    <Compile Include="Data\DatabaseService.cs" />
     <Compile Include="Interfaces\ICurrentTrackObserver.cs" />
     <Compile Include="Interfaces\ICurrentTrackSubject.cs" />
-    <Compile Include="Data\IDatabaseEntity.cs" />
-    <Compile Include="Data\IDatabaseService.cs" />
+    <Compile Include="Data\Interfaces\IDatabaseEntity.cs" />
     <Compile Include="Interfaces\IPlaybackStateObserver.cs" />
     <Compile Include="Interfaces\IPlaybackStateSubject.cs" />
     <Compile Include="Infrastructure\M3UReader.cs" />
     <Compile Include="Data\Models\Playlist.cs" />
     <Compile Include="Infrastructure\PlaylistCreator.cs" />
-    <Compile Include="Data\Models\PlaylistData.cs" />
     <Compile Include="Data\Models\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
