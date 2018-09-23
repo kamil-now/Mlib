@@ -10,6 +10,10 @@ namespace Mlib.Data
 {
     public abstract class GenericRepository<C, T> : IGenericRepository<T> where T : class, IDataEntity where C : DbContext
     {
+        public GenericRepository(C context)
+        {
+            Context = context;
+        }
         public abstract T Get(string id);
         public C Context { get; set; }
 

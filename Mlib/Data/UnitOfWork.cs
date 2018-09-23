@@ -15,6 +15,9 @@ namespace Mlib.Data
         private readonly DbContext dbContext;
         
         public PlaylistRepository Playlists { get; }
+        public TrackRepository Tracks { get; }
+        public ArtistRepository Artists { get; }
+        public AlbumRepository Albums { get; }
         public UnitOfWork(DbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -24,6 +27,19 @@ namespace Mlib.Data
             if (entity is Playlist)
             {
                 return Playlists;
+            }
+            if (entity is Artist)
+            {
+                return Artists;
+
+            }
+            if (entity is Album)
+            {
+                return Albums;
+            }
+            if (entity is Track)
+            {
+                return Tracks;
             }
             return null;
         }

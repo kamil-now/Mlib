@@ -3,6 +3,8 @@ using Mlib.Infrastructure;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 
@@ -10,8 +12,10 @@ namespace Mlib.Data.Models
 {
     public class Playlist : IDataEntity
     {
+        [NotMapped]
         public string Id => Name;
-
+        [Key]
+        [Required]
         public string Name{ get; set; }
         public string ImageId { get; set; }
 

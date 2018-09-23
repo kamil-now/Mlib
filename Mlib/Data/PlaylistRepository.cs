@@ -10,11 +10,17 @@ namespace Mlib.Data
 {
     public class PlaylistRepository : GenericRepository<DbContext, Playlist>
     {
-        public override Playlist Get(string id)=> GetAll().FirstOrDefault(x => x.Id == id);
-        public PlaylistRepository(DbContext context)
+        public PlaylistRepository(DbContext context) : base(context)
         {
-            Context = context;
         }
+
+        public override Playlist Get(string id)
+        {
+            var all = GetAll();
+            return all.FirstOrDefault(x => x.Name == id) ?? all.FirstOrDefault(x => x.Id == id);
+
+        }
+
 
     }
 }

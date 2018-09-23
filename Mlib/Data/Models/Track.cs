@@ -1,6 +1,8 @@
 ﻿using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 
@@ -8,17 +10,21 @@ namespace Mlib.Data.Models
 {
     public class Track : IDataEntity
     {
+        [NotMapped]
         public string Id => TrackId.ToString();
+        [Key]
+        [Required]
         public int TrackId { get; set; }
+        [Required]
+        public string FullPath { get; set; }
         public ICollection<Playlist> Playlists { get; set; }
-
-        public string Title { get; private set; }
-        public string Artist { get; private set; }
-        public string Album { get; private set; }
-        public uint Year { get; private set; }
-        public long Length { get; private set; }
-        public string FullPath { get; private set; }
-        [Ignore]
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        public uint Year { get; set; }
+        public long Length { get; set; }
+       
+        [NotMapped]
         public bool IsCopy => TrackId == -1;
         public Track(FileInfo mp3File)
         {

@@ -153,6 +153,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\AlbumRepository.cs" />
+    <Compile Include="Data\ArtistRepository.cs" />
     <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\Interfaces\IGenericRepository.cs" />
     <Compile Include="Data\Interfaces\IRepository.cs" />
@@ -164,6 +166,11 @@
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
+    <Compile Include="Data\Migrations\201809231541553_Initial.cs" />
+    <Compile Include="Data\Migrations\201809231541553_Initial.Designer.cs">
+      <DependentUpon>201809231541553_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
@@ -217,6 +224,9 @@
     <Compile Include="UI\Views\TracksView.xaml.cs">
       <DependentUpon>TracksView.xaml</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Data\Migrations\201809231541553_Initial.resx">
+      <DependentUpon>201809231541553_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
