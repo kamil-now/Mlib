@@ -10,6 +10,10 @@ namespace Mlib.Data
 {
     public class TrackRepository : GenericRepository<DbContext, Track>
     {
+        public TrackRepository(DbContext context) : base(context)
+        {
+        }
+
         public override Track Get(string id)=> GetAll().FirstOrDefault(x => x.Id == id);
     }
 }

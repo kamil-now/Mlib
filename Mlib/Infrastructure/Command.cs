@@ -12,6 +12,10 @@ namespace Mlib.Infrastructure
         {
             this.action = action;
         }
+        public Command(Action action)
+        {
+            this.action = new Action<object>(obj => action.Invoke());
+        }
 
         public bool CanExecute(object parameter) => true;
 

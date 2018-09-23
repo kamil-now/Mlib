@@ -8,11 +8,13 @@ namespace Mlib.UI.ViewModels
         public DirectoryExplorerViewModel DirectoryExplorer { get; }
         public AudioControlsViewModel AudioControls { get; }
         public PlaylistViewModel Playlist { get; }
-        public MainViewModel(PlaylistViewModel playlist, DirectoryExplorerViewModel directoryExplorer, AudioControlsViewModel audioControls)
+        public LibraryViewModel Library { get; }
+        public MainViewModel(PlaylistViewModel playlist, DirectoryExplorerViewModel directoryExplorer, AudioControlsViewModel audioControls, LibraryViewModel library)
         {
             Playlist = playlist;
             DirectoryExplorer = directoryExplorer;
             AudioControls = audioControls;
+            Library = library;
         }
     }
 }

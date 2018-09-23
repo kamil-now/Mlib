@@ -1,4 +1,5 @@
 ﻿using Mlib.Data.Models;
+using Mlib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,7 @@ namespace Mlib.Data
     {
         public EventHandler DbContextChanged;
         private readonly DbContext dbContext;
-        
+
         public PlaylistRepository Playlists { get; }
         public TrackRepository Tracks { get; }
         public ArtistRepository Artists { get; }
@@ -21,9 +22,19 @@ namespace Mlib.Data
         public UnitOfWork(DbContext dbContext)
         {
             this.dbContext = dbContext;
+            Playlists = new PlaylistRepository(dbContext);
+            Tracks =new TrackRepository(dbContext);
+            Artists=new ArtistRepository(dbContext);
+            Albums =new AlbumRepository(dbContext);
         }
-        public IRepository GetRepository<T>(T entity) where T : class, IDataEntity
+        public IEnumerable<T> GetAll<T>() where T : class, IDataEntity, new()
         {
+            return GetRepository<T>().GetAll()?.ToList() as IEnumerable<T>;
+
+        }
+        public IRepository GetRepository<T>() where T : class, IDataEntity, new()
+        {
+            var entity = new T();
             if (entity is Playlist)
             {
                 return Playlists;
@@ -43,9 +54,9 @@ namespace Mlib.Data
             }
             return null;
         }
-        public bool AddOrUpdate<T>(T entity, bool commit) where T : class, IDataEntity
+        public bool AddOrUpdate<T>(T entity, bool commit) where T : class, IDataEntity, new()
         {
-            var repo = GetRepository(entity);
+            var repo = GetRepository<T>();
             var isValid = repo != null && ValidateRequiredProperties(entity);
 
             if (isValid)
@@ -74,9 +85,9 @@ namespace Mlib.Data
             }
             return isValid;
         }
-        public bool Delete<T>(T entity, bool commit) where T : class, IDataEntity
+        public bool Delete<T>(T entity, bool commit) where T : class, IDataEntity, new()
         {
-            var repo = GetRepository(entity);
+            var repo = GetRepository<T>();
 
             if (repo != null && repo?.Get(entity.Id) != null)
             {

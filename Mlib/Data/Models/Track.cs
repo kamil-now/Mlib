@@ -26,6 +26,11 @@ namespace Mlib.Data.Models
        
         [NotMapped]
         public bool IsCopy => TrackId == -1;
+
+        public Track()
+        {
+            Playlists = new List<Playlist>();
+        }
         public Track(FileInfo mp3File)
         {
             TagLib.File taggedFile = TagLib.File.Create(mp3File.FullName);
@@ -36,7 +41,6 @@ namespace Mlib.Data.Models
             Length = taggedFile.Length;
             FullPath = mp3File.FullName;
         }
-        public Track() { }
         public Track Copy()
         {
             return new Track()

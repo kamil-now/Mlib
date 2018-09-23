@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mlib.Data
 {
-    public interface IDataEntity
+    public interface IDataEntity 
     {
         string Id { get; }
     }

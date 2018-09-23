@@ -139,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Views\LibraryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,6 +175,10 @@
       <DependentUpon>201809231541553_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201809231643582_constuctors.cs" />
+    <Compile Include="Migrations\201809231643582_constuctors.Designer.cs">
+      <DependentUpon>201809231643582_constuctors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Startup\AppBootstrapper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
@@ -203,6 +211,7 @@
     <Compile Include="UI\ViewModels\DirectoryExplorerViewModel.cs" />
     <Compile Include="UI\ViewModels\Interfaces\IMainViewModel.cs" />
     <Compile Include="UI\ViewModels\Interfaces\IViewModel.cs" />
+    <Compile Include="UI\ViewModels\LibraryViewModel.cs" />
     <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\ViewModels\PlaylistViewModel.cs" />
     <Compile Include="UI\ViewModels\TracksViewModel.cs" />
@@ -215,6 +224,9 @@
     <Compile Include="UI\Views\DirectoryExplorerView.xaml.cs">
       <DependentUpon>DirectoryExplorerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Views\LibraryView.xaml.cs">
+      <DependentUpon>LibraryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -226,6 +238,9 @@
     </Compile>
     <EmbeddedResource Include="Data\Migrations\201809231541553_Initial.resx">
       <DependentUpon>201809231541553_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231643582_constuctors.resx">
+      <DependentUpon>201809231643582_constuctors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

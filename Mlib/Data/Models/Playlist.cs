@@ -27,6 +27,8 @@ namespace Mlib.Data.Models
         public Playlist()
         {
             Tracks = new List<Track>();
+            Playlists = new List<Playlist>();
+            Albums = new List<Album>();
            
         }
         public Playlist(FileInfo file) : this()

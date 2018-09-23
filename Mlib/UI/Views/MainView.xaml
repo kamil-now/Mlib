@@ -17,8 +17,8 @@
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <views:DirectoryExplorerView Background="{StaticResource GlobalDark}"
-                                     DataContext="{Binding DirectoryExplorer}" />
+        <views:LibraryView Background="{StaticResource GlobalDark}"
+                                     DataContext="{Binding Library}" />
         <views:AudioControlsView Background="{StaticResource GlobalDim}"
                                  Grid.Row="1"
                                  Grid.ColumnSpan="3"

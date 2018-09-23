@@ -22,7 +22,7 @@ namespace Mlib.Data.Models
         public ICollection<Track> Tracks { get; set; }
         public Album()
         {
-
+            Tracks = new List<Track>();
         }
     }
 }
