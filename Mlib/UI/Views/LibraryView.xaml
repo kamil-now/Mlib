@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Mlib.UI.Views"
+             xmlns:data="clr-namespace:Mlib.Data.Models"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -15,7 +16,8 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Stretch">
             <StackPanel.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Style TargetType="Button"
+                       BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="HorizontalAlignment"
                             Value="Left" />
                     <Setter Property="Margin"
@@ -33,33 +35,39 @@
                        HorizontalAlignment="Center" />
             <Button Content="Add to library"
                     Command="{Binding AddNew}" />
-            <Button Content="All tracks" />
-            <Button Content="Albums" />
-            <Button Content="Artists" />
-            <Button Content="Playlists" />
+            <Button Content="All tracks"
+                    Command="{Binding SetCollection}"
+                    CommandParameter="{x:Type data:Track}" />
+            <Button Content="Albums"
+                    Command="{Binding SetCollection}"
+                    CommandParameter="{x:Type data:Album}" />
+            <Button Content="Artists"
+                    Command="{Binding SetCollection}"
+                    CommandParameter="{x:Type data:Artist}" />
+            <Button Content="Playlists"
+                    Command="{Binding SetCollection}"
+                    CommandParameter="{x:Type data:Playlist}" />
 
         </StackPanel>
         <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
-        <ListView ItemsSource="{Binding Playlists}"
+        <ListView ItemsSource="{Binding Collection}"
                   HorizontalContentAlignment="Right"
                   FlowDirection="RightToLeft"
                   SelectedItem="{Binding Selected}"
                   Grid.Row="1">
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
+            <ListView.Resources>
+                <DataTemplate DataType="{x:Type data:Playlist}">
                     <StackPanel Margin="0,0,20,0"
                                 HorizontalAlignment="Right"
                                 MaxWidth="200">
                         <Button
                                 Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
                                 CommandParameter="{Binding}">
-                            <TextBlock Typography.Capitals="AllSmallCaps"
-                                       Text="{Binding Name}"
+                            <TextBlock Text="{Binding Name}"
                                        TextWrapping="NoWrap" />
                             <Button.ToolTip>
-                                <TextBlock Typography.Capitals="AllSmallCaps"
-                                           Text="{Binding Name}"
+                                <TextBlock Text="{Binding Name}"
                                            TextWrapping="NoWrap" />
                             </Button.ToolTip>
 
@@ -68,7 +76,63 @@
                                    BorderBrush="{StaticResource GlobalLightDim}" />
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:Track}">
+                    <StackPanel Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                MaxWidth="200">
+                        <Button
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
+                                CommandParameter="{Binding}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                                <TextBlock Text="{Binding Artist}"
+                                           FontSize="10"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                            </StackPanel>
+                        </Button>
+                        <Separator BorderThickness="2"
+                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type data:Album}">
+                    <StackPanel Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                MaxWidth="200">
+                        <Button
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
+                                CommandParameter="{Binding}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                                <TextBlock Text="{Binding Artist}"
+                                           FontSize="10"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                            </StackPanel>
+                        </Button>
+                        <Separator BorderThickness="2"
+                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type data:Artist}">
+                    <StackPanel Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                MaxWidth="200">
+                        <Button
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
+                                CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding Name}"
+                                       TextWrapping="NoWrap" />
+                        </Button>
+                        <Separator BorderThickness="2"
+                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.Resources>
         </ListView>
     </Grid>
 </UserControl>

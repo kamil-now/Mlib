@@ -19,11 +19,12 @@ namespace Mlib.UI.ViewModels
     public class LibraryViewModel : Screen, IViewModel
     {
         UnitOfWork unitOfWork;
+        AudioPlayer audioPlayer;
         PlaylistViewModel playlistVM;
-        private FileInfo selected;
+        private IDataEntity selected;
 
-        public BindableCollection<FileInfo> Files { get; set; }
-        public FileInfo Selected
+        public BindableCollection<IDataEntity> Collection { get; set; }
+        public IDataEntity Selected
         {
             get => selected;
             set
@@ -37,18 +38,23 @@ namespace Mlib.UI.ViewModels
         public BindableCollection<IDataEntity> Artists { get; }
         public BindableCollection<IDataEntity> Albums { get; }
 
-        public LibraryViewModel(UnitOfWork unitOfWork, PlaylistViewModel playlistVM)
+        public LibraryViewModel(UnitOfWork unitOfWork,AudioPlayer audioPlayer, PlaylistViewModel playlistVM)
         {
             this.unitOfWork = unitOfWork;
             this.playlistVM = playlistVM;
+            this.audioPlayer = audioPlayer;
+            var playlists = unitOfWork.Playlists.GetAll().ToList();
+            var tracks = unitOfWork.Tracks.GetAll().ToList();
+            var albums = unitOfWork.Albums.GetAll().ToList();
+            var artists = unitOfWork.Artists.GetAll().ToList();
 
-            var playlists = unitOfWork.GetAll<Playlist>();
-            var tracks = unitOfWork.GetAll<Track>();
 
             unitOfWork.DbContextChanged += DbStateChanged;
-            playlists = unitOfWork.Playlists.GetAll();
+
             Playlists = !playlists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(playlists) : new BindableCollection<IDataEntity>();
             Tracks = !tracks.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(tracks) : new BindableCollection<IDataEntity>();
+            Albums = !albums.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(albums) : new BindableCollection<IDataEntity>();
+            Artists = !artists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(artists) : new BindableCollection<IDataEntity>();
         }
 
         private void DbStateChanged(object sender, EventArgs e)
@@ -76,7 +82,35 @@ namespace Mlib.UI.ViewModels
             }
             return (null, null);
         }
-        public ICommand Select => new Command(playlist => playlistVM.SetPlaylist(playlist as Playlist));
+        public ICommand SetCollection => new Command(type =>
+         {
+             var t = type as Type;
+             if (t == typeof(Album))
+             {
+                 Collection = Albums;
+                 
+             }
+             else if(t == typeof(Track))
+             {
+                 Collection = Tracks;
+             }
+             else if (t == typeof(Artist))
+             {
+                 Collection = Artists;
+             }
+             else if (t == typeof(Playlist))
+             {
+                 Collection = Playlists;
+             }
+             NotifyOfPropertyChange(() => Collection);
+         });
+        public ICommand Select => new Command(item =>
+        {
+            if (item is Playlist)
+                playlistVM.SetPlaylist(item as Playlist);
+            if (item is Track)
+                audioPlayer.SetNowPlaying(item as Track);
+        });
         public ICommand AddNew => new Command(() =>
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();

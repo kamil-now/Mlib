@@ -27,11 +27,6 @@ namespace Mlib.Data
             Artists = new ArtistRepository(dbContext);
             Albums = new AlbumRepository(dbContext);
         }
-        public IEnumerable<T> GetAll<T>() where T : class, IDataEntity, new()
-        {
-            return GetRepository<T>().GetAll()?.ToList() as IEnumerable<T>;
-
-        }
         public IRepository GetRepository<T>() where T : class, IDataEntity, new()
         {
             var entity = new T();
