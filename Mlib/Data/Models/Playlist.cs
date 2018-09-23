@@ -10,11 +10,15 @@ namespace Mlib.Data.Models
 {
     public class Playlist : IDataEntity
     {
-        public int ID { get; set; }
-        public string Id => ID.ToString();
-        public int Length => Tracks?.Count ?? 0;
-        public string Name { get; set; } 
-        public List<Track> Tracks { get; set; }
+        public string Id => Name;
+
+        public string Name{ get; set; }
+        public string ImageId { get; set; }
+
+        public ICollection<Track> Tracks { get; set; }
+        public ICollection<Playlist> Playlists { get; set; }
+        public ICollection<Album> Albums { get; set; }
+        
 
         public Playlist()
         {

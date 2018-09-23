@@ -8,9 +8,9 @@ namespace Mlib.Data.Models
 {
     public class Track : IDataEntity
     {
-        public int ID { get; set; }
-        public string Id => ID.ToString();
-        List<Playlist> Playlists { get; set; }
+        public string Id => TrackId.ToString();
+        public int TrackId { get; set; }
+        public ICollection<Playlist> Playlists { get; set; }
 
         public string Title { get; private set; }
         public string Artist { get; private set; }
@@ -19,8 +19,7 @@ namespace Mlib.Data.Models
         public long Length { get; private set; }
         public string FullPath { get; private set; }
         [Ignore]
-        public bool IsCopy => ID == -1;
-
+        public bool IsCopy => TrackId == -1;
         public Track(FileInfo mp3File)
         {
             TagLib.File taggedFile = TagLib.File.Create(mp3File.FullName);
@@ -36,7 +35,7 @@ namespace Mlib.Data.Models
         {
             return new Track()
             {
-                ID = -1,
+                TrackId = -1,
                 Title = Title,
                 Artist = Artist,
                 Album = Album,

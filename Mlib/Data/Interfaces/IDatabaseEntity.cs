@@ -9,8 +9,6 @@ namespace Mlib.Data
 {
     public interface IDataEntity
     {
-        [PrimaryKey, AutoIncrement]
-        int ID { get; set; }
         string Id { get; }
     }
 }

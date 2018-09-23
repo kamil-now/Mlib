@@ -21,7 +21,7 @@ namespace Mlib.Infrastructure
         public void SetNowPlaying(Track track)
         {
             NowPlaying = track;
-            trackNumber = currentPlaylist?.Tracks?.IndexOf(track) + 1 ?? -1;
+            //trackNumber = currentPlaylist?.Tracks?..IndexOf(track) + 1 ?? -1;
 
             NotifyOfCurrentTrackChange();
         }

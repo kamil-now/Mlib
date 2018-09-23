@@ -12,5 +12,22 @@ namespace Mlib.Data
     {
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
+        public MlibData():base("MlibData")
+        {
+
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Playlist>().
+              HasMany(c => c.Tracks).
+              WithMany(p => p.Playlists).
+              Map(
+               m =>
+               {
+                   m.MapLeftKey("Name");
+                   m.MapRightKey("TrackId");
+                   m.ToTable("PlaylistTracks");
+               });
+        }
     }
 }

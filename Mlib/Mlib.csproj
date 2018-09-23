@@ -157,7 +157,10 @@
     <Compile Include="Data\Interfaces\IGenericRepository.cs" />
     <Compile Include="Data\Interfaces\IRepository.cs" />
     <Compile Include="Data\MlibData.cs" />
+    <Compile Include="Data\Models\Album.cs" />
+    <Compile Include="Data\Models\Artist.cs" />
     <Compile Include="Data\PlaylistRepository.cs" />
+    <Compile Include="Data\TrackRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
