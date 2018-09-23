@@ -1,5 +1,4 @@
-﻿using SQLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mlib.Data
 {
-    public interface IDataEntity 
+    public enum EntityType
     {
-        string Id { get; }
+        Track,
+        Playlist,
+        Album,
+        Artist
     }
 }

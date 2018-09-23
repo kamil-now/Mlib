@@ -23,9 +23,9 @@ namespace Mlib.Data
         {
             this.dbContext = dbContext;
             Playlists = new PlaylistRepository(dbContext);
-            Tracks =new TrackRepository(dbContext);
-            Artists=new ArtistRepository(dbContext);
-            Albums =new AlbumRepository(dbContext);
+            Tracks = new TrackRepository(dbContext);
+            Artists = new ArtistRepository(dbContext);
+            Albums = new AlbumRepository(dbContext);
         }
         public IEnumerable<T> GetAll<T>() where T : class, IDataEntity, new()
         {
@@ -65,17 +65,24 @@ namespace Mlib.Data
                 var exists = databaseEntity != null;
                 try
                 {
-                    repo.Add(entity);
 
+                    EntityState state;
                     if (exists)
                     {
                         repo.Edit(databaseEntity);
+                        state = EntityState.Modified;
+                    }
+                    else
+                    {
+                        repo.Add(entity);
+                        state = EntityState.Added;
                     }
                     if (commit)
                     {
                         Commit();
-                        DbContextChanged?.Invoke(repo, null);
+                        DbContextChanged?.Invoke(repo, new DbContextChangedEventArgs(entity, state));
                     }
+
                 }
                 catch
                 {
@@ -97,7 +104,7 @@ namespace Mlib.Data
                     if (commit)
                     {
                         Commit();
-                        DbContextChanged?.Invoke(repo, null);
+                        DbContextChanged?.Invoke(repo, new DbContextChangedEventArgs(entity, EntityState.Deleted));
                     }
                 }
                 catch

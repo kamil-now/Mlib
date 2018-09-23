@@ -12,20 +12,32 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-
-            <TextBlock Text="Library"
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Stretch">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="HorizontalAlignment"
+                            Value="Left" />
+                    <Setter Property="Margin"
+                            Value="20,5" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Mlib"
+                       Foreground="{StaticResource GlobalAccent}"
+                       FontFamily="Pescadero"
+                       FontWeight="Bold"
+                       Typography.CapitalSpacing="True"
                        Typography.Capitals="AllSmallCaps"
-                       FontSize="18"
+                       FontSize="20"
+                       Margin="10"
                        HorizontalAlignment="Center" />
-
-            <Button Content="All tracks" />
-            <Button Content="Albums"/>
-            <Button Content="Artists" />
-            <Button Content="Playlists"/>
-            
-            <Button Content="Add new"
+            <Button Content="Add to library"
                     Command="{Binding AddNew}" />
+            <Button Content="All tracks" />
+            <Button Content="Albums" />
+            <Button Content="Artists" />
+            <Button Content="Playlists" />
+
         </StackPanel>
         <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
         <ListView ItemsSource="{Binding Playlists}"

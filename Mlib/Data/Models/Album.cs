@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace Mlib.Data.Models
     public class Album : IDataEntity
     {
         public string Id => AlbumId.ToString();
+        [NotMapped]
+        public EntityType Type => EntityType.Album;
         [Required]
         [Key]
         public int AlbumId { get; set; }

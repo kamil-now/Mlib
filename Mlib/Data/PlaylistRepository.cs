@@ -17,7 +17,7 @@ namespace Mlib.Data
         public override Playlist Get(string id)
         {
             var all = GetAll();
-            return all.FirstOrDefault(x => x.Name == id) ?? all.FirstOrDefault(x => x.Id == id);
+            return all.FirstOrDefault(x => x.Name == id);// ?? all.FirstOrDefault(x => x.Id == id);
 
         }
 

@@ -12,6 +12,8 @@ namespace Mlib.Data.Models
     {
         [NotMapped]
         public string Id => TrackId.ToString();
+        [NotMapped]
+        public EntityType Type => EntityType.Track;
         [Key]
         [Required]
         public int TrackId { get; set; }

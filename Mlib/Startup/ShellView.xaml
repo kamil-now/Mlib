@@ -12,7 +12,7 @@
         WindowState="Normal"
         ResizeMode="CanResize"
         AllowsTransparency="True"
-        cal:Message.Attach="[Loaded]=[OnLoad($view)]">
+        cal:Message.Attach="[Loaded]=[OnLoad($view)];[Closed]=[OnClosed]">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
                       ResizeBorderThickness="5" />

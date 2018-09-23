@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Mlib.Properties;
 using Mlib.UI.ViewModels.Interfaces;
 using System.Windows;
 using System.Windows.Input;
@@ -42,6 +43,10 @@ namespace Mlib.ViewModels
                 window.BorderThickness = IsMaximized ? new Thickness(maximizedWindowBorderThickness) : new Thickness(minimizedWindowBorderThickness);
                 NotifyOfPropertyChange(() => IsMaximized);
             };
+        }
+        public void OnClosed()
+        {
+            Settings.Default.Save();
         }
 
         public void Drag(MouseButtonEventArgs e)

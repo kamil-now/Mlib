@@ -3,9 +3,11 @@ using Mlib.Data;
 using Mlib.Data.Models;
 using Mlib.Extensions;
 using Mlib.Infrastructure;
+using Mlib.Properties;
 using Mlib.UI.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,10 +32,10 @@ namespace Mlib.UI.ViewModels
                 Select.Execute(selected);
             }
         }
-        public BindableCollection<Playlist> Playlists { get; }
-        public BindableCollection<Track> Tracks { get; }
-        public BindableCollection<Artist> Artists { get; }
-        public BindableCollection<Album> Albums { get; }
+        public BindableCollection<IDataEntity> Playlists { get; }
+        public BindableCollection<IDataEntity> Tracks { get; }
+        public BindableCollection<IDataEntity> Artists { get; }
+        public BindableCollection<IDataEntity> Albums { get; }
 
         public LibraryViewModel(UnitOfWork unitOfWork, PlaylistViewModel playlistVM)
         {
@@ -43,32 +45,61 @@ namespace Mlib.UI.ViewModels
             var playlists = unitOfWork.GetAll<Playlist>();
             var tracks = unitOfWork.GetAll<Track>();
 
-            Playlists = !playlists.IsNullOrEmpty() ? new BindableCollection<Playlist>(playlists) : new BindableCollection<Playlist>();
-            Tracks = !tracks.IsNullOrEmpty() ? new BindableCollection<Track>(tracks) : new BindableCollection<Track>();
+            unitOfWork.DbContextChanged += DbStateChanged;
+            playlists = unitOfWork.Playlists.GetAll();
+            Playlists = !playlists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(playlists) : new BindableCollection<IDataEntity>();
+            Tracks = !tracks.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(tracks) : new BindableCollection<IDataEntity>();
         }
-        public ICommand Select => new Command(fileInfo => playlistVM.SetPlaylist(new Playlist(fileInfo as FileInfo)));
+
+        private void DbStateChanged(object sender, EventArgs e)
+        {
+            var args = e as DbContextChangedEventArgs;
+            var tuple = GetCollection(args.Entity.Type);
+            ICollection<IDataEntity> collection = tuple.Collection;
+
+            switch (args.State)
+            {
+                case EntityState.Deleted: collection.Remove(collection.First(x => x.Id == args.Entity.Id)); break;
+                case EntityState.Added: collection.Add(args.Entity); break;
+                case EntityState.Modified: collection.Swap(collection.First(x => x.Id == args.Entity.Id), args.Entity); break;
+            }
+            tuple.NotifyAction.Invoke();
+        }
+        private (ICollection<IDataEntity> Collection, System.Action NotifyAction) GetCollection(EntityType type)
+        {
+            switch (type)
+            {
+                case EntityType.Playlist: return (Playlists, () => NotifyOfPropertyChange(() => Playlists));
+                case EntityType.Track: return (Tracks, () => NotifyOfPropertyChange(() => Tracks));
+                case EntityType.Album: return (Albums, () => NotifyOfPropertyChange(() => Albums));
+                case EntityType.Artist: return (Artists, () => NotifyOfPropertyChange(() => Artists));
+            }
+            return (null, null);
+        }
+        public ICommand Select => new Command(playlist => playlistVM.SetPlaylist(playlist as Playlist));
         public ICommand AddNew => new Command(() =>
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-
-
-            // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".m3u";
-            dlg.Filter = "M3U files (*.m3u)|*.m3u";
-            dlg.InitialDirectory = "D:\\MBlibrary";
+            dlg.Filter = "M3U files (*.m3u)|*.m3u|MP3 files (*.mp3)|*.mp3";
+            var directory = Settings.Default.AddNewLastDirectory;
+            dlg.InitialDirectory = string.IsNullOrEmpty(directory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyComputer) : directory;
 
-            // Display OpenFileDialog by calling ShowDialog method 
+
             bool? result = dlg.ShowDialog();
 
-
-            // Get the selected file name and display in a TextBox 
             if (result == true)
             {
-                // Open document 
                 string filename = dlg.FileName;
                 var fileInfo = new FileInfo(filename);
-                playlistVM.SetPlaylist(new Playlist(fileInfo as FileInfo));
+
+                if (fileInfo.Extension == ".m3u")
+                    unitOfWork.AddOrUpdate(new Playlist(fileInfo), true);
+                else
+                    unitOfWork.AddOrUpdate(new Track(fileInfo), true);
+
+                Settings.Default.AddNewLastDirectory = fileInfo.Directory.FullName;
             }
         });
     }

@@ -12,6 +12,8 @@ namespace Mlib.Data.Models
     {
         [NotMapped]
         public string Id => Name;
+        [NotMapped]
+        public EntityType Type => EntityType.Artist;
         [Required]
         [Key]
         public string Name { get; set; }
