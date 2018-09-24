@@ -37,7 +37,7 @@ namespace Mlib.Data.Models
         {
             TagLib.File taggedFile = TagLib.File.Create(mp3File.FullName);
             Title = taggedFile.Tag.Title;
-            Artist = taggedFile.Tag.AlbumArtists.FirstOrDefault();
+            Artist = taggedFile.Tag.FirstPerformer;
             Album = taggedFile.Tag.Album;
             Year = taggedFile.Tag.Year;
             Length = taggedFile.Length;

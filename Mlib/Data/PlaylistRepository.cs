@@ -13,7 +13,7 @@ namespace Mlib.Data
         public PlaylistRepository(DbContext context) : base(context)
         {
         }
-
+        public override IQueryable<Playlist> GetAll() => base.GetAll().Include(n => n.Tracks);
         public override Playlist Get(string id)
         {
             var all = GetAll();

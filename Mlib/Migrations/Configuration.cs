@@ -10,7 +10,6 @@ namespace Mlib.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Mlib.Data.MlibData";
         }
 
         protected override void Seed(Mlib.Data.MlibData context)

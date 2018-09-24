@@ -174,13 +174,9 @@
     <Compile Include="Extensions\ICollectionExtensions.cs" />
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
-    <Compile Include="Migrations\201809232029045_InitialCreate.cs" />
-    <Compile Include="Migrations\201809232029045_InitialCreate.Designer.cs">
-      <DependentUpon>201809232029045_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809242010548_Init.cs" />
-    <Compile Include="Migrations\201809242010548_Init.Designer.cs">
-      <DependentUpon>201809242010548_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201809242016594_Initial.cs" />
+    <Compile Include="Migrations\201809242016594_Initial.Designer.cs">
+      <DependentUpon>201809242016594_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
@@ -240,11 +236,8 @@
     <Compile Include="UI\Views\TracksView.xaml.cs">
       <DependentUpon>TracksView.xaml</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\201809232029045_InitialCreate.resx">
-      <DependentUpon>201809232029045_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809242010548_Init.resx">
-      <DependentUpon>201809242010548_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809242016594_Initial.resx">
+      <DependentUpon>201809242016594_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
