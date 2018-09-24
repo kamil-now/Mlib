@@ -19,7 +19,7 @@
     </WindowChrome.WindowChrome>
     <Grid Background="Black">
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="33" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <local:MainView Grid.Row="1"
@@ -36,7 +36,7 @@
                     VerticalAlignment="Top"
                     Style="{StaticResource MarlettButton}" />
             <Rectangle Grid.Column="1"
-                       Fill="Black"
+                       Fill="{StaticResource GlobalDimDark}"
                        cal:Message.Attach="[Event PreviewMouseLeftButtonDown]=[Action Drag($eventArgs)];
                        [PreviewMouseMove]=[MouseMove($eventArgs)];
                        [PreviewMouseLeftButtonUp]=[MouseUp()]" />
@@ -48,7 +48,7 @@
                     Background="Black"
                     Margin="0">
 
-            <Button Content="&#x1F5D5;"
+            <Button Content="&#x2014;"
                     FontFamily="Tahoma"
                     cal:Message.Attach="[Click]=[Minimize]"
                     Style="{StaticResource MarlettButton}" />
@@ -68,7 +68,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="r"
+            <Button Content="&#x2715;"
+                    FontFamily="Tahoma"
                     cal:Message.Attach="[Click]=[Close]">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}"

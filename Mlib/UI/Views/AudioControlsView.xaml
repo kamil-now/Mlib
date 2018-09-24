@@ -35,7 +35,7 @@
                    VerticalAlignment="Bottom"
                    FontWeight="Bold"
                    Typography.Capitals="AllSmallCaps"
-                   Foreground="{StaticResource GlobalAccent}"
+                   Foreground="{StaticResource GlobalBright}"
                    FontSize="20" />
         <TextBlock Text="{Binding NowPlaying.Artist}"
                    Foreground="{StaticResource GlobalLight}"

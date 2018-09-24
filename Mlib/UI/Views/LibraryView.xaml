@@ -12,7 +12,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Stretch">
             <StackPanel.Resources>
@@ -24,17 +26,15 @@
                             Value="20,5" />
                 </Style>
             </StackPanel.Resources>
-            <TextBlock Text="Mlib"
-                       Foreground="{StaticResource GlobalAccent}"
+            <TextBlock Text="Library"
+                       Foreground="{StaticResource GlobalBright}"
                        FontFamily="Pescadero"
-                       FontWeight="Bold"
                        Typography.CapitalSpacing="True"
                        Typography.Capitals="AllSmallCaps"
-                       FontSize="20"
+                       FontSize="14"
                        Margin="10"
                        HorizontalAlignment="Center" />
-            <Button Content="Add to library"
-                    Command="{Binding AddNew}" />
+
             <Button Content="All tracks"
                     Command="{Binding SetCollection}"
                     CommandParameter="{x:Type data:Track}" />
@@ -134,5 +134,12 @@
                 </DataTemplate>
             </ListView.Resources>
         </ListView>
+        <Button Style="{StaticResource AddButton}"
+                Grid.Row="2"
+                FontSize="16"
+                Margin="20,5"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                Command="{Binding AddNew}" />
     </Grid>
 </UserControl>

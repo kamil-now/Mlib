@@ -4,9 +4,12 @@
 
     <!--icon font: DFPOP1-W9-->
 
-    <sys:Double x:Key="DefaultFontSize">14</sys:Double>
+    <sys:Double x:Key="DefaultFontSize">12</sys:Double>
     <SolidColorBrush x:Key="GlobalAccent"
-                     Color="#FD4928" />
+                     Color="#1E7E9E" />
+    <!--GREEN OPTION   Color="#1DB954" />-->
+    <!--BLUE OPTION    Color="#1E7E9E" />-->
+    <!--RED OPTION    Color="#FD4928" />-->
     <SolidColorBrush x:Key="GlobalDark"
                      Color="#090909" />
     <SolidColorBrush x:Key="GlobalDimDark"

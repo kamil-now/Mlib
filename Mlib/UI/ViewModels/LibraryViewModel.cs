@@ -48,13 +48,15 @@ namespace Mlib.UI.ViewModels
             var albums = unitOfWork.Albums.GetAll().ToList();
             var artists = unitOfWork.Artists.GetAll().ToList();
 
-
+            //TODO observer
             unitOfWork.DbContextChanged += DbStateChanged;
 
             Playlists = !playlists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(playlists) : new BindableCollection<IDataEntity>();
             Tracks = !tracks.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(tracks) : new BindableCollection<IDataEntity>();
             Albums = !albums.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(albums) : new BindableCollection<IDataEntity>();
             Artists = !artists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(artists) : new BindableCollection<IDataEntity>();
+
+            Collection = Playlists;
         }
 
         private void DbStateChanged(object sender, EventArgs e)
@@ -84,6 +86,7 @@ namespace Mlib.UI.ViewModels
         }
         public ICommand SetCollection => new Command(type =>
          {
+             //TODO enum switch
              var t = type as Type;
              if (t == typeof(Album))
              {

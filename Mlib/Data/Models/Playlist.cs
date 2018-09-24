@@ -21,9 +21,9 @@ namespace Mlib.Data.Models
         public string Name{ get; set; }
         public string ImageId { get; set; }
 
-        public ICollection<Track> Tracks { get; set; }
-        public ICollection<Playlist> Playlists { get; set; }
-        public ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Playlist> Playlists { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
         
 
         public Playlist()

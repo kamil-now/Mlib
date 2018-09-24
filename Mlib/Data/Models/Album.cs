@@ -22,7 +22,7 @@ namespace Mlib.Data.Models
         public Artist Artist { get; set; }
         public string Year { get; set; }
         public string ImageId { get; set; }
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
         public Album()
         {
             Tracks = new List<Track>();

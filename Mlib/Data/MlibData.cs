@@ -16,7 +16,7 @@ namespace Mlib.Data
         public DbSet<Album> Albums { get; set; }
         public MlibData():base("MlibData")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
         }
     }
 }

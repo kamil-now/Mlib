@@ -18,8 +18,8 @@ namespace Mlib.Data.Models
         [Key]
         public string Name { get; set; }
         public string ImageId { get; set; }
-        ICollection<Track> Tracks { get; set; }
-        ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
         public Artist()
         {
             Tracks = new List<Track>();

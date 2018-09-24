@@ -19,7 +19,7 @@ namespace Mlib.Data.Models
         public int TrackId { get; set; }
         [Required]
         public string FullPath { get; set; }
-        public ICollection<Playlist> Playlists { get; set; }
+        public virtual ICollection<Playlist> Playlists { get; set; }
         public string Title { get; set; }
         public string Artist { get; set; }
         public string Album { get; set; }

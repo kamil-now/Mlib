@@ -14,11 +14,10 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="{Binding SelectedPlaylist.Name}"
-                   Typography.Capitals="AllSmallCaps"
                    Grid.ColumnSpan="2"
                    FontWeight="Bold"
                    FontSize="20"
-                   Foreground="{StaticResource GlobalAccent}" />
+                   Foreground="{StaticResource GlobalBright}" />
         <ListView ItemsSource="{Binding SelectedPlaylist.Tracks}"
                   Grid.Row="1">
             <ListView.ItemTemplate>
