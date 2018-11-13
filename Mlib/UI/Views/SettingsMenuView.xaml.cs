@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Mlib.UI.Views
 {
     /// <summary>
-    /// Interaction logic for DirectoryExplorerView.xaml
+    /// Interaction logic for SettingsMenuView.xaml
     /// </summary>
-    public partial class DirectoryExplorerView : UserControl
+    public partial class SettingsMenuView : UserControl
     {
-        public DirectoryExplorerView()
+        public SettingsMenuView()
         {
             InitializeComponent();
         }

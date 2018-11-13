@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:local="clr-namespace:Mlib.UI.Views"
+        xmlns:converters="clr-namespace:Mlib.UI.Converters"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         BorderBrush="Transparent"
@@ -17,13 +18,18 @@
         <WindowChrome CaptionHeight="0"
                       ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:BoolToCollapsedConverter x:Key="BoolToCollapsedConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="33" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <local:MainView Grid.Row="1"
-                        cal:Bind.Model="{Binding MainView}" />
+                        cal:View.Model="{Binding MainView}" />
         <Grid Background="Black"
               Margin="0">
             <Grid.ColumnDefinitions>
@@ -34,7 +40,8 @@
                     FontFamily="Tahoma"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Style="{StaticResource MarlettButton}" />
+                    Style="{StaticResource MarlettButton}"
+                    cal:Message.Attach="[Event Click]=[Action ToggleSettingsMenu]" />
             <Rectangle Grid.Column="1"
                        Fill="{StaticResource GlobalDimDark}"
                        cal:Message.Attach="[Event PreviewMouseLeftButtonDown]=[Action Drag($eventArgs)];
@@ -85,6 +92,12 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-
+        <local:SettingsMenuView cal:View.Model="{Binding SettingsMenuView}"
+                                Grid.Row="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top" 
+                                Margin="5 0 0 0 "
+                                Visibility="{Binding SettingsMenuVisible, Converter={StaticResource BoolToCollapsedConverter}}"
+                                cal:Message.Attach="[Event MouseLeave]=[Action CloseSettingsMenu()]; [Event MouseEnter]=[CancelCloseSettingsMenu()]"/>
     </Grid>
 </Window>

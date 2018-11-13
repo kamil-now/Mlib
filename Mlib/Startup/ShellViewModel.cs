@@ -1,7 +1,11 @@
 ﻿using Caliburn.Micro;
 using Mlib.Properties;
+using Mlib.UI.ViewModels;
 using Mlib.UI.ViewModels.Interfaces;
+using System.Collections.Generic;
+using System.Timers;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace Mlib.ViewModels
@@ -11,25 +15,50 @@ namespace Mlib.ViewModels
         private static readonly int maximizedWindowBorderThickness = 5;
         private static readonly int minimizedWindowBorderThickness = 0;
         private bool mRestoreForDragMove;
+        private bool settingsMenuVisible;
+        private Timer timer;
+        private bool closeCanceled = true;
         private Window window;
-        private IMainViewModel mainView;
+        IWindowManager windowManager;
 
-        public IMainViewModel MainView
+        public bool IsMaximized => window?.WindowState == WindowState.Maximized;
+        public IMainViewModel MainView { get; }
+        public IViewModel SettingsMenuView { get; }
+
+        public bool SettingsMenuVisible
         {
-            get => mainView;
+            get => settingsMenuVisible;
             set
             {
-                mainView = value;
+                settingsMenuVisible = value;
                 NotifyOfPropertyChange();
             }
         }
-        public bool IsMaximized => window?.WindowState == WindowState.Maximized;
 
-        public ShellViewModel(IMainViewModel main)
+
+        public ShellViewModel(IMainViewModel mainView, IWindowManager windowManager, SettingsMenuViewModel settingsMenuView)
         {
-            mainView = main;
+            MainView = mainView;
+            SettingsMenuView = settingsMenuView;
+            this.windowManager = windowManager;
         }
 
+        public void ToggleSettingsMenu() => SettingsMenuVisible = !SettingsMenuVisible;
+        public void CancelCloseSettingsMenu() => closeCanceled = true;
+        public void CloseSettingsMenu()
+        {
+            closeCanceled = false;
+            timer = new Timer(1500);
+            timer.Elapsed += (s, e) =>
+            {
+                if (!closeCanceled)
+                {
+                    timer.Stop();
+                    SettingsMenuVisible = false;
+                }
+            };
+            timer.Start();
+        }
         public void OnLoad(Window window)
         {
             this.window = window;

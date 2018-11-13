@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/GlobalStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/GlobalScrollBarStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/CustomButtonsStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/ContextMenuStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

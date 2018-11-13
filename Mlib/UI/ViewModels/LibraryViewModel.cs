@@ -20,6 +20,7 @@ namespace Mlib.UI.ViewModels
     {
         UnitOfWork unitOfWork;
         AudioPlayer audioPlayer;
+        MusicLibrary library;
         PlaylistViewModel playlistVM;
         private IDataEntity selected;
 
@@ -38,9 +39,10 @@ namespace Mlib.UI.ViewModels
         public BindableCollection<IDataEntity> Artists { get; }
         public BindableCollection<IDataEntity> Albums { get; }
 
-        public LibraryViewModel(UnitOfWork unitOfWork,AudioPlayer audioPlayer, PlaylistViewModel playlistVM)
+        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM)
         {
             this.unitOfWork = unitOfWork;
+            this.library = library;
             this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
             var playlists = unitOfWork.Playlists.GetAll().ToList();
@@ -91,9 +93,9 @@ namespace Mlib.UI.ViewModels
              if (t == typeof(Album))
              {
                  Collection = Albums;
-                 
+
              }
-             else if(t == typeof(Track))
+             else if (t == typeof(Track))
              {
                  Collection = Tracks;
              }
@@ -114,30 +116,30 @@ namespace Mlib.UI.ViewModels
             if (item is Track)
                 audioPlayer.SetNowPlaying(item as Track);
         });
-        public ICommand AddNew => new Command(() =>
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+        public ICommand AddNew => new Command(library.AddMusicFiles);
+        //{
+        //    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".m3u";
-            dlg.Filter = "M3U files (*.m3u)|*.m3u|MP3 files (*.mp3)|*.mp3";
-            var directory = Settings.Default.AddNewLastDirectory;
-            dlg.InitialDirectory = string.IsNullOrEmpty(directory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyComputer) : directory;
+        //    dlg.DefaultExt = ".m3u";
+        //    dlg.Filter = "M3U files (*.m3u)|*.m3u|MP3 files (*.mp3)|*.mp3";
+        //    var directory = Settings.Default.AddNewLastDirectory;
+        //    dlg.InitialDirectory = string.IsNullOrEmpty(directory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyComputer) : directory;
 
 
-            bool? result = dlg.ShowDialog();
+        //    bool? result = dlg.ShowDialog();
 
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                var fileInfo = new FileInfo(filename);
+        //    if (result == true)
+        //    {
+        //        string filename = dlg.FileName;
+        //        var fileInfo = new FileInfo(filename);
 
-                if (fileInfo.Extension == ".m3u")
-                    unitOfWork.AddOrUpdate(new Playlist(fileInfo), true);
-                else
-                    unitOfWork.AddOrUpdate(new Track(fileInfo), true);
+        //        if (fileInfo.Extension == ".m3u")
+        //            unitOfWork.AddOrUpdate(new Playlist(fileInfo), true);
+        //        else
+        //            unitOfWork.AddOrUpdate(new Track(fileInfo), true);
 
-                Settings.Default.AddNewLastDirectory = fileInfo.Directory.FullName;
-            }
-        });
+        //        Settings.Default.AddNewLastDirectory = fileInfo.Directory.FullName;
+        //    }
+        //});
     }
 }

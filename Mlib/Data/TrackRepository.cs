@@ -14,6 +14,6 @@ namespace Mlib.Data
         {
         }
 
-        public override Track Get(string id)=> GetAll().FirstOrDefault(x => x.Id == id);
+        public override Track Get(string id)=> GetAll().FirstOrDefault(x => x.TrackId == int.Parse(id));
     }
 }

@@ -116,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Styles\ContextMenuStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Styles\CustomButtonsStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Views\SettingsMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\TracksView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +182,7 @@
     <Compile Include="Extensions\ICollectionExtensions.cs" />
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
+    <Compile Include="Infrastructure\MusicLibrary.cs" />
     <Compile Include="Migrations\201809242016594_Initial.cs" />
     <Compile Include="Migrations\201809242016594_Initial.Designer.cs">
       <DependentUpon>201809242016594_Initial.cs</DependentUpon>
@@ -206,14 +215,15 @@
     </Compile>
     <Compile Include="Startup\ShellViewModel.cs" />
     <Compile Include="UI\Additional\Converters\BoolToCollapsedConverter.cs" />
+    <Compile Include="UI\Additional\ListActionItem.cs" />
     <Compile Include="UI\ViewModels\AudioControlsViewModel.cs" />
     <Compile Include="UI\ViewModels\DetailsViewModel.cs" />
-    <Compile Include="UI\ViewModels\DirectoryExplorerViewModel.cs" />
     <Compile Include="UI\ViewModels\Interfaces\IMainViewModel.cs" />
     <Compile Include="UI\ViewModels\Interfaces\IViewModel.cs" />
     <Compile Include="UI\ViewModels\LibraryViewModel.cs" />
     <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\ViewModels\PlaylistViewModel.cs" />
+    <Compile Include="UI\ViewModels\SettingsMenuViewModel.cs" />
     <Compile Include="UI\ViewModels\TracksViewModel.cs" />
     <Compile Include="UI\Views\AudioControlsView.xaml.cs">
       <DependentUpon>AudioControlsView.xaml</DependentUpon>
@@ -233,6 +243,9 @@
     <Compile Include="UI\Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Views\SettingsMenuView.xaml.cs">
+      <DependentUpon>SettingsMenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Views\TracksView.xaml.cs">
       <DependentUpon>TracksView.xaml</DependentUpon>
     </Compile>
@@ -250,7 +263,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Resources\newicon_ilq_icon.ico" />
