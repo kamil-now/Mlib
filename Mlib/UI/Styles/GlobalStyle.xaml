@@ -6,10 +6,10 @@
 
     <sys:Double x:Key="DefaultFontSize">12</sys:Double>
     <SolidColorBrush x:Key="GlobalAccent"
-                     Color="#1E7E9E" />
-    <!--GREEN OPTION   Color="#1DB954" />-->
-    <!--BLUE OPTION    Color="#1E7E9E" />-->
-    <!--RED OPTION    Color="#FD4928" />-->
+                     Color="#1DB954" />
+    <!--Color="#1E7E9E" />-->
+    <!-- Color="#1E7E9E" />-->
+    <!--Color="#FD4928" />-->
     <SolidColorBrush x:Key="GlobalDark"
                      Color="#090909" />
     <SolidColorBrush x:Key="GlobalDimDark"

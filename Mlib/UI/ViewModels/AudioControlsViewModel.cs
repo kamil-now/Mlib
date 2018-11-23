@@ -1,12 +1,12 @@
-﻿using Caliburn.Micro;
-using Mlib.Data.Models;
-using Mlib.Infrastructure;
-using Mlib.UI.ViewModels.Interfaces;
-using NAudio.Wave;
-using System.Windows.Input;
-
-namespace Mlib.UI.ViewModels
+﻿namespace Mlib.UI.ViewModels
 {
+    using Caliburn.Micro;
+    using Mlib.Data.Models;
+    using Mlib.Infrastructure;
+    using Mlib.UI.Interfaces;
+    using NAudio.Wave;
+    using System.Windows.Input;
+
     public class AudioControlsViewModel : Screen, IViewModel, IPlaybackStateObserver, ICurrentTrackObserver
     {
         public AudioControlsViewModel(AudioPlayer audioPlayer)

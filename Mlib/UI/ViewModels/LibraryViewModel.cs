@@ -1,24 +1,25 @@
-﻿using Caliburn.Micro;
-using Mlib.Data;
-using Mlib.Data.Models;
-using Mlib.Extensions;
-using Mlib.Infrastructure;
-using Mlib.Properties;
-using Mlib.UI.ViewModels.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-
-namespace Mlib.UI.ViewModels
+﻿namespace Mlib.UI.ViewModels
 {
+    using Caliburn.Micro;
+    using Mlib.Data;
+    using Mlib.Data.Models;
+    using Mlib.Extensions;
+    using Mlib.Infrastructure;
+    using Mlib.Properties;
+    using Mlib.UI.Additional;
+    using Mlib.UI.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Dynamic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
     public class LibraryViewModel : Screen, IViewModel
     {
         UnitOfWork unitOfWork;
@@ -26,7 +27,6 @@ namespace Mlib.UI.ViewModels
         MusicLibrary library;
         PlaylistViewModel playlistVM;
         TracksViewModel tracksVM;
-        IWindowManager windowManager;
         private IDataEntity selected;
 
         public BindableCollection<IDataEntity> Collection { get; set; }
@@ -44,14 +44,13 @@ namespace Mlib.UI.ViewModels
         public BindableCollection<IDataEntity> Artists { get; }
         public BindableCollection<IDataEntity> Albums { get; }
 
-        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM, IWindowManager windowManager)
+        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM)
         {
             this.unitOfWork = unitOfWork;
             this.library = library;
             this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
             this.tracksVM = tracksVM;
-            this.windowManager = windowManager;
 
 
             var playlists = unitOfWork.Playlists.GetAll().ToList();
@@ -127,8 +126,11 @@ namespace Mlib.UI.ViewModels
         });
         public ICommand AddNew => new Command(() =>
         {
-            tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x=>x as Track));
-            MlibWindowManager.ShowWindow(tracksVM);
+            tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x => x as Track));
+            dynamic settings = new ExpandoObject();
+            settings.Width = 700;
+            settings.Height = 500;
+            AppWindowManager.ShowWindow(tracksVM, settings);
         });
 
     }

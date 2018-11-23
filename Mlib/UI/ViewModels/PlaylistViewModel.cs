@@ -1,11 +1,11 @@
-﻿using Caliburn.Micro;
-using Mlib.Data.Models;
-using Mlib.Infrastructure;
-using Mlib.UI.ViewModels.Interfaces;
-using System.Windows.Input;
-
-namespace Mlib.UI.ViewModels
+﻿namespace Mlib.UI.ViewModels
 {
+    using Caliburn.Micro;
+    using Mlib.Data.Models;
+    using Mlib.Infrastructure;
+    using Mlib.UI.Interfaces;
+    using System.Windows.Input;
+
     public class PlaylistViewModel : Screen, IViewModel
     {
         private AudioPlayer audioPlayer;

@@ -1,25 +1,26 @@
-﻿using Autofac;
-using Caliburn.Micro;
-using Mlib.Data;
-using Mlib.Infrastructure;
-using Mlib.Properties;
-using Mlib.UI.ViewModels;
-using Mlib.UI.ViewModels.Interfaces;
-using Mlib.ViewModels;
-using Mlib.Views;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace Mlib
+﻿namespace Mlib
 {
+    using Autofac;
+    using Caliburn.Micro;
+    using Mlib.Data;
+    using Mlib.Infrastructure;
+    using Mlib.Properties;
+    using Mlib.UI;
+    using Mlib.UI.Additional;
+    using Mlib.UI.Interfaces;
+    using Mlib.UI.ViewModels;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Diagnostics;
+    using System.Dynamic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+
     public class AppBootstrapper : BootstrapperBase
     {
         public IContainer Container { get; private set; }
@@ -46,13 +47,12 @@ namespace Mlib
             builder.RegisterType<MlibData>().As<DbContext>().SingleInstance();
             builder.RegisterType<UnitOfWork>().AsSelf().SingleInstance();
 
-            builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ShellViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();
             builder.RegisterType<PlaylistViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<TracksViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<AudioControlsViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<LibraryViewModel>().As<IViewModel>().AsSelf().SingleInstance();
-            builder.RegisterType<SettingsMenuViewModel>().As<IViewModel>().AsSelf().SingleInstance();
 
 
             builder.RegisterType<MusicLibrary>().AsSelf().SingleInstance();
@@ -93,11 +93,8 @@ namespace Mlib
         {
             try
             {
-                DisplayRootViewFor<ShellViewModel>(new Dictionary<string, object>()
-                {
-                    { nameof(Window.Title),"Mlib" }
-                });
-
+                AppWindowManager.ShowWindow<IMainViewModel>();
+                Settings.Default.Save();
             }
             catch (Exception e)
             {

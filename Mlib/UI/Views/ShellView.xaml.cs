@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Mlib.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MWindowView.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class WindowView : UserControl
+    public partial class ShellView : Window
     {
-        public WindowView()
+        public ShellView()
         {
             InitializeComponent();
         }

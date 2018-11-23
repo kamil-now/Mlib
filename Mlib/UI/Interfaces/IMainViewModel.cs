@@ -1,6 +1,5 @@
-﻿namespace Mlib.UI.ViewModels
+﻿namespace Mlib.UI.Interfaces
 {
-    using Caliburn.Micro;
     using Mlib.UI.Interfaces;
     using System;
     using System.Collections.Generic;
@@ -8,7 +7,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DetailsViewModel : Screen, IViewModel
+    public interface IMainViewModel : IViewModel, IContextMenuAgent
+
     {
     }
 }

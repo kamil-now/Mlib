@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <Grid Background="{StaticResource GlobalDimDark}">
+    <Grid Background="{StaticResource GlobalDim}">
 
         <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
         <ListView ItemsSource="{Binding Tracks}"

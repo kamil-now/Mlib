@@ -114,7 +114,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Startup\ShellView.xaml">
+    <Page Include="UI\Controls\ContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,15 +158,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\Views\WindowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\Views\PlaylistView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\Views\SettingsMenuView.xaml">
+    <Page Include="UI\Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,6 +172,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\Additional\BindingProxy.cs" />
+    <Compile Include="UI\Converters\DebugConverter.cs" />
+    <Compile Include="UI\Interfaces\IContextMenuAgent.cs" />
+    <Compile Include="UI\Interfaces\IContextMenuItem.cs" />
+    <Compile Include="AppWindowManager.cs" />
     <Compile Include="Data\AlbumRepository.cs" />
     <Compile Include="Data\ArtistRepository.cs" />
     <Compile Include="Data\EntityType.cs" />
@@ -193,13 +194,12 @@
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
     <Compile Include="Infrastructure\MusicLibrary.cs" />
-    <Compile Include="Infrastructure\MlibWindowManager.cs" />
     <Compile Include="Migrations\201809242016594_Initial.cs" />
     <Compile Include="Migrations\201809242016594_Initial.Designer.cs">
       <DependentUpon>201809242016594_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Startup\AppBootstrapper.cs" />
+    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\AudioPlayer.cs" />
     <Compile Include="Interfaces\ICurrentTrackObserver.cs" />
@@ -224,18 +224,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Startup\ShellViewModel.cs" />
-    <Compile Include="UI\Additional\Converters\BoolToCollapsedConverter.cs" />
+    <Compile Include="UI\ViewModels\ShellViewModel.cs" />
+    <Compile Include="UI\Converters\BoolToCollapsedConverter.cs" />
     <Compile Include="UI\Additional\ListActionItem.cs" />
+    <Compile Include="UI\Controls\ContextMenu.xaml.cs">
+      <DependentUpon>ContextMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ViewModels\AudioControlsViewModel.cs" />
     <Compile Include="UI\ViewModels\DetailsViewModel.cs" />
-    <Compile Include="UI\ViewModels\Interfaces\IMainViewModel.cs" />
-    <Compile Include="UI\ViewModels\Interfaces\IViewModel.cs" />
+    <Compile Include="UI\Interfaces\IMainViewModel.cs" />
+    <Compile Include="UI\Interfaces\IViewModel.cs" />
     <Compile Include="UI\ViewModels\LibraryViewModel.cs" />
     <Compile Include="UI\ViewModels\MainViewModel.cs" />
-    <Compile Include="UI\ViewModels\WindowViewModel.cs" />
     <Compile Include="UI\ViewModels\PlaylistViewModel.cs" />
-    <Compile Include="UI\ViewModels\SettingsMenuViewModel.cs" />
     <Compile Include="UI\ViewModels\TracksViewModel.cs" />
     <Compile Include="UI\Views\AudioControlsView.xaml.cs">
       <DependentUpon>AudioControlsView.xaml</DependentUpon>
@@ -252,14 +253,11 @@
     <Compile Include="UI\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\WindowView.xaml.cs">
-      <DependentUpon>WindowView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\SettingsMenuView.xaml.cs">
-      <DependentUpon>SettingsMenuView.xaml</DependentUpon>
+    <Compile Include="UI\Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\TracksView.xaml.cs">
       <DependentUpon>TracksView.xaml</DependentUpon>

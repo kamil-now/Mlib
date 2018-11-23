@@ -1,44 +1,57 @@
-﻿using Mlib.UI.ViewModels.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Shell;
-
-namespace Mlib.UI.ViewModels
+﻿namespace Mlib.UI.ViewModels
 {
-    public class WindowViewModel : UserControl
+    using Caliburn.Micro;
+    using Mlib.Properties;
+    using Mlib.UI.Additional;
+    using Mlib.UI.Interfaces;
+    using System.Collections.Generic;
+    using System.Timers;
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+    using System.Windows.Shell;
+
+    public class ShellViewModel : Screen, IViewModel
     {
         public IViewModel ViewModel { get; set; }
-        static WindowViewModel()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowViewModel), new FrameworkPropertyMetadata(typeof(WindowViewModel)));
-        }
         private static readonly int maximizedWindowBorderThickness = 5;
         private static readonly int minimizedWindowBorderThickness = 1;
-        private Window window;
         private bool mRestoreForDragMove;
-        public bool IsMaximized => window?.WindowState == WindowState.Maximized;
-        public void OnLoad(FrameworkElement element)
-        {
-            while (!(element is Window))
-            {
-                element = element.Parent as FrameworkElement;
-            }
-            window = element as Window;
+        private bool contextMenuVisible;
+        private Window window;
 
-            window.Style = (Style)element.FindResource(typeof(Window));
-            WindowChrome.SetWindowChrome(window, new WindowChrome() { CaptionHeight = 0, ResizeBorderThickness = new Thickness(5) });
+        public bool IsMaximized => window?.WindowState == WindowState.Maximized;
+
+
+        public bool ContextMenuVisible
+        {
+            get => contextMenuVisible && ViewModel is IContextMenuAgent && (ViewModel as IContextMenuAgent).ContextMenuItems != null;
+            set
+            {
+                contextMenuVisible = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public ShellViewModel(IViewModel viewModel)
+        {
+            ViewModel = viewModel;
+        }
+
+        public void ToggleSettingsMenu() => ContextMenuVisible = !ContextMenuVisible;
+
+        public void OnLoad(Window window)
+        {
+            this.window = window;
+            window.Style = (Style)window.FindResource(typeof(Window));
+
 
             window.StateChanged += (s, e) =>
             {
                 window.BorderThickness = IsMaximized ? new Thickness(maximizedWindowBorderThickness) : new Thickness(minimizedWindowBorderThickness);
-
+                NotifyOfPropertyChange(() => IsMaximized);
             };
+
         }
         public void Drag(MouseButtonEventArgs e)
         {
@@ -59,7 +72,7 @@ namespace Mlib.UI.ViewModels
             }
 
         }
-        public new void MouseMove(MouseEventArgs e)
+        public void MouseMove(MouseEventArgs e)
         {
             if (mRestoreForDragMove)
             {
@@ -75,10 +88,11 @@ namespace Mlib.UI.ViewModels
                 window.DragMove();
             }
         }
-        public new void MouseUp() => mRestoreForDragMove = false;
+        public void MouseUp() => mRestoreForDragMove = false;
         public void ToggleWindowState() => window.WindowState = IsMaximized ? WindowState.Normal : WindowState.Maximized;
         public void Minimize() => window.WindowState = WindowState.Minimized;
-        public void Close() => window.Close();
-    }
+        public void Close() => TryClose();
 
+
+    }
 }
