@@ -16,7 +16,6 @@
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/GlobalCheckBoxStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/CustomButtonsStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/Styles/ContextMenuStyle.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Mlib;component/UI/CustomControls/MlibWindow.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

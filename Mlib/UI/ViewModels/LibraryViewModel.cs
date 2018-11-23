@@ -127,22 +127,8 @@ namespace Mlib.UI.ViewModels
         });
         public ICommand AddNew => new Command(() =>
         {
-            var settings = new Dictionary<string, object>()
-            {
-                { nameof(Window.Height), 500},
-                { nameof(Window.Width), 400},
-                { nameof(Window.SizeToContent), SizeToContent.Manual},
-                { nameof(Window.WindowStyle), WindowStyle.None},
-                { nameof(Window.WindowStartupLocation), WindowStartupLocation.CenterScreen},
-                { nameof(Window.BorderBrush), new SolidColorBrush(Colors.Black)},
-                { nameof(Window.BorderThickness), new Thickness(1)},
-                { nameof(Window.WindowState),WindowState.Normal},
-                { nameof(Window.ResizeMode), ResizeMode.NoResize},
-                { nameof(Window.AllowsTransparency), true}
-            };
-
             tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x=>x as Track));
-            windowManager.ShowWindow(tracksVM, null, settings);
+            MlibWindowManager.ShowWindow(tracksVM);
         });
 
     }

@@ -59,6 +59,7 @@ namespace Mlib
             builder.RegisterType<AudioPlayer>().AsSelf().SingleInstance();
             builder.RegisterType<PlaylistCreator>().AsSelf().SingleInstance();
 
+
             builder.Register<IWindowManager>(c => new WindowManager()).InstancePerLifetimeScope();
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();
 
