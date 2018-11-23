@@ -128,8 +128,8 @@
         {
             tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x => x as Track));
             dynamic settings = new ExpandoObject();
-            settings.Width = 700;
-            settings.Height = 500;
+            settings.Width = 500;
+            settings.Height = 300;
             AppWindowManager.ShowWindow(tracksVM, settings);
         });
 

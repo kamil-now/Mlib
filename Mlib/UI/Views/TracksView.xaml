@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <Grid Background="{StaticResource GlobalDim}">
+    <Grid Background="{StaticResource GlobalDark}">
 
         <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
         <ListView ItemsSource="{Binding Tracks}"
@@ -16,37 +16,26 @@
 
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type data:Track}">
-                    <StackPanel Orientation="Vertical"
+                    <StackPanel Margin="0,0,20,0"
                                 HorizontalAlignment="Stretch">
                         <CheckBox Margin="20,5"
                                   FlowDirection="LeftToRight"
                                   VerticalAlignment="Center">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="{Binding Artist}"
-                                           Margin="10,0"
-                                           Grid.Column="2"
-                                           HorizontalAlignment="Left"
-                                           Foreground="{StaticResource GlobalLight}"
-                                           TextWrapping="NoWrap" />
-                                <TextBlock Text=" - "
-                                           Grid.Column="1" />
-                                <TextBlock Text="{Binding Title}"
-                                           Grid.Column="0"
-                                           Margin="10,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{StaticResource GlobalLight}"
-                                           TextWrapping="NoWrap" />
-
-                            </Grid>
+                            <Button
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.Select}"
+                                    CommandParameter="{Binding}">
+                                <UniformGrid Rows="2" Columns="1">
+                                    <TextBlock Text="{Binding Title}"
+                                               HorizontalAlignment="Right"
+                                               TextWrapping="NoWrap" />
+                                    <TextBlock Text="{Binding Artist}"
+                                               FontSize="10"
+                                               HorizontalAlignment="Right"
+                                               TextWrapping="NoWrap" />
+                                </UniformGrid>
+                            </Button>
                         </CheckBox>
                         <Separator BorderThickness="2"
-                                   VerticalAlignment="Bottom"
                                    BorderBrush="{StaticResource GlobalLightDim}" />
                     </StackPanel>
                 </DataTemplate>
