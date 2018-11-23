@@ -8,10 +8,12 @@ using Mlib.UI.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Mlib.UI.ViewModels
@@ -22,6 +24,8 @@ namespace Mlib.UI.ViewModels
         AudioPlayer audioPlayer;
         MusicLibrary library;
         PlaylistViewModel playlistVM;
+        TracksViewModel tracksVM;
+        IWindowManager windowManager;
         private IDataEntity selected;
 
         public BindableCollection<IDataEntity> Collection { get; set; }
@@ -39,12 +43,16 @@ namespace Mlib.UI.ViewModels
         public BindableCollection<IDataEntity> Artists { get; }
         public BindableCollection<IDataEntity> Albums { get; }
 
-        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM)
+        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM, IWindowManager windowManager)
         {
             this.unitOfWork = unitOfWork;
             this.library = library;
             this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
+            this.tracksVM = tracksVM;
+            this.windowManager = windowManager;
+
+
             var playlists = unitOfWork.Playlists.GetAll().ToList();
             var tracks = unitOfWork.Tracks.GetAll().ToList();
             var albums = unitOfWork.Albums.GetAll().ToList();
@@ -116,30 +124,16 @@ namespace Mlib.UI.ViewModels
             if (item is Track)
                 audioPlayer.SetNowPlaying(item as Track);
         });
-        public ICommand AddNew => new Command(library.AddMusicFiles);
-        //{
-        //    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+        public ICommand AddNew => new Command(() =>
+        {
+            dynamic settings = new ExpandoObject();
+            settings.Height = 500;
+            settings.Width = 400;
+            settings.SizeToContent = SizeToContent.Manual;
 
-        //    dlg.DefaultExt = ".m3u";
-        //    dlg.Filter = "M3U files (*.m3u)|*.m3u|MP3 files (*.mp3)|*.mp3";
-        //    var directory = Settings.Default.AddNewLastDirectory;
-        //    dlg.InitialDirectory = string.IsNullOrEmpty(directory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyComputer) : directory;
+            tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x=>x as Track));
+            windowManager.ShowWindow(tracksVM, null, settings);
+        });
 
-
-        //    bool? result = dlg.ShowDialog();
-
-        //    if (result == true)
-        //    {
-        //        string filename = dlg.FileName;
-        //        var fileInfo = new FileInfo(filename);
-
-        //        if (fileInfo.Extension == ".m3u")
-        //            unitOfWork.AddOrUpdate(new Playlist(fileInfo), true);
-        //        else
-        //            unitOfWork.AddOrUpdate(new Track(fileInfo), true);
-
-        //        Settings.Default.AddNewLastDirectory = fileInfo.Directory.FullName;
-        //    }
-        //});
     }
 }

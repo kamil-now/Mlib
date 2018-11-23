@@ -124,7 +124,8 @@
 								</VisualBrush>
 							</Rectangle.OpacityMask>
 						</Rectangle>
-						<TextBlock Text="Add to library"
+						<TextBlock Text="new list"
+								   Typography.Capitals="AllSmallCaps"
 								   VerticalAlignment="Center"
 								   Margin="5,0" />
 					</StackPanel>

@@ -39,13 +39,13 @@ namespace Mlib.Infrastructure
         }
         string[] ShowDialog(string filter, string defaultExtension)
         {
+            //TODO folders selection
             OpenFileDialog dlg = new OpenFileDialog();
             var directory = Settings.Default.AddNewLastDirectory;
             dlg.InitialDirectory = string.IsNullOrEmpty(directory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyComputer) : directory;
 
             dlg.Multiselect = true;
             dlg.ReadOnlyChecked = true;
-
 
             var result = dlg.ShowDialog();
 
