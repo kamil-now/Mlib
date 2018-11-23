@@ -88,6 +88,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -116,6 +118,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\CustomControls\MlibWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Styles\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +129,10 @@
     <Page Include="UI\Styles\CustomButtonsStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Styles\GlobalCheckBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Styles\GlobalScrollBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +226,7 @@
     <Compile Include="Startup\ShellViewModel.cs" />
     <Compile Include="UI\Additional\Converters\BoolToCollapsedConverter.cs" />
     <Compile Include="UI\Additional\ListActionItem.cs" />
+    <Compile Include="UI\CustomControls\MlibWindow.cs" />
     <Compile Include="UI\ViewModels\AudioControlsViewModel.cs" />
     <Compile Include="UI\ViewModels\DetailsViewModel.cs" />
     <Compile Include="UI\ViewModels\Interfaces\IMainViewModel.cs" />

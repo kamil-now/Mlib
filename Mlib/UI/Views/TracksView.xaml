@@ -4,53 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:data="clr-namespace:Mlib.Data.Models"
+             xmlns:custom="clr-namespace:Mlib.UI.CustomControls"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <custom:MlibWindow>
+        <Grid Background="{StaticResource GlobalDimDark}">
 
-    <Grid Background="{StaticResource GlobalDimDark}">
+            <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
+            <ListView ItemsSource="{Binding Tracks}"
+                      FlowDirection="LeftToRight"
+                      SelectedItem="{Binding Selected}">
 
-        <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
-        <ListView ItemsSource="{Binding Tracks}"
-                  FlowDirection="LeftToRight"
-                  SelectedItem="{Binding Selected}">
+                <ListView.Resources>
+                    <DataTemplate DataType="{x:Type data:Track}">
+                        <StackPanel Orientation="Vertical"
+                                    HorizontalAlignment="Stretch">
+                            <CheckBox Margin="20,5"
+                                      FlowDirection="LeftToRight"
+                                      VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-            <ListView.Resources>
-                <DataTemplate DataType="{x:Type data:Track}">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                        <CheckBox Margin="20,5"
-                                  FlowDirection="LeftToRight"
-                                  VerticalAlignment="Center">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Artist}"
+                                               Margin="10,0"
+                                               Grid.Column="2"
+                                               HorizontalAlignment="Left"
+                                               Foreground="{StaticResource GlobalLight}"
+                                               TextWrapping="NoWrap" />
+                                    <TextBlock Text=" - "
+                                               Grid.Column="1" />
+                                    <TextBlock Text="{Binding Title}"
+                                               Grid.Column="0"
+                                               Margin="10,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{StaticResource GlobalLight}"
+                                               TextWrapping="NoWrap" />
 
-                                <TextBlock Text="{Binding Artist}"
-                                           Margin="10,0"
-                                           Grid.Column="2"
-                                           HorizontalAlignment="Left"
-                                           Foreground="{StaticResource GlobalLight}"
-                                           TextWrapping="NoWrap" />
-                                <TextBlock Text=" - "
-                                           Grid.Column="1" />
-                                <TextBlock Text="{Binding Title}"
-                                           Grid.Column="0"
-                                           Margin="10,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{StaticResource GlobalLight}"
-                                           TextWrapping="NoWrap"/>
-
-                            </Grid>
-                        </CheckBox>
-                        <Separator BorderThickness="2"
-                                   VerticalAlignment="Bottom"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.Resources>
-        </ListView>
-    </Grid>
+                                </Grid>
+                            </CheckBox>
+                            <Separator BorderThickness="2"
+                                       VerticalAlignment="Bottom"
+                                       BorderBrush="{StaticResource GlobalLightDim}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.Resources>
+            </ListView>
+        </Grid>
+    </custom:MlibWindow>
 </UserControl>
