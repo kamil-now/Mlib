@@ -72,7 +72,7 @@
             this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
             this.tracksVM = tracksVM;
-            
+
             //TODO observer
             unitOfWork.DbContextChanged += DbStateChanged;
 
@@ -139,9 +139,11 @@
         public ICommand AddNew => new Command(() =>
         {
             tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x => x as Track));
-            dynamic settings = new ExpandoObject();
-            settings.Width = 500;
-            settings.Height = 300;
+            var settings = new Dictionary<DependencyProperty, object>()
+            {
+                {Window.WidthProperty, 500d },
+                {Window.HeightProperty, 500d }
+            };
             AppWindowManager.ShowWindow(tracksVM, settings);
         });
 

@@ -1,6 +1,7 @@
 ﻿namespace Mlib.UI.ViewModels
 {
     using Caliburn.Micro;
+    using Mlib.Extensions;
     using Mlib.Properties;
     using Mlib.UI.Additional;
     using Mlib.UI.Interfaces;
@@ -32,10 +33,11 @@
                 NotifyOfPropertyChange();
             }
         }
-
-        public ShellViewModel(IViewModel viewModel)
+        IDictionary<DependencyProperty, object> settings;
+        public ShellViewModel(IViewModel viewModel, IDictionary<DependencyProperty, object>  settings)
         {
             ViewModel = viewModel;
+            this.settings = settings;
         }
 
         public void ToggleSettingsMenu() => ContextMenuVisible = !ContextMenuVisible;
@@ -43,9 +45,11 @@
         public void OnLoad(Window window)
         {
             this.window = window;
-            window.Style = (Style)window.FindResource(typeof(Window));
-
-
+            settings?.ForEach(n =>
+            {
+                
+                window.SetValue(n.Key, n.Value);
+            });
             window.StateChanged += (s, e) =>
             {
                 window.BorderThickness = IsMaximized ? new Thickness(maximizedWindowBorderThickness) : new Thickness(minimizedWindowBorderThickness);

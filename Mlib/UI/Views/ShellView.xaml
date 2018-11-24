@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         WindowState="Normal"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         cal:Message.Attach="[Loaded]=[OnLoad($view)]">
     <WindowChrome.WindowChrome>

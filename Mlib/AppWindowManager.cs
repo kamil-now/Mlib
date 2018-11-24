@@ -28,23 +28,22 @@
             var left = (SystemParameters.PrimaryScreenWidth / 2) - (width / 2);
             var top = (SystemParameters.PrimaryScreenHeight / 2) - (height / 2);
 
-            defaultSettings.Add(nameof(Window.Width), width);
-            defaultSettings.Add(nameof(Window.Height), height);
-            defaultSettings.Add(nameof(Window.MinHeight), height * minSizeProportionPercent);
-            defaultSettings.Add(nameof(Window.MinWidth), width * minSizeProportionPercent);
-            defaultSettings.Add(nameof(Window.Left), left);
-            defaultSettings.Add(nameof(Window.Top), top);
+            defaultSettings.Add(Window.WidthProperty, width);
+            defaultSettings.Add(Window.HeightProperty, height);
+            defaultSettings.Add(Window.MinHeightProperty, height * minSizeProportionPercent);
+            defaultSettings.Add(Window.MinWidthProperty, width * minSizeProportionPercent);
+            defaultSettings.Add(Window.LeftProperty, left);
+            defaultSettings.Add(Window.TopProperty, top);
 
 
         }
-        static Dictionary<string, object> defaultSettings = new Dictionary<string, object>()
+        static Dictionary<DependencyProperty, object> defaultSettings = new Dictionary<DependencyProperty, object>()
             {
-                { nameof(Window.SizeToContent), SizeToContent.Manual},
-                { nameof(Window.WindowStartupLocation), WindowStartupLocation.CenterScreen},
-                { nameof(Window.BorderThickness), new Thickness(1)},
-                { nameof(Window.ResizeMode), ResizeMode.CanResize}
+                { Window.SizeToContentProperty, SizeToContent.Manual},
+                { Window.BorderThicknessProperty, new Thickness(1)},
+                { Window.ResizeModeProperty, ResizeMode.CanResize}
             };
-        public static void ShowWindow<T>(T viewModel,IDictionary<string, object> windowSettings = null) where T : IViewModel
+        public static void ShowWindow<T>(T viewModel,IDictionary<DependencyProperty, object> windowSettings = null) where T : IViewModel
         {
             windowSettings?.ForEach(n =>
             {
@@ -53,10 +52,11 @@
                     defaultSettings[n.Key] = n.Value;
                 }
             });
-            var window = new ShellViewModel(viewModel);
-            IoC.Get<IWindowManager>().ShowWindow(window, null, windowSettings);
+            var window = new ShellViewModel(viewModel, defaultSettings);
+
+            IoC.Get<IWindowManager>().ShowWindow(window);
         }
-        public static void ShowWindow<T>(IDictionary<string, object> settings = null) where T : IViewModel
+        public static void ShowWindow<T>(IDictionary<DependencyProperty, object> settings = null) where T : IViewModel
         {
             ShowWindow((T)IoC.GetInstance(typeof(T), null), settings);
         }
