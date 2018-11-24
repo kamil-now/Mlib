@@ -21,7 +21,7 @@
                   Style="{StaticResource ContextMenuList}">
 
             <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type add:ListActionItem}">
+                <DataTemplate DataType="{x:Type add:ListCommandItem}">
                     <Button Margin="5"
                             Command="{Binding Command}"
                             Content="{Binding Name}"

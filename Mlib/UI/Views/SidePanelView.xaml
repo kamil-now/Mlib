@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:data="clr-namespace:Mlib.Data.Models"
+             xmlns:converters="clr-namespace:Mlib.UI.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-
+    <UserControl.Resources>
+        <converters:BoolToHiddenConverter x:Key="boolToHiddenConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -34,20 +38,10 @@
                        FontSize="14"
                        Margin="10"
                        HorizontalAlignment="Center" />
-
-            <Button Content="All tracks"
-                    Command="{Binding SetCollection}"
-                    CommandParameter="{x:Type data:Track}" />
-            <Button Content="Albums"
-                    Command="{Binding SetCollection}"
-                    CommandParameter="{x:Type data:Album}" />
-            <Button Content="Artists"
-                    Command="{Binding SetCollection}"
-                    CommandParameter="{x:Type data:Artist}" />
-            <Button Content="Playlists"
-                    Command="{Binding SetCollection}"
-                    CommandParameter="{x:Type data:Playlist}" />
-
+            <ListView ItemsSource="{Binding Groups}"
+                      SelectedItem="{Binding SelectedGroup}"
+                      Style="{StaticResource SelectorList}"
+                      FontSize="14" />
         </StackPanel>
         <!--WITH FLOWDIRECTION CHANGE ALL PROPERTIES ALSO CHANGE FLOW (i.e. buttons right margin applies to the left side)-->
         <ListView ItemsSource="{Binding Collection}"

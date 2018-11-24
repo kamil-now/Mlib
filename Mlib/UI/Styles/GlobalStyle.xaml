@@ -58,49 +58,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
                     <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ColorAnimation Duration="0"
-                                                        To="#d9d7ec"
-                                                        Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="listItem1" />
-                                        <ColorAnimation Duration="0"
-                                                        To="Black"
-                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="Content1" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ColorAnimation Duration="0"
-                                                        To="#d9d7ec"
-                                                        Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="listItem1" />
-                                        <ColorAnimation Duration="0"
-                                                        To="Black"
-                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="Content1" />
-
-                                    </Storyboard>
-
-                                </VisualState>
-
-                            </VisualStateGroup>
-
-                        </VisualStateManager.VisualStateGroups>
-
-                        <Grid>
-                            <Rectangle x:Name="listItem1"
-                                       Stroke="Transparent"
-                                       Fill="Transparent" />
-                            <ContentControl x:Name="Content1"
-                                            Foreground="Gray"
+                        <ContentControl x:Name="Content"
+                                            Foreground="{StaticResource GlobalLight}"
                                             Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        </Grid>
+                     
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

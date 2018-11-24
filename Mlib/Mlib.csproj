@@ -138,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Styles\SelectorListStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\AudioControlsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -150,7 +154,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\Views\LibraryView.xaml">
+    <Page Include="UI\Views\SidePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UI\Additional\BindingProxy.cs" />
+    <Compile Include="UI\Converters\BoolToHiddenConverter.cs" />
     <Compile Include="UI\Converters\DebugConverter.cs" />
     <Compile Include="UI\Interfaces\IContextMenuAgent.cs" />
     <Compile Include="UI\Interfaces\IContextMenuItem.cs" />
@@ -226,7 +231,7 @@
     </Compile>
     <Compile Include="UI\ViewModels\ShellViewModel.cs" />
     <Compile Include="UI\Converters\BoolToCollapsedConverter.cs" />
-    <Compile Include="UI\Additional\ListActionItem.cs" />
+    <Compile Include="UI\Additional\ListCommandItem.cs" />
     <Compile Include="UI\Controls\ContextMenu.xaml.cs">
       <DependentUpon>ContextMenu.xaml</DependentUpon>
     </Compile>
@@ -234,7 +239,7 @@
     <Compile Include="UI\ViewModels\DetailsViewModel.cs" />
     <Compile Include="UI\Interfaces\IMainViewModel.cs" />
     <Compile Include="UI\Interfaces\IViewModel.cs" />
-    <Compile Include="UI\ViewModels\LibraryViewModel.cs" />
+    <Compile Include="UI\ViewModels\SidePanelViewModel.cs" />
     <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\ViewModels\PlaylistViewModel.cs" />
     <Compile Include="UI\ViewModels\TracksViewModel.cs" />
@@ -247,8 +252,8 @@
     <Compile Include="UI\Views\DirectoryExplorerView.xaml.cs">
       <DependentUpon>DirectoryExplorerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\LibraryView.xaml.cs">
-      <DependentUpon>LibraryView.xaml</DependentUpon>
+    <Compile Include="UI\Views\SidePanelView.xaml.cs">
+      <DependentUpon>SidePanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

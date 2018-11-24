@@ -9,5 +9,6 @@
     public interface IContextMenuItem
     {
         string Name { get; }
+        bool IsSelected { get; set; }
     }
 }

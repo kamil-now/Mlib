@@ -20,7 +20,7 @@
     using System.Windows.Input;
     using System.Windows.Media;
 
-    public class LibraryViewModel : Screen, IViewModel
+    public class SidePanelViewModel : Screen, IViewModel
     {
         UnitOfWork unitOfWork;
         AudioPlayer audioPlayer;
@@ -28,8 +28,28 @@
         PlaylistViewModel playlistVM;
         TracksViewModel tracksVM;
         private IDataEntity selected;
+        private ListCommandItem selectedGroup;
+        private BindableCollection<IDataEntity> collection;
 
-        public BindableCollection<IDataEntity> Collection { get; set; }
+        public BindableCollection<IDataEntity> Collection
+        {
+            get => collection; set
+            {
+                collection = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        public ListCommandItem SelectedGroup
+        {
+            get => selectedGroup;
+            set
+            {
+                selectedGroup = value;
+                selectedGroup.Command.Execute(null);
+                selectedGroup.IsSelected = true;
+                NotifyOfPropertyChange();
+            }
+        }
         public IDataEntity Selected
         {
             get => selected;
@@ -39,36 +59,50 @@
                 Select.Execute(selected);
             }
         }
-        public BindableCollection<IDataEntity> Playlists { get; }
-        public BindableCollection<IDataEntity> Tracks { get; }
-        public BindableCollection<IDataEntity> Artists { get; }
-        public BindableCollection<IDataEntity> Albums { get; }
+        public BindableCollection<ListCommandItem> Groups { get; set; }
+        public BindableCollection<IDataEntity> Playlists { get; private set; }
+        public BindableCollection<IDataEntity> Tracks { get; private set; }
+        public BindableCollection<IDataEntity> Artists { get; private set; }
+        public BindableCollection<IDataEntity> Albums { get; private set; }
 
-        public LibraryViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM)
+        public SidePanelViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM)
         {
             this.unitOfWork = unitOfWork;
             this.library = library;
             this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
             this.tracksVM = tracksVM;
+            
+            //TODO observer
+            unitOfWork.DbContextChanged += DbStateChanged;
 
+            SetCollections();
+            SetGroups();
 
+        }
+        void SetCollections()
+        {
             var playlists = unitOfWork.Playlists.GetAll().ToList();
             var tracks = unitOfWork.Tracks.GetAll().ToList();
             var albums = unitOfWork.Albums.GetAll().ToList();
             var artists = unitOfWork.Artists.GetAll().ToList();
-
-            //TODO observer
-            unitOfWork.DbContextChanged += DbStateChanged;
-
             Playlists = !playlists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(playlists) : new BindableCollection<IDataEntity>();
             Tracks = !tracks.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(tracks) : new BindableCollection<IDataEntity>();
             Albums = !albums.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(albums) : new BindableCollection<IDataEntity>();
             Artists = !artists.IsNullOrEmpty() ? new BindableCollection<IDataEntity>(artists) : new BindableCollection<IDataEntity>();
 
+        }
+        void SetGroups()
+        {
+            Groups = new BindableCollection<ListCommandItem>()
+            {
+                new ListCommandItem("All tracks", new Command(()=>Collection=Tracks)),
+                new ListCommandItem("Albums", new Command(()=>Collection=Albums)),
+                new ListCommandItem("Artists", new Command(()=>Collection=Artists)),
+                new ListCommandItem("Playlists", new Command(()=>Collection=Playlists)){ IsSelected=true},
+            };
             Collection = Playlists;
         }
-
         private void DbStateChanged(object sender, EventArgs e)
         {
             var args = e as DbContextChangedEventArgs;
@@ -94,29 +128,7 @@
             }
             return (null, null);
         }
-        public ICommand SetCollection => new Command(type =>
-         {
-             //TODO enum switch
-             var t = type as Type;
-             if (t == typeof(Album))
-             {
-                 Collection = Albums;
 
-             }
-             else if (t == typeof(Track))
-             {
-                 Collection = Tracks;
-             }
-             else if (t == typeof(Artist))
-             {
-                 Collection = Artists;
-             }
-             else if (t == typeof(Playlist))
-             {
-                 Collection = Playlists;
-             }
-             NotifyOfPropertyChange(() => Collection);
-         });
         public ICommand Select => new Command(item =>
         {
             if (item is Playlist)
