@@ -3,13 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Mlib.UI.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:conv="clr-namespace:Mlib.UI.Converters"
+             xmlns:controls="clr-namespace:Mlib.UI.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
         <conv:BoolToCollapsedConverter x:Key="b2c" />
+        <sys:Double x:Key="playButtonSize">35</sys:Double>
+        <sys:Double x:Key="controlButtonsSize">20</sys:Double>
     </UserControl.Resources>
     <Grid Background="{StaticResource GlobalDim}">
         <Grid.RowDefinitions>
@@ -35,7 +38,8 @@
                    Grid.Row="1"
                    Typography.Capitals="AllSmallCaps"
                    FontSize="14" />
-        <Grid Grid.Column="1" Grid.RowSpan="2">
+        <Grid Grid.Column="1"
+              Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -43,11 +47,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
             <Button Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="20"
-                    Width="20"
+                    Height="{StaticResource controlButtonsSize}"
+                    Width="{StaticResource controlButtonsSize}"
                     Margin="5"
                     Command="{Binding PreviousTrackCommand}"
                     Style="{StaticResource PreviousTrackButton}" />
@@ -56,28 +64,34 @@
                     Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource False}}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="40"
-                    Width="40"
-                    Margin="5"
+                    Height="{StaticResource playButtonSize}"
+                    Width="{StaticResource playButtonSize}"
+                    Margin="2"
                     Style="{StaticResource PlayButton}" />
             <Button Grid.Column="2"
                     Command="{Binding TogglePlayPauseCommand}"
                     Visibility="{Binding IsPlaying, Converter={StaticResource b2c},ConverterParameter={StaticResource True}}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="40"
-                    Width="40"
-                    Margin="5"
+                    Height="{StaticResource playButtonSize}"
+                    Width="{StaticResource playButtonSize}"
+                    Margin="2"
                     Style="{StaticResource PauseButton}" />
-            
+
             <Button Grid.Column="3"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Height="20"
-                    Width="20"
+                    Height="{StaticResource controlButtonsSize}"
+                    Width="{StaticResource controlButtonsSize}"
                     Margin="5"
                     Command="{Binding NextTrackCommand}"
                     Style="{StaticResource NextTrackButton}" />
+
+            <controls:AudioProgressBar Grid.Row="1"
+                                       Grid.ColumnSpan="10"
+                                       AudioPlayer="{Binding AudioPlayer, Mode=OneWay}" />
+
         </Grid>
+
     </Grid>
 </UserControl>

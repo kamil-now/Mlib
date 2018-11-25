@@ -6,8 +6,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Timers;
 
-    public class AudioPlayer : IPlaybackStateSubject, ICurrentTrackSubject
+    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
     {
         private WaveStream audioFileReader;
 
@@ -83,17 +84,17 @@
             }
         }
 
-        public void SetPosition(double value)
+        public double CurrentTrackLenght =>audioFileReader?.TotalTime.TotalSeconds ?? 0;
+
+        public double CurrentTrackPosition
         {
-            if (audioFileReader != null)
+            get => audioFileReader?.CurrentTime.TotalSeconds ?? 0;
+            set
             {
-                audioFileReader.CurrentTime = TimeSpan.FromSeconds(value);
+                if (audioFileReader != null)
+                    audioFileReader.CurrentTime = TimeSpan.FromSeconds(value);
             }
         }
-
-        public double GetLenghtInSeconds() => audioFileReader?.TotalTime.TotalSeconds ?? 0;
-
-        public double GetPositionInSeconds() => audioFileReader?.CurrentTime.TotalSeconds ?? 0;
 
         private void ChangeNowPlaying(Track track)
         {
@@ -121,6 +122,7 @@
         {
             if (output != null)
             {
+                timer.Stop();
                 if (output.PlaybackState == PlaybackState.Playing)
                 {
                     output.Stop(); ;
@@ -148,8 +150,13 @@
             var wc = new WaveChannel32(audioFileReader);
 
             output.Init(wc);
+            NotifyOfPropertyChange(() => CurrentTrackLenght);
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Elapsed += (s, e) => NotifyOfPropertyChange(() => CurrentTrackPosition);
+            timer.Start();
         }
-
+        Timer timer;
         public void Attach(IPlaybackStateObserver observer)
         {
             if (!playbackStateObservers.Contains(observer))

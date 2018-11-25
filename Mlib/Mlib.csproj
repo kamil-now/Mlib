@@ -114,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="UI\Controls\AudioProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Controls\ContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UI\Additional\BindingProxy.cs" />
+    <Compile Include="UI\Controls\AudioProgressBar.xaml.cs">
+      <DependentUpon>AudioProgressBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Converters\BoolToHiddenConverter.cs" />
     <Compile Include="UI\Converters\DebugConverter.cs" />
     <Compile Include="UI\Interfaces\IContextMenuAgent.cs" />

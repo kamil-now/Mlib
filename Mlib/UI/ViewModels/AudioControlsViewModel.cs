@@ -11,7 +11,7 @@
     {
         public AudioControlsViewModel(AudioPlayer audioPlayer)
         {
-            this.audioPlayer = audioPlayer;
+            this.AudioPlayer = audioPlayer;
             audioPlayer.Attach(this as IPlaybackStateObserver);
             audioPlayer.Attach(this as ICurrentTrackObserver);
 
@@ -20,10 +20,10 @@
             PreviousTrackCommand = new Command(q => audioPlayer.PreviousTrack());
         }
 
-        AudioPlayer audioPlayer;
+        public AudioPlayer AudioPlayer { get; }
         public double VolumeLevel { get; set; } = 1;
-        public Track NowPlaying => audioPlayer.NowPlaying;
-        public bool IsPlaying => audioPlayer.IsPlaying;
+        public Track NowPlaying => AudioPlayer.NowPlaying;
+        public bool IsPlaying => AudioPlayer.IsPlaying;
 
         public ICommand TogglePlayPauseCommand { get; }
         public ICommand PreviousTrackCommand { get; }

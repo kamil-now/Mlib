@@ -23,7 +23,7 @@
     <SolidColorBrush x:Key="GlobalBright"
                      Color="White" />
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
-                     Color="{StaticResource GlobalLight}" />
+                     Color="#b3b3b3" />
     <Style TargetType="{x:Type Window}">
         <Setter Property="FontSize"
                 Value="{StaticResource DefaultFontSize}" />
@@ -59,10 +59,10 @@
                 <ControlTemplate TargetType="ListViewItem">
                     <Grid>
                         <ContentControl x:Name="Content"
-                                            Foreground="{StaticResource GlobalLight}"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}" />
-                     
+                                        Foreground="{StaticResource GlobalLight}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -83,4 +83,6 @@
                 Value="Right" />
     </Style>
 
+
+  
 </ResourceDictionary>
