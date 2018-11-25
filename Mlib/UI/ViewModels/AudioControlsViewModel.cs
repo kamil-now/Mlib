@@ -16,7 +16,7 @@
             audioPlayer.Attach(this as ICurrentTrackObserver);
 
             TogglePlayPauseCommand = new Command(q => audioPlayer.TogglePlayPause(VolumeLevel));
-            NextTrackCommand = new Command(q => audioPlayer.NextTrack());
+            NextTrackCommand = new Command(q => audioPlayer.PlayNextTrack());
             PreviousTrackCommand = new Command(q => audioPlayer.PreviousTrack());
         }
 

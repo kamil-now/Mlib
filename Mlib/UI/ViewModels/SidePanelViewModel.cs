@@ -131,7 +131,7 @@
             if (item is Playlist)
                 audioPlayer.SetPlaylist(item as Playlist);
             if (item is Track)
-                audioPlayer.SetNowPlaying(item as Track);
+                audioPlayer.Play(item as Track);
         });
         public ICommand AddNew => new Command(() =>
         {

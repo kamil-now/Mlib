@@ -10,15 +10,14 @@
 
     public class PlaylistViewModel : Screen, IViewModel
     {
-        AudioPlayer audioPlayer;
-        public Playlist Playlist => audioPlayer.CurrentPlaylist;
+        public AudioPlayer AudioPlayer { get; }
         public PlaylistViewModel(AudioPlayer audioPlayer)
         {
-            this.audioPlayer = audioPlayer;
+            AudioPlayer = audioPlayer;
         }
         public ICommand Select => new Command(track =>
         {
-            audioPlayer.Play(track as Track);
+            AudioPlayer.Play(track as Track);
         });
     }
 }

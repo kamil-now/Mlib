@@ -13,20 +13,34 @@
             <RowDefinition Height="14*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Playlist.Name}"
+        <TextBlock Text="{Binding AudioPlayer.CurrentPlaylist.Name}"
                    Grid.ColumnSpan="2"
                    FontWeight="Bold"
                    FontSize="20"
                    Foreground="{StaticResource GlobalBright}" />
-        <ListView ItemsSource="{Binding Playlist.Tracks}"
-                  Grid.Row="1">
+        <ListView ItemsSource="{Binding AudioPlayer.CurrentPlaylist.Tracks}"
+                  Grid.Row="1"
+                  SelectedItem="{Binding AudioPlayer.NowPlaying,Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0,0,20,0" HorizontalAlignment="Right">
 
                         <Button Content="{Binding Title}"
                                 Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
-                                CommandParameter="{Binding}" />
+                                CommandParameter="{Binding}">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                                    <Style.Triggers>
+                                        <Trigger Property="Selector.IsSelected"
+                                                 Value="True">
+                                            <Setter Property="Foreground"
+                                                    Value="{StaticResource GlobalAccent}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    
+                                </Style>
+                            </Button.Style>
+                        </Button>
                         <Separator BorderThickness="2"
                                    BorderBrush="{StaticResource GlobalLightDim}" />
                     </StackPanel>

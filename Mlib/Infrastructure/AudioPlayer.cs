@@ -25,14 +25,15 @@
             CurrentPlaylist = playlist;
             AppWindowManager.SetPlaylistPanel(this);
         }
-        public void SetNowPlaying(Track track)
+        private void SetNowPlaying(Track track)
         {
             NowPlaying = track;
-
+            NotifyOfPropertyChange(() => NowPlaying);
+            trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(track) + 1 ?? -1;
             NotifyOfCurrentTrackChange();
         }
 
-        public void NextTrack()
+        public void PlayNextTrack()
         {
             if (trackNumber > 0)
             {
@@ -84,8 +85,10 @@
             }
         }
 
-        public double CurrentTrackLenght =>audioFileReader?.TotalTime.TotalSeconds ?? 0;
+        public double CurrentTrackLenght => audioFileReader?.TotalTime.TotalSeconds ?? 0;
+        public string TotalTime => audioFileReader?.TotalTime.ToString("mm\\:ss");
 
+        public string CurrentTime => audioFileReader?.CurrentTime.ToString("mm\\:ss");
         public double CurrentTrackPosition
         {
             get => audioFileReader?.CurrentTime.TotalSeconds ?? 0;
@@ -139,21 +142,24 @@
         private void InitOutput()
         {
             output = new WaveOut();
-            output.PlaybackStopped += (s, e) =>
-            {
-                NextTrack();
-                Play();
-            };
-
             audioFileReader = new MediaFoundationReader(NowPlaying.FullPath);
 
             var wc = new WaveChannel32(audioFileReader);
 
             output.Init(wc);
             NotifyOfPropertyChange(() => CurrentTrackLenght);
+            NotifyOfPropertyChange(() => TotalTime);
             timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += (s, e) => NotifyOfPropertyChange(() => CurrentTrackPosition);
+            timer.Interval = 100;
+            timer.Elapsed += (s, e) =>
+            {
+                NotifyOfPropertyChange(() => CurrentTrackPosition);
+                NotifyOfPropertyChange(() => CurrentTime);
+                if ((int)CurrentTrackPosition == (int)CurrentTrackLenght)
+                {
+                    PlayNextTrack();
+                }
+            };
             timer.Start();
         }
         Timer timer;
