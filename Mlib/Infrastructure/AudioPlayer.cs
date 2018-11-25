@@ -2,41 +2,31 @@
 {
     using Caliburn.Micro;
     using Mlib.Data.Models;
-    using Mlib.UI;
-    using Mlib.UI.ViewModels;
     using NAudio.Wave;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
+    public class AudioPlayer : IPlaybackStateSubject, ICurrentTrackSubject
     {
         private WaveStream audioFileReader;
-        
+
         private IWavePlayer output;
         private int trackNumber;
         private List<IPlaybackStateObserver> playbackStateObservers = new List<IPlaybackStateObserver>();
         private List<ICurrentTrackObserver> currentTrackObservers = new List<ICurrentTrackObserver>();
-        private Playlist currentPlaylist;
-        public Playlist CurrentPlaylist
-        {
-            get => currentPlaylist; private set
-            {
-                currentPlaylist = value;
-                NotifyOfPropertyChange();
-            }
-        }
+
         public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
         public Track NowPlaying { get; private set; }
+        public Playlist CurrentPlaylist { get; private set; }
         public void SetPlaylist(Playlist playlist)
         {
             CurrentPlaylist = playlist;
-            AppWindowManager.SetRightSidePanel(new PlaylistViewModel(playlist, this));
+            AppWindowManager.SetPlaylistPanel(this);
         }
         public void SetNowPlaying(Track track)
         {
             NowPlaying = track;
-            //trackNumber = currentPlaylist?.Tracks?..IndexOf(track) + 1 ?? -1;
 
             NotifyOfCurrentTrackChange();
         }
@@ -66,9 +56,8 @@
                 ChangeNowPlaying(CurrentPlaylist.Tracks.ElementAt(trackNumber - 1));
             }
         }
-        public void Play(Track track, Playlist playlist)
+        public void Play(Track track)
         {
-            CurrentPlaylist = playlist;
             SetNowPlaying(track);
             Play();
         }

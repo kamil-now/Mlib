@@ -1,7 +1,9 @@
-﻿namespace Mlib.UI
+﻿namespace Mlib
 {
     using Caliburn.Micro;
+    using Mlib.Data.Models;
     using Mlib.Extensions;
+    using Mlib.Infrastructure;
     using Mlib.UI.Additional;
     using Mlib.UI.Interfaces;
     using Mlib.UI.ViewModels;
@@ -60,6 +62,8 @@
         {
             ShowWindow((T)IoC.GetInstance(typeof(T), null), settings);
         }
+        public static void SetPlaylistPanel( AudioPlayer audioPlayer)=> SetRightSidePanel(new PlaylistViewModel(audioPlayer));
+
         public static void SetMainPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().MainPanel = viewModel;
         public static void SetLeftSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().LeftSidePanel = viewModel;
         public static void SetRightSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().RightSidePanel = viewModel;
