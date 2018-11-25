@@ -18,9 +18,9 @@ namespace Mlib.UI.Views
     /// <summary>
     /// Interaction logic for LibraryView.xaml
     /// </summary>
-    public partial class LibraryView : UserControl
+    public partial class SidePanelView : UserControl
     {
-        public LibraryView()
+        public SidePanelView()
         {
             InitializeComponent();
         }

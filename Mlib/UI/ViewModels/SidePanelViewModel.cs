@@ -25,8 +25,6 @@
         UnitOfWork unitOfWork;
         AudioPlayer audioPlayer;
         MusicLibrary library;
-        PlaylistViewModel playlistVM;
-        TracksViewModel tracksVM;
         private IDataEntity selected;
         private ListCommandItem selectedGroup;
         private BindableCollection<IDataEntity> collection;
@@ -65,13 +63,11 @@
         public BindableCollection<IDataEntity> Artists { get; private set; }
         public BindableCollection<IDataEntity> Albums { get; private set; }
 
-        public SidePanelViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer, PlaylistViewModel playlistVM, TracksViewModel tracksVM)
+        public SidePanelViewModel(UnitOfWork unitOfWork, MusicLibrary library, AudioPlayer audioPlayer)
         {
             this.unitOfWork = unitOfWork;
             this.library = library;
-            this.playlistVM = playlistVM;
             this.audioPlayer = audioPlayer;
-            this.tracksVM = tracksVM;
 
             //TODO observer
             unitOfWork.DbContextChanged += DbStateChanged;
@@ -116,6 +112,7 @@
                 case EntityState.Modified: collection.Swap(collection.First(x => x.Id == args.Entity.Id), args.Entity); break;
             }
             tuple.NotifyAction.Invoke();
+            NotifyOfPropertyChange(() => Collection);
         }
         private (ICollection<IDataEntity> Collection, System.Action NotifyAction) GetCollection(EntityType type)
         {
@@ -132,19 +129,20 @@
         public ICommand Select => new Command(item =>
         {
             if (item is Playlist)
-                playlistVM.SetPlaylist(item as Playlist);
+                audioPlayer.SetPlaylist(item as Playlist);
             if (item is Track)
                 audioPlayer.SetNowPlaying(item as Track);
         });
         public ICommand AddNew => new Command(() =>
         {
-            tracksVM.Tracks = new BindableCollection<Track>(Tracks.Select(x => x as Track));
+            var tracks = new TracksViewModel() { Tracks = new BindableCollection<Track>(Tracks.Select(x => x as Track)) };
+
             var settings = new Dictionary<DependencyProperty, object>()
             {
                 {Window.WidthProperty, 500d },
                 {Window.HeightProperty, 500d }
             };
-            AppWindowManager.ShowWindow(tracksVM, settings);
+            AppWindowManager.SetMainPanel(tracks);
         });
 
     }

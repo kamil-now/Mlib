@@ -8,17 +8,54 @@
 
     public class MainViewModel : Screen, IMainViewModel
     {
-        public AudioControlsViewModel AudioControls { get; }
-        public PlaylistViewModel Playlist { get; }
-        public SidePanelViewModel Library { get; }
+        private IViewModel mainPanel;
+        private IViewModel leftSidePanel;
+        private IViewModel rightSidePanel;
+        private IViewModel bottomPanel;
 
+        public IViewModel BottomPanel
+        {
+            get => bottomPanel;
+            set
+            {
+                bottomPanel = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        public IViewModel LeftSidePanel
+        {
+            get => leftSidePanel;
+            set
+            {
+                leftSidePanel = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        public IViewModel RightSidePanel
+        {
+            get => rightSidePanel;
+            set
+            {
+                rightSidePanel = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        public IViewModel MainPanel
+        {
+            get => mainPanel;
+            set
+            {
+                mainPanel = value;
+                NotifyOfPropertyChange();
+            }
+        }
         public BindableCollection<IContextMenuItem> ContextMenuItems { get; }
 
-        public MainViewModel(PlaylistViewModel playlist, AudioControlsViewModel audioControls, SidePanelViewModel library, MusicLibrary musicLibrary)
+
+        public MainViewModel(AudioControlsViewModel audioControls, SidePanelViewModel sidePanel, MusicLibrary musicLibrary)
         {
-            Playlist = playlist;
-            AudioControls = audioControls;
-            Library = library;
+            BottomPanel = audioControls;
+            LeftSidePanel = sidePanel;
             ContextMenuItems = new BindableCollection<IContextMenuItem>()
             {
                 new ListCommandItem("Add files to library", new Command(musicLibrary.AddMusicFiles))

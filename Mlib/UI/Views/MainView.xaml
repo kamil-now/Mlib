@@ -4,10 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:views="clr-namespace:Mlib.UI.Views"
              mc:Ignorable="d">
-    <!--Background="{StaticResource GlobalAccent}"-->
-    <Grid>
+    <Grid Background="{StaticResource GlobalDimDark}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition Width="2*"/>
@@ -17,7 +15,17 @@
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <views:LibraryView Background="{StaticResource GlobalDark}"
+        <ContentControl cal:View.Model="{Binding LeftSidePanel}"/>
+        <ContentControl  Grid.Row="0"
+                         Grid.Column="1"
+                         cal:View.Model="{Binding MainPanel}" />
+        <ContentControl Grid.Row="0"
+                        Grid.Column="2"
+                        cal:View.Model="{Binding RightSidePanel}" />
+        <ContentControl Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        cal:View.Model="{Binding BottomPanel}" />
+        <!--<views:LibraryView Background="{StaticResource GlobalDark}"
                                      DataContext="{Binding Library}" />
         <views:AudioControlsView Background="{StaticResource GlobalDim}"
                                  Grid.Row="1"
@@ -26,7 +34,7 @@
         <views:PlaylistView Background="{StaticResource GlobalDimDark}"
                             Grid.Row="0"
                             Grid.Column="1"
-                            DataContext="{Binding Playlist}" />
+                            DataContext="{Binding Playlist}" />-->
         <Rectangle VerticalAlignment="Stretch"
                    HorizontalAlignment="Right"
                    Width="1"

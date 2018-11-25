@@ -43,7 +43,7 @@
                 { Window.BorderThicknessProperty, new Thickness(1)},
                 { Window.ResizeModeProperty, ResizeMode.CanResize}
             };
-        public static void ShowWindow<T>(T viewModel,IDictionary<DependencyProperty, object> windowSettings = null) where T : IViewModel
+        public static void ShowWindow<T>(T viewModel, IDictionary<DependencyProperty, object> windowSettings = null) where T : IViewModel
         {
             windowSettings?.ForEach(n =>
             {
@@ -60,5 +60,10 @@
         {
             ShowWindow((T)IoC.GetInstance(typeof(T), null), settings);
         }
+        public static void SetMainPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().MainPanel = viewModel;
+        public static void SetLeftSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().LeftSidePanel = viewModel;
+        public static void SetRightSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().RightSidePanel = viewModel;
+        public static void SetBottomPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().BottomPanel = viewModel;
+
     }
 }

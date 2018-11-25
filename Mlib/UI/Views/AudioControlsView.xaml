@@ -8,19 +8,10 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <!--<div>Icons made by
-        <a href="https://www.flaticon.com/authors/smashicons"
-           title="Smashicons">Smashicons</a> from
-        <a href="https://www.flaticon.com/"
-           title="Flaticon">www.flaticon.com</a> is licensed by
-        <a href="http://creativecommons.org/licenses/by/3.0/"
-           title="Creative Commons BY 3.0"
-           target="_blank">CC 3.0 BY</a>
-    </div>-->
     <UserControl.Resources>
         <conv:BoolToCollapsedConverter x:Key="b2c" />
     </UserControl.Resources>
-    <Grid Margin="5">
+    <Grid Background="{StaticResource GlobalDim}">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="2*" />

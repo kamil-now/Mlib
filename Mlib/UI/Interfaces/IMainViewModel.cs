@@ -8,7 +8,10 @@
     using System.Threading.Tasks;
 
     public interface IMainViewModel : IViewModel, IContextMenuAgent
-
     {
+        IViewModel BottomPanel { get; set; }
+        IViewModel MainPanel { get; set; }
+        IViewModel LeftSidePanel { get; set; }
+        IViewModel RightSidePanel { get; set; }
     }
 }

@@ -3,26 +3,23 @@
     using Caliburn.Micro;
     using Mlib.Data.Models;
     using Mlib.Infrastructure;
+    using Mlib.UI.Additional;
     using Mlib.UI.Interfaces;
+    using System.Linq;
     using System.Windows.Input;
 
     public class PlaylistViewModel : Screen, IViewModel
     {
-        private AudioPlayer audioPlayer;
-        public Playlist SelectedPlaylist { get; set; }
-
-        public PlaylistViewModel(AudioPlayer audioPlayer)
+        AudioPlayer audioPlayer;
+        public Playlist Playlist { get; }
+        public PlaylistViewModel(Playlist playlist, AudioPlayer audioPlayer)
         {
+            Playlist = playlist;
             this.audioPlayer = audioPlayer;
         }
         public ICommand Select => new Command(track =>
         {
-            audioPlayer.Play(track as Track, SelectedPlaylist);
+            audioPlayer.Play(track as Track, Playlist);
         });
-        public void SetPlaylist(Playlist playlist)
-        {
-            SelectedPlaylist = playlist;
-            NotifyOfPropertyChange(() => SelectedPlaylist);
-        }
     }
 }

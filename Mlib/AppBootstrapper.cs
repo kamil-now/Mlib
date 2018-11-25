@@ -49,8 +49,7 @@
 
             builder.RegisterType<ShellViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();
-            builder.RegisterType<PlaylistViewModel>().As<IViewModel>().AsSelf().SingleInstance();
-            builder.RegisterType<TracksViewModel>().As<IViewModel>().AsSelf().SingleInstance();
+
             builder.RegisterType<AudioControlsViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<SidePanelViewModel>().As<IViewModel>().AsSelf().SingleInstance();
 

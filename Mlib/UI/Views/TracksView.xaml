@@ -7,20 +7,20 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <Grid Background="{StaticResource GlobalDark}">
+    <Grid Background="{StaticResource GlobalDimDark}">
         <ListView ItemsSource="{Binding Tracks}"
                   FlowDirection="LeftToRight"
                   SelectedItem="{Binding Selected}">
 
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type data:Track}">
-                    <StackPanel Margin="0,0,20,0"
+                    <StackPanel Margin="20,0,0,0"
                                 HorizontalAlignment="Stretch">
                         <CheckBox Margin="20,5"
                                   FlowDirection="LeftToRight"
                                   VerticalAlignment="Center">
                             <UniformGrid Rows="2"
-                                         Margin="10,0"
+                                         Margin="10,0,0,0"
                                          Columns="1">
                                 <TextBlock Text="{Binding Title}"
                                            Foreground="{StaticResource GlobalLight}"
