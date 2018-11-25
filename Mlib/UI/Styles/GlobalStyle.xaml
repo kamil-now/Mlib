@@ -6,10 +6,10 @@
 
     <sys:Double x:Key="DefaultFontSize">12</sys:Double>
     <SolidColorBrush x:Key="GlobalAccent"
-                     Color="#1DB954" />
+    Color="#FD4928" />
+                     <!--Color="#1DB954" />-->
     <!--Color="#1E7E9E" />-->
     <!-- Color="#1E7E9E" />-->
-    <!--Color="#FD4928" />-->
     <SolidColorBrush x:Key="GlobalDark"
                      Color="#090909" />
     <SolidColorBrush x:Key="GlobalDimDark"
@@ -82,7 +82,111 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Right" />
     </Style>
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+                Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation"
+                     Value="Horizontal">
+                <Setter Property="MinHeight"
+                        Value="20" />
+                <Setter Property="MinWidth"
+                        Value="100" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto"
+                                                   MinHeight="{TemplateBinding MinHeight}" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Track Grid.Row="1"
+                                       x:Name="PART_Track">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="Slider.DecreaseLarge">
+                                            <RepeatButton.Style>
+                                                <Style TargetType="RepeatButton">
+                                                    <Setter Property="SnapsToDevicePixels"
+                                                            Value="true" />
+                                                    <Setter Property="OverridesDefaultStyle"
+                                                            Value="true" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="RepeatButton">
+                                                                <Border SnapsToDevicePixels="True"
+                                                                        Background="{StaticResource GlobalLight}"
+                                                                        BorderThickness="1"
+                                                                        CornerRadius="1"
+                                                                        BorderBrush="{StaticResource GlobalLight}"
+                                                                        Height="3" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </RepeatButton.Style>
+                                        </RepeatButton>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb">
+                                            <Thumb.Style>
+                                                <Style TargetType="Thumb">
+                                                    <Setter Property="SnapsToDevicePixels"
+                                                            Value="true" />
+                                                    <Setter Property="OverridesDefaultStyle"
+                                                            Value="true" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Thumb">
+                                                                <Ellipse Height="12"
+                                                                         Width="12"
+                                                                         Fill="{StaticResource GlobalBright}" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Thumb.Style>
+                                        </Thumb>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="Slider.IncreaseLarge">
+                                            <RepeatButton.Style>
+                                                <Style TargetType="RepeatButton">
+                                                    <Setter Property="SnapsToDevicePixels"
+                                                            Value="true" />
+                                                    <Setter Property="OverridesDefaultStyle"
+                                                            Value="true" />
+                                                    <Setter Property="IsTabStop"
+                                                            Value="false" />
+                                                    <Setter Property="Focusable"
+                                                            Value="false" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="RepeatButton">
+                                                                <Border  BorderThickness="1"
+                                                                         CornerRadius="1"
+                                                                         BorderBrush="{StaticResource GlobalLightDim}"
+                                                                         Background="{StaticResource GlobalLightDim}"
+                                                                         Height="3" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </RepeatButton.Style>
+                                        </RepeatButton>
+                                    </Track.IncreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
-
-  
 </ResourceDictionary>

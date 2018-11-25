@@ -52,6 +52,7 @@
 
             builder.RegisterType<AudioControlsViewModel>().As<IViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<SidePanelViewModel>().As<IViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<BottomPanelViewModel>().As<IViewModel>().AsSelf().SingleInstance();
 
 
             builder.RegisterType<MusicLibrary>().AsSelf().SingleInstance();

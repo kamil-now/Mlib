@@ -52,9 +52,9 @@
         public BindableCollection<IContextMenuItem> ContextMenuItems { get; }
 
 
-        public MainViewModel(AudioControlsViewModel audioControls, SidePanelViewModel sidePanel, MusicLibrary musicLibrary)
+        public MainViewModel(BottomPanelViewModel bottomPanel, SidePanelViewModel sidePanel, MusicLibrary musicLibrary)
         {
-            BottomPanel = audioControls;
+            BottomPanel = bottomPanel;
             LeftSidePanel = sidePanel;
             ContextMenuItems = new BindableCollection<IContextMenuItem>()
             {

@@ -18,7 +18,14 @@
         private List<ICurrentTrackObserver> currentTrackObservers = new List<ICurrentTrackObserver>();
 
         public bool IsPlaying => output?.PlaybackState == PlaybackState.Playing;
-        public Track NowPlaying { get; private set; }
+        public Track NowPlaying
+        {
+            get => nowPlaying; private set
+            {
+                nowPlaying = value;
+                NotifyOfPropertyChange();
+            }
+        }
         public Playlist CurrentPlaylist { get; private set; }
         public void SetPlaylist(Playlist playlist)
         {
@@ -28,7 +35,6 @@
         private void SetNowPlaying(Track track)
         {
             NowPlaying = track;
-            NotifyOfPropertyChange(() => NowPlaying);
             trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(track) + 1 ?? -1;
             NotifyOfCurrentTrackChange();
         }
@@ -85,7 +91,7 @@
             }
         }
 
-        public double CurrentTrackLenght => audioFileReader?.TotalTime.TotalSeconds ?? 0;
+        public double CurrentTrackLenght => audioFileReader?.TotalTime.TotalSeconds ?? 1;
         public string TotalTime => audioFileReader?.TotalTime.ToString("mm\\:ss");
 
         public string CurrentTime => audioFileReader?.CurrentTime.ToString("mm\\:ss");
@@ -163,6 +169,8 @@
             timer.Start();
         }
         Timer timer;
+        private Track nowPlaying;
+
         public void Attach(IPlaybackStateObserver observer)
         {
             if (!playbackStateObservers.Contains(observer))

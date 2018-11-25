@@ -150,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Views\BottomPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\DetailsView..xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -236,6 +240,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UI\ViewModels\BottomPanelViewModel.cs" />
     <Compile Include="UI\ViewModels\ShellViewModel.cs" />
     <Compile Include="UI\Converters\BoolToCollapsedConverter.cs" />
     <Compile Include="UI\Additional\ListCommandItem.cs" />
@@ -252,6 +257,9 @@
     <Compile Include="UI\ViewModels\TracksViewModel.cs" />
     <Compile Include="UI\Views\AudioControlsView.xaml.cs">
       <DependentUpon>AudioControlsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Views\BottomPanelView.xaml.cs">
+      <DependentUpon>BottomPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\DetailsView..xaml.cs">
       <DependentUpon>DetailsView..xaml</DependentUpon>

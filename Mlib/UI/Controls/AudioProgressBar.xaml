@@ -13,122 +13,21 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding AudioPlayer.CurrentTime, Mode=OneWay}"
-                   Foreground="{StaticResource GlobalAccent}" />
+                   Foreground="{StaticResource GlobalLight}"
+                   FontSize="10"
+                   HorizontalAlignment="Right"/>
         <Slider x:Name="Slider"
                 Grid.Column="1"
+                Margin="5,0"
+                HorizontalAlignment="Stretch"
                 Value="{Binding AudioPlayer.CurrentTrackPosition}"
                 Minimum="0"
-                Maximum="{Binding AudioPlayer.CurrentTrackLenght, Mode=OneWay}">
-            <Slider.Style>
-                <Style TargetType="{x:Type Slider}">
-                    <Setter Property="Focusable"
-                            Value="False" />
-                    <Setter Property="SnapsToDevicePixels"
-                            Value="true" />
-                    <Setter Property="OverridesDefaultStyle"
-                            Value="true" />
-                    <Style.Triggers>
-                        <Trigger Property="Orientation"
-                                 Value="Horizontal">
-                            <Setter Property="MinHeight"
-                                    Value="21" />
-                            <Setter Property="MinWidth"
-                                    Value="104" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Slider">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto"
-                                                               MinHeight="{TemplateBinding MinHeight}" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Track Grid.Row="1"
-                                                   x:Name="PART_Track">
-                                                <Track.DecreaseRepeatButton>
-                                                    <RepeatButton Command="Slider.DecreaseLarge">
-                                                        <RepeatButton.Style>
-                                                            <Style TargetType="RepeatButton">
-                                                                <Setter Property="SnapsToDevicePixels"
-                                                                        Value="true" />
-                                                                <Setter Property="OverridesDefaultStyle"
-                                                                        Value="true" />
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="RepeatButton">
-                                                                            <Border SnapsToDevicePixels="True"
-                                                                                    Background="{StaticResource GlobalLight}"
-                                                                                    BorderThickness="1"
-                                                                                    BorderBrush="{StaticResource GlobalLight}"
-                                                                                    Height="4" />
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </RepeatButton.Style>
-                                                    </RepeatButton>
-                                                </Track.DecreaseRepeatButton>
-                                                <Track.Thumb>
-                                                    <Thumb x:Name="Thumb">
-                                                        <Thumb.Style>
-                                                            <Style TargetType="Thumb">
-                                                                <Setter Property="SnapsToDevicePixels"
-                                                                        Value="true" />
-                                                                <Setter Property="OverridesDefaultStyle"
-                                                                        Value="true" />
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="Thumb">
-                                                                            <Ellipse Height="10"
-                                                                                     Width="10"
-                                                                                     Fill="{StaticResource GlobalAccent}" />
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </Thumb.Style>
-                                                    </Thumb>
-                                                </Track.Thumb>
-                                                <Track.IncreaseRepeatButton>
-                                                    <RepeatButton Command="Slider.IncreaseLarge">
-                                                        <RepeatButton.Style>
-                                                            <Style TargetType="RepeatButton">
-                                                                <Setter Property="SnapsToDevicePixels"
-                                                                        Value="true" />
-                                                                <Setter Property="OverridesDefaultStyle"
-                                                                        Value="true" />
-                                                                <Setter Property="IsTabStop"
-                                                                        Value="false" />
-                                                                <Setter Property="Focusable"
-                                                                        Value="false" />
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="RepeatButton">
-                                                                            <Border  BorderThickness="1"
-                                                                                     BorderBrush="{StaticResource GlobalDark}"
-                                                                                     Background="{StaticResource GlobalDark}"
-                                                                                     Height="4" />
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </RepeatButton.Style>
-                                                    </RepeatButton>
-                                                </Track.IncreaseRepeatButton>
-                                            </Track>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Slider.Style>
-        </Slider>
+                Maximum="{Binding AudioPlayer.CurrentTrackLenght, Mode=OneWay}" />
+
         <TextBlock Grid.Column="2"
                    Text="{Binding AudioPlayer.TotalTime, Mode=OneWay}"
-                   Foreground="{StaticResource GlobalLight}" />
+                   Foreground="{StaticResource GlobalLight}"
+                   FontSize="10"/>
     </Grid>
    
 </UserControl>
