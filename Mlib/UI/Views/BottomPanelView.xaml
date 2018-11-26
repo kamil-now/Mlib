@@ -23,6 +23,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding AudioPlayer.NowPlaying.Title}"
+                   TextTrimming="CharacterEllipsis"
                    Grid.ColumnSpan="2"
                    TextWrapping="WrapWithOverflow"
                    HorizontalAlignment="Center"
@@ -33,6 +34,7 @@
                    FontSize="20" />
         <TextBlock Text="{Binding AudioPlayer.NowPlaying.Artist}"
                    Grid.ColumnSpan="2"
+                   TextTrimming="CharacterEllipsis"
                    Grid.Row="1"
                    Foreground="{StaticResource GlobalLight}"
                    HorizontalAlignment="Center"
