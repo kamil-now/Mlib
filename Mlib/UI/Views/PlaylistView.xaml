@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:add="clr-namespace:Mlib.UI.Additional"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -18,17 +20,18 @@
                    FontWeight="Bold"
                    FontSize="20"
                    Foreground="{StaticResource GlobalBright}" />
-        <ListView ItemsSource="{Binding AudioPlayer.CurrentPlaylist.Tracks}"
-                  Grid.Row="1"
-                  SelectedItem="{Binding AudioPlayer.NowPlaying,Mode=OneWay}">
+        <ListView Grid.Row="1"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding Tracks}"
+                  SelectedItem="{Binding AudioPlayer.NowPlaying,Mode=OneWay}"
+                  cal:Message.Attach="[Event Loaded]=[Action InitListView($source)]">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0,0,20,0"
+                                HorizontalAlignment="Stretch">
+                        <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
+                                CommandParameter="{Binding}"
                                 HorizontalAlignment="Right">
-
-                        <Button Content="{Binding Title}"
-                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
-                                CommandParameter="{Binding}">
                             <Button.Style>
                                 <Style BasedOn="{StaticResource {x:Type Button}}"
                                        TargetType="Button">
@@ -42,6 +45,15 @@
 
                                 </Style>
                             </Button.Style>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Item.Title}"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                                <TextBlock Text="{Binding Item.Artist}"
+                                           FontSize="10"
+                                           HorizontalAlignment="Right"
+                                           TextWrapping="NoWrap" />
+                            </StackPanel>
                         </Button>
                         <Separator BorderThickness="2"
                                    BorderBrush="{StaticResource GlobalLightDim}" />

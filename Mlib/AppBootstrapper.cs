@@ -100,12 +100,12 @@
             {
 #if DEBUG
                 Debug.WriteLine(string.Join(Environment.NewLine, Environment.NewLine, DateTime.Now, e.Message, e.Source, e.StackTrace));
-#else
+#endif
                 using (StreamWriter writer = new StreamWriter(ConnectionStrings.Log, true))
                 {
                     writer.Write(string.Join(Environment.NewLine, Environment.NewLine, DateTime.Now, e.Message, e.Source, e.StackTrace));
                 }
-#endif
+
                 throw e;
             }
         }
