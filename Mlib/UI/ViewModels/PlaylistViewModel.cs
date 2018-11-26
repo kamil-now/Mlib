@@ -1,6 +1,7 @@
 ﻿namespace Mlib.UI.ViewModels
 {
     using Caliburn.Micro;
+    using GongSolutions.Wpf.DragDrop;
     using Mlib.Data.Models;
     using Mlib.Infrastructure;
     using Mlib.UI.Additional;
@@ -14,7 +15,7 @@
     using System.Windows.Controls;
     using System.Windows.Input;
 
-    public class PlaylistViewModel : Screen, IViewModel
+    public class PlaylistViewModel : Screen, IViewModel, IDragSource
     {
         public AudioPlayer AudioPlayer { get; }
         public ObservableCollection<Track> Tracks
@@ -31,69 +32,37 @@
             AudioPlayer = audioPlayer;
             Tracks = new ObservableCollection<Track>(AudioPlayer.CurrentPlaylist.Tracks);
         }
-        ListView listView;
         private ObservableCollection<Track> _tracks;
-        void Drag(object sender, MouseButtonEventArgs args)
+      
+        public void StartDrag(IDragInfo dragInfo)
         {
-            try
-            {
-                if (sender is ListViewItem)
-                {
-                    ListViewItem draggedItem = sender as ListViewItem;
-                    DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
-                    draggedItem.IsSelected = true;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
+            Track track = (Track)dragInfo.SourceItem;
+
+            dragInfo.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+            dragInfo.Data = track;
+
         }
 
-
-        void Drop(object sender, DragEventArgs args)
+        public bool CanStartDrag(IDragInfo dragInfo)
         {
-            try
-            {
-                var droppedData = args.Data.GetData(typeof(Track)) as Track;
-                var target = ((ListViewItem)(sender)).DataContext as Track;
-
-                int removedIdx = listView.Items.IndexOf(droppedData);
-                int targetIdx = listView.Items.IndexOf(target);
-
-                if (removedIdx < targetIdx)
-                {
-                    Tracks.Insert(targetIdx + 1, droppedData);
-                    Tracks.RemoveAt(removedIdx);
-                }
-                else
-                {
-                    int remIdx = removedIdx + 1;
-                    if (Tracks.Count + 1 > remIdx)
-                    {
-                        Tracks.Insert(targetIdx, droppedData);
-                        Tracks.RemoveAt(remIdx);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-
+            throw new NotImplementedException();
         }
-        public void InitListView(object sender)
+
+        public void Dropped(IDropInfo dropInfo)
         {
-            listView = sender as ListView;
-
-
-            Style itemContainerStyle = new Style(typeof(ListViewItem));
-            itemContainerStyle.BasedOn = (Style)listView.FindResource(typeof(ListViewItem));
-            itemContainerStyle.Setters.Add(new Setter(UIElement.AllowDropProperty, true));
-            itemContainerStyle.Setters.Add(new EventSetter(UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Drag)));
-            itemContainerStyle.Setters.Add(new EventSetter(UIElement.DropEvent, new DragEventHandler(Drop)));
-            listView.ItemContainerStyle = itemContainerStyle;
+            throw new NotImplementedException();
         }
+
+        public void DragCancelled()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryCatchOccurredException(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+        
         public ICommand Select => new Command(track =>
         {
             AudioPlayer.Play(track as Track);
