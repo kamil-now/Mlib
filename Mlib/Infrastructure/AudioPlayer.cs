@@ -7,6 +7,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Timers;
+    using System.Windows;
 
     public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
     {
@@ -76,6 +77,7 @@
         }
         public void Pause()
         {
+            timer.Stop();
             output?.Pause();
             NotifyOfPlaybackStateChange();
         }
@@ -115,26 +117,29 @@
         }
         private void Play()
         {
-            if (output?.PlaybackState == PlaybackState.Paused)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                output.Play();
-            }
-            else if (NowPlaying != null)
-            {
-                DisposeWavePlayer();
-                InitOutput();
-                output.Play();
-            }
-            NotifyOfPlaybackStateChange();
+                if (output?.PlaybackState == PlaybackState.Paused)
+                {
+                    output.Play();
+                }
+                else if (NowPlaying != null)
+                {
+                    DisposeWavePlayer();
+                    InitOutput();
+                    output.Play();
+                    timer.Start();
+                }
+                NotifyOfPlaybackStateChange();
+            });
         }
         private void DisposeWavePlayer()
         {
             if (output != null)
             {
-                timer.Stop();
                 if (output.PlaybackState == PlaybackState.Playing)
                 {
-                    output.Stop(); ;
+                    output.Stop();
                 }
                 output.Dispose();
                 output = null;
@@ -144,6 +149,7 @@
                 audioFileReader.Dispose();
                 audioFileReader = null;
             }
+
         }
         private void InitOutput()
         {
@@ -156,18 +162,25 @@
             NotifyOfPropertyChange(() => CurrentTrackLenght);
             NotifyOfPropertyChange(() => TotalTime);
             timer = new Timer();
-            timer.Interval = 100;
+            timer.Interval = 10;
             timer.Elapsed += (s, e) =>
             {
-                NotifyOfPropertyChange(() => CurrentTrackPosition);
-                NotifyOfPropertyChange(() => CurrentTime);
-                if ((int)CurrentTrackPosition == (int)CurrentTrackLenght)
+                if (!elapsedInProgress)
                 {
-                    PlayNextTrack();
+                    elapsedInProgress = true;
+                    NotifyOfPropertyChange(() => CurrentTrackPosition);
+                    NotifyOfPropertyChange(() => CurrentTime);
+                    if ((int)CurrentTrackPosition == (int)CurrentTrackLenght)
+                    {
+                        timer.Stop();
+                        PlayNextTrack();
+                    }
+                    elapsedInProgress = false;
                 }
+
             };
-            timer.Start();
         }
+        bool elapsedInProgress;
         Timer timer;
         private Track nowPlaying;
 
