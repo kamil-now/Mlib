@@ -5,9 +5,13 @@ namespace Mlib.Infrastructure
 {
     public static class M3UReader
     {
+        /// <summary>
+        /// In case of exception, wrong extension or empty file returns empty enumerator
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<FileInfo> GetFiles(FileInfo file)
         {
-            if (file.Extension == ".m3u")
+            if (file.Extension == ".m3u" && file.Exists)
             {
                 string line;
                 FileInfo retval = null;
@@ -26,7 +30,7 @@ namespace Mlib.Infrastructure
                     }
                 }
             }
-
+            yield break;
         }
         static FileInfo GetFile(string path)
         {
