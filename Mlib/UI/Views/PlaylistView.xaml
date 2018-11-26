@@ -25,10 +25,12 @@
                   ItemsSource="{Binding Tracks}"
                   SelectedItem="{Binding AudioPlayer.NowPlaying,Mode=OneWay}"
                   cal:Message.Attach="[Event Loaded]=[Action InitListView($source)]">
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0,0,20,0"
                                 HorizontalAlignment="Stretch">
+                        
                         <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
                                 CommandParameter="{Binding}"
                                 HorizontalAlignment="Right">
@@ -46,17 +48,20 @@
                                 </Style>
                             </Button.Style>
                             <StackPanel>
-                                <TextBlock Text="{Binding Item.Title}"
+                                <TextBlock Text="{Binding Title}"
                                            HorizontalAlignment="Right"
                                            TextWrapping="NoWrap" />
-                                <TextBlock Text="{Binding Item.Artist}"
+                                <TextBlock Text="{Binding Artist}"
                                            FontSize="10"
                                            HorizontalAlignment="Right"
                                            TextWrapping="NoWrap" />
                             </StackPanel>
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   x:Name="separator"
+                                   BorderBrush="{StaticResource GlobalLightDim}">
+                           
+                        </Separator>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

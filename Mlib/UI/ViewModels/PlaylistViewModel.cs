@@ -7,21 +7,17 @@
     using Mlib.UI.Interfaces;
     using System;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    public class DragDropDecorator<T>
-    {
-        public DragDropDecorator()
-        {
-        }
-        public T Item { get; set; }
-    }
+
     public class PlaylistViewModel : Screen, IViewModel
     {
         public AudioPlayer AudioPlayer { get; }
-        public ObservableCollection<DragDropDecorator<Track>> Tracks
+        public ObservableCollection<Track> Tracks
         {
             get => _tracks;
             set
@@ -33,44 +29,58 @@
         public PlaylistViewModel(AudioPlayer audioPlayer)
         {
             AudioPlayer = audioPlayer;
-            Tracks = new ObservableCollection<DragDropDecorator<Track>>(
-                AudioPlayer.CurrentPlaylist.Tracks
-                .Select(n => new DragDropDecorator<Track>() { Item = n }));
+            Tracks = new ObservableCollection<Track>(AudioPlayer.CurrentPlaylist.Tracks);
         }
         ListView listView;
-        private ObservableCollection<DragDropDecorator<Track>> _tracks;
-        void Drag(object sender, MouseButtonEventArgs e)
+        private ObservableCollection<Track> _tracks;
+        void Drag(object sender, MouseButtonEventArgs args)
         {
-            if (sender is ListViewItem)
+            try
             {
-                ListViewItem draggedItem = sender as ListViewItem;
-                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
-                draggedItem.IsSelected = true;
+                if (sender is ListViewItem)
+                {
+                    ListViewItem draggedItem = sender as ListViewItem;
+                    DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
+                    draggedItem.IsSelected = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
         }
 
-        void Drop(object sender, DragEventArgs e)
+
+        void Drop(object sender, DragEventArgs args)
         {
-            var droppedData = e.Data.GetData(typeof(DragDropDecorator<Track>)) as DragDropDecorator<Track>;
-            var target = ((ListViewItem)(sender)).DataContext as DragDropDecorator<Track>;
-
-            int removedIdx = listView.Items.IndexOf(droppedData);
-            int targetIdx = listView.Items.IndexOf(target);
-
-            if (removedIdx < targetIdx)
+            try
             {
-                Tracks.Insert(targetIdx + 1, droppedData);
-                Tracks.RemoveAt(removedIdx);
-            }
-            else
-            {
-                int remIdx = removedIdx + 1;
-                if (Tracks.Count + 1 > remIdx)
+                var droppedData = args.Data.GetData(typeof(Track)) as Track;
+                var target = ((ListViewItem)(sender)).DataContext as Track;
+
+                int removedIdx = listView.Items.IndexOf(droppedData);
+                int targetIdx = listView.Items.IndexOf(target);
+
+                if (removedIdx < targetIdx)
                 {
-                    Tracks.Insert(targetIdx, droppedData);
-                    Tracks.RemoveAt(remIdx);
+                    Tracks.Insert(targetIdx + 1, droppedData);
+                    Tracks.RemoveAt(removedIdx);
+                }
+                else
+                {
+                    int remIdx = removedIdx + 1;
+                    if (Tracks.Count + 1 > remIdx)
+                    {
+                        Tracks.Insert(targetIdx, droppedData);
+                        Tracks.RemoveAt(remIdx);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
         }
         public void InitListView(object sender)
         {
@@ -86,7 +96,7 @@
         }
         public ICommand Select => new Command(track =>
         {
-            AudioPlayer.Play((track as DragDropDecorator<Track>).Item);
+            AudioPlayer.Play(track as Track);
         });
     }
 }
