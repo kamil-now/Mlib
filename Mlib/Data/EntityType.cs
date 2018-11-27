@@ -10,6 +10,7 @@ namespace Mlib.Data
     {
         Track,
         Playlist,
+        PlaylistTrack,
         Album,
         Artist
     }

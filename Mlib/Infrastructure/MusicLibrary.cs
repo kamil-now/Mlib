@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Mlib.Data;
 using Mlib.Data.Models;
+using Mlib.Extensions;
 using Mlib.Properties;
 using System;
 using System.Collections.Generic;
@@ -29,11 +30,23 @@ namespace Mlib.Infrastructure
                 foreach (var filename in fileNames)
                 {
                     var fileInfo = new FileInfo(filename);
+                    var tracks = M3UReader.GetFiles(fileInfo)?.Select(n => new Track(n))?.ToList();
+                    var playlistName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
 
                     if (fileInfo.Extension == ".m3u")
-                        unitOfWork.AddOrUpdate(new Playlist(fileInfo), true);
-                    else
-                        unitOfWork.AddOrUpdate(new Track(fileInfo), true);
+                    {
+                        var playlist = new Playlist(playlistName);
+
+                        unitOfWork.AddOrUpdate(playlist, true);
+
+                        uint x = 0;
+                        var playlistTracks = tracks.Select(n => new PlaylistTrack(playlist, n, x++));
+                        playlistTracks.ForEach(n=>
+                        {
+                            unitOfWork.AddOrUpdate(n, true);
+                        });
+                    }
+                    tracks.ForEach(n => unitOfWork.AddOrUpdate(n, true));
                 }
             }
         }

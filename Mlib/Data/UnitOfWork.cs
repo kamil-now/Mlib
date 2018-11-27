@@ -17,6 +17,7 @@ namespace Mlib.Data
 
         public PlaylistRepository Playlists { get; }
         public TrackRepository Tracks { get; }
+        public PlaylistTrackRepository PlaylistTracks { get; }
         public ArtistRepository Artists { get; }
         public AlbumRepository Albums { get; }
         public UnitOfWork(DbContext dbContext)
@@ -24,6 +25,7 @@ namespace Mlib.Data
             this.dbContext = dbContext;
             Playlists = new PlaylistRepository(dbContext);
             Tracks = new TrackRepository(dbContext);
+            PlaylistTracks = new PlaylistTrackRepository(dbContext);
             Artists = new ArtistRepository(dbContext);
             Albums = new AlbumRepository(dbContext);
         }
@@ -34,6 +36,7 @@ namespace Mlib.Data
             {
                 case Type playlist when playlist == typeof(Playlist): return Playlists;
                 case Type track when track == typeof(Track): return Tracks;
+                case Type playlistTrack when playlistTrack == typeof(PlaylistTrack): return PlaylistTracks;
                 case Type artist when artist == typeof(Artist): return Artists;
                 case Type album when album == typeof(Album): return Albums;
 
@@ -47,7 +50,7 @@ namespace Mlib.Data
 
             if (isValid)
             {
-                var databaseEntity = repo?.Get(entity.Id);
+                var databaseEntity = repo.Get(entity.Id);
                 var exists = databaseEntity != null;
                 try
                 {

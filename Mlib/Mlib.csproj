@@ -187,6 +187,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Models\PlaylistTrack.cs" />
+    <Compile Include="Data\PlaylistTrackRepository.cs" />
+    <Compile Include="Migrations\201811271747215_InitialMigration.cs" />
+    <Compile Include="Migrations\201811271747215_InitialMigration.Designer.cs">
+      <DependentUpon>201811271747215_InitialMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Additional\BindingProxy.cs" />
     <Compile Include="UI\Controls\AudioProgressBar.xaml.cs">
       <DependentUpon>AudioProgressBar.xaml</DependentUpon>
@@ -213,10 +219,6 @@
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="Infrastructure\ConnectionStrings.cs" />
     <Compile Include="Infrastructure\MusicLibrary.cs" />
-    <Compile Include="Migrations\201809242016594_Initial.cs" />
-    <Compile Include="Migrations\201809242016594_Initial.Designer.cs">
-      <DependentUpon>201809242016594_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -285,8 +287,8 @@
     <Compile Include="UI\Views\TracksView.xaml.cs">
       <DependentUpon>TracksView.xaml</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\201809242016594_Initial.resx">
-      <DependentUpon>201809242016594_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811271747215_InitialMigration.resx">
+      <DependentUpon>201811271747215_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

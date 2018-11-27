@@ -2,7 +2,9 @@
 {
     using Caliburn.Micro;
     using GongSolutions.Wpf.DragDrop;
+    using Mlib.Data;
     using Mlib.Data.Models;
+    using Mlib.Extensions;
     using Mlib.Infrastructure;
     using Mlib.UI.Additional;
     using Mlib.UI.Interfaces;
@@ -11,6 +13,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -25,14 +28,18 @@
             set
             {
                 _tracks = value;
-                AudioPlayer.CurrentPlaylist.Tracks = value;
                 NotifyOfPropertyChange();
             }
         }
         public PlaylistViewModel(AudioPlayer audioPlayer)
         {
             AudioPlayer = audioPlayer;
-            Tracks = new ObservableCollection<Track>(AudioPlayer.CurrentPlaylist.Tracks);
+            Tracks = new ObservableCollection<Track>(AudioPlayer
+                .CurrentPlaylist
+                .Tracks
+                .OrderBy(n => n.PlaylistTracks.First(x => x.Track.TrackId == n.TrackId)
+                .Number)
+                .ToList());
         }
         private ObservableCollection<Track> _tracks;
 
@@ -77,6 +84,16 @@
                 {
                     (dropInfo.VisualTarget as ListView).SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, sourceItem);
                 }
+                //TODO refactor out of here
+               Task.Run(()=>
+                Tracks.ForEach(n =>
+                {
+                    var entity = AudioPlayer.CurrentPlaylist.PlaylistTracks.First(x => x.Track.Id == n.Id);
+                    entity.Number = (uint)Tracks.ToList().IndexOf(n);
+                    IoC.Get<UnitOfWork>().AddOrUpdate(entity, true);
+
+                }));
+                //
             }
 
         }

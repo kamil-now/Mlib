@@ -3,7 +3,7 @@ namespace Mlib.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {
@@ -15,13 +15,10 @@ namespace Mlib.Migrations
                         Title = c.String(nullable: false),
                         Year = c.String(),
                         ImageId = c.String(),
-                        Playlist_Name = c.String(maxLength: 128),
                         Artist_Name = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.AlbumId)
-                .ForeignKey("dbo.Playlists", t => t.Playlist_Name)
                 .ForeignKey("dbo.Artists", t => t.Artist_Name, cascadeDelete: true)
-                .Index(t => t.Playlist_Name)
                 .Index(t => t.Artist_Name);
             
             CreateTable(
@@ -42,6 +39,8 @@ namespace Mlib.Migrations
                         Title = c.String(),
                         Artist = c.String(),
                         Album = c.String(),
+                        Number = c.Long(nullable: false),
+                        Year = c.Long(nullable: false),
                         Length = c.Long(nullable: false),
                         Artist_Name = c.String(maxLength: 128),
                         Album_AlbumId = c.Int(),
@@ -51,6 +50,21 @@ namespace Mlib.Migrations
                 .ForeignKey("dbo.Albums", t => t.Album_AlbumId)
                 .Index(t => t.Artist_Name)
                 .Index(t => t.Album_AlbumId);
+            
+            CreateTable(
+                "dbo.PlaylistTracks",
+                c => new
+                    {
+                        EntityId = c.Int(nullable: false, identity: true),
+                        Number = c.Long(nullable: false),
+                        Playlist_Name = c.String(nullable: false, maxLength: 128),
+                        Track_TrackId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.EntityId)
+                .ForeignKey("dbo.Playlists", t => t.Playlist_Name, cascadeDelete: true)
+                .ForeignKey("dbo.Tracks", t => t.Track_TrackId, cascadeDelete: true)
+                .Index(t => t.Playlist_Name)
+                .Index(t => t.Track_TrackId);
             
             CreateTable(
                 "dbo.Playlists",
@@ -64,19 +78,6 @@ namespace Mlib.Migrations
                 .ForeignKey("dbo.Playlists", t => t.Playlist_Name)
                 .Index(t => t.Playlist_Name);
             
-            CreateTable(
-                "dbo.PlaylistTracks",
-                c => new
-                    {
-                        Playlist_Name = c.String(nullable: false, maxLength: 128),
-                        Track_TrackId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Playlist_Name, t.Track_TrackId })
-                .ForeignKey("dbo.Playlists", t => t.Playlist_Name, cascadeDelete: true)
-                .ForeignKey("dbo.Tracks", t => t.Track_TrackId, cascadeDelete: true)
-                .Index(t => t.Playlist_Name)
-                .Index(t => t.Track_TrackId);
-            
         }
         
         public override void Down()
@@ -87,16 +88,14 @@ namespace Mlib.Migrations
             DropForeignKey("dbo.PlaylistTracks", "Track_TrackId", "dbo.Tracks");
             DropForeignKey("dbo.PlaylistTracks", "Playlist_Name", "dbo.Playlists");
             DropForeignKey("dbo.Playlists", "Playlist_Name", "dbo.Playlists");
-            DropForeignKey("dbo.Albums", "Playlist_Name", "dbo.Playlists");
+            DropIndex("dbo.Playlists", new[] { "Playlist_Name" });
             DropIndex("dbo.PlaylistTracks", new[] { "Track_TrackId" });
             DropIndex("dbo.PlaylistTracks", new[] { "Playlist_Name" });
-            DropIndex("dbo.Playlists", new[] { "Playlist_Name" });
             DropIndex("dbo.Tracks", new[] { "Album_AlbumId" });
             DropIndex("dbo.Tracks", new[] { "Artist_Name" });
             DropIndex("dbo.Albums", new[] { "Artist_Name" });
-            DropIndex("dbo.Albums", new[] { "Playlist_Name" });
-            DropTable("dbo.PlaylistTracks");
             DropTable("dbo.Playlists");
+            DropTable("dbo.PlaylistTracks");
             DropTable("dbo.Tracks");
             DropTable("dbo.Artists");
             DropTable("dbo.Albums");

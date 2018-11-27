@@ -1,4 +1,5 @@
-﻿using Mlib.Extensions;
+﻿using Caliburn.Micro;
+using Mlib.Extensions;
 using Mlib.Infrastructure;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
@@ -16,28 +17,37 @@ namespace Mlib.Data.Models
         public string Id => Name;
         [NotMapped]
         public EntityType Type => EntityType.Playlist;
+        [NotMapped]
+        public ICollection<Track> Tracks
+        {
+            get => PlaylistTracks.Select(n => n.Track).ToList();//.OrderBy(n => n.Number).ToList();
+            set
+            {
+                //value.ForEach(n =>
+                //{
+                //    var entity = PlaylistTracks.First(x => x.Track.Id == n.Id);
+                //    entity.Number = (uint)value.ToList().IndexOf(n);
+                //    IoC.Get<UnitOfWork>().AddOrUpdate(entity, true);
+
+                //});
+            }
+        }
         [Key]
         [Required]
-        public string Name{ get; set; }
+        public string Name { get; set; }
         public string ImageId { get; set; }
 
-        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
         public virtual ICollection<Playlist> Playlists { get; set; }
-        public virtual ICollection<Album> Albums { get; set; }
-        
 
         public Playlist()
         {
-            //Tracks = new List<Track>();
-            //Playlists = new List<Playlist>();
-            //Albums = new List<Album>();
-           
+
         }
-        public Playlist(FileInfo file) : this()
+        public Playlist(string name)
         {
-            Name =  file.Name.Substring(0,file.Name.LastIndexOf('.'));
-            Tracks =  M3UReader.GetFiles(file).Select(n=>new Track(n)).ToList();
+            Name = name;
         }
-        
+
     }
 }

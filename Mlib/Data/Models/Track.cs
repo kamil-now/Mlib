@@ -14,16 +14,19 @@ namespace Mlib.Data.Models
         public string Id => TrackId.ToString();
         [NotMapped]
         public EntityType Type => EntityType.Track;
+        [NotMapped]
+        public ICollection<Playlist> Playlists => PlaylistTracks.Select(n => n.Playlist).ToList();
         [Key]
         [Required]
         public int TrackId { get; set; }
         [Required]
         public string FullPath { get; set; }
-        public virtual ICollection<Playlist> Playlists { get; set; }
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
         public string Title { get; set; }
         public string Artist { get; set; }
         public string Album { get; set; }
-        public uint Year { get; set; }
+        public long Number { get; set; }
+        public long Year { get; set; }
         public long Length { get; set; }
        
         [NotMapped]
@@ -31,11 +34,11 @@ namespace Mlib.Data.Models
 
         public Track()
         {
-            Playlists = new List<Playlist>();
         }
         public Track(FileInfo mp3File)
         {
             TagLib.File taggedFile = TagLib.File.Create(mp3File.FullName);
+            Number = taggedFile.Tag. DiscCount;
             Title = taggedFile.Tag.Title;
             Artist = taggedFile.Tag.FirstPerformer;
             Album = taggedFile.Tag.Album;
