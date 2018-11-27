@@ -9,8 +9,29 @@
     using System.Timers;
     using System.Windows;
 
-    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject
+    public class AudioPlayer : PropertyChangedBase, IPlaybackStateSubject, ICurrentTrackSubject, IDisposable
     {
+        private GlobalKeyboardHook globalKeyboardHook;
+
+        public AudioPlayer()
+        {
+            globalKeyboardHook = new GlobalKeyboardHook();
+            globalKeyboardHook.KeyboardPressed += OnKeyPressed;
+        }
+
+        private void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e)
+        {
+            if (e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
+            {
+                if (e.KeyboardData.VirtualCode == 0xB3)
+                    TogglePlayPause();
+                else if (e.KeyboardData.VirtualCode == 0xB0)
+                    PlayNextTrack();
+                else if (e.KeyboardData.VirtualCode == 0xB1)
+                    PlayPreviousTrack();
+                    e.Handled = true;
+            }
+        }
         private WaveStream audioFileReader;
 
         private IWavePlayer output;
@@ -52,7 +73,7 @@
 
             }
         }
-        public void PreviousTrack()
+        public void PlayPreviousTrack()
         {
             var trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(nowPlaying) + 1 ?? -1;
             if (trackNumber > 0)
@@ -92,7 +113,17 @@
                 Play();
             }
         }
-
+        public void TogglePlayPause()
+        {
+            if (output?.PlaybackState == PlaybackState.Playing)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+        }
         public double CurrentTrackLenght => audioFileReader?.TotalTime.TotalSeconds ?? 1;
         public string TotalTime => audioFileReader?.TotalTime.ToString("mm\\:ss");
 
@@ -122,6 +153,7 @@
                 if (output?.PlaybackState == PlaybackState.Paused)
                 {
                     output.Play();
+                    timer.Start();
                 }
                 else if (NowPlaying != null)
                 {
@@ -217,6 +249,10 @@
         public void NotifyOfCurrentTrackChange()
         {
             currentTrackObservers.ForEach(n => n.UpdateCurrentTrack(NowPlaying));
+        }
+        public void Dispose()
+        {
+            globalKeyboardHook?.Dispose();
         }
     }
 }

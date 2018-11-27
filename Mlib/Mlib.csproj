@@ -189,6 +189,7 @@
   <ItemGroup>
     <Compile Include="Data\Models\PlaylistTrack.cs" />
     <Compile Include="Data\PlaylistTrackRepository.cs" />
+    <Compile Include="Infrastructure\GlobalKeyboardHook.cs" />
     <Compile Include="Migrations\201811271747215_InitialMigration.cs" />
     <Compile Include="Migrations\201811271747215_InitialMigration.Designer.cs">
       <DependentUpon>201811271747215_InitialMigration.cs</DependentUpon>
