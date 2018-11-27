@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d">
-    <Grid Background="{StaticResource GlobalDimDark}">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition Width="2*"/>
@@ -16,33 +16,15 @@
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <ContentControl cal:View.Model="{Binding LeftSidePanel}"/>
+        
         <ContentControl  Grid.Row="0"
                          Grid.Column="1"
-                         cal:View.Model="{Binding MainPanel}" />
+                         cal:View.Model="{Binding MainPanel}"/>
         <ContentControl Grid.Row="0"
                         Grid.Column="2"
                         cal:View.Model="{Binding RightSidePanel}" />
         <ContentControl Grid.Row="1"
                         Grid.ColumnSpan="3"
                         cal:View.Model="{Binding BottomPanel}" />
-        <!--<views:LibraryView Background="{StaticResource GlobalDark}"
-                                     DataContext="{Binding Library}" />
-        <views:AudioControlsView Background="{StaticResource GlobalDim}"
-                                 Grid.Row="1"
-                                 Grid.ColumnSpan="3"
-                                 DataContext="{Binding AudioControls}" />
-        <views:PlaylistView Background="{StaticResource GlobalDimDark}"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            DataContext="{Binding Playlist}" />-->
-        <Rectangle VerticalAlignment="Stretch"
-                   HorizontalAlignment="Right"
-                   Width="1"
-                   Margin="1"
-                   Stroke="Black" />
-        <Separator BorderBrush="Black"
-                   Grid.ColumnSpan="2"
-                   BorderThickness="2"
-                   VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>

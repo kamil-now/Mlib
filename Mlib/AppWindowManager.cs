@@ -62,9 +62,20 @@
         {
             ShowWindow((T)IoC.GetInstance(typeof(T), null), settings);
         }
-        public static void SetPlaylistPanel( AudioPlayer audioPlayer)=> SetRightSidePanel(new PlaylistViewModel(audioPlayer));
-
-        public static void SetMainPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().MainPanel = viewModel;
+        static IViewModel playlistVM;
+        public static void SetPlaylistPanel(AudioPlayer audioPlayer)
+        {
+            playlistVM = new PlaylistViewModel(audioPlayer);
+            SetMainPanel(playlistVM);
+        }
+        public static void SetMainPanel(IViewModel viewModel)
+        {
+            if (!(viewModel is PlaylistViewModel))
+            {
+                SetRightSidePanel(playlistVM);
+            }
+            IoC.Get<IMainViewModel>().MainPanel = viewModel;
+        }
         public static void SetLeftSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().LeftSidePanel = viewModel;
         public static void SetRightSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().RightSidePanel = viewModel;
         public static void SetBottomPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().BottomPanel = viewModel;

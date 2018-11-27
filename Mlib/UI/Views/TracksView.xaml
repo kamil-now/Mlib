@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <Grid Background="{StaticResource GlobalDimDark}">
+    <Grid>
         <ListView ItemsSource="{Binding Tracks}"
                   FlowDirection="LeftToRight"
                   SelectedItem="{Binding Selected}">
@@ -34,7 +34,7 @@
                             </UniformGrid>
                         </CheckBox>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.Resources>

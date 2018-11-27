@@ -8,15 +8,13 @@
     <SolidColorBrush x:Key="GlobalAccent"
     Color="#FD4928" />
                      <!--Color="#1DB954" />-->
-    <!--Color="#1E7E9E" />-->
-    <!-- Color="#1E7E9E" />-->
     <SolidColorBrush x:Key="GlobalDark"
                      Color="#090909" />
     <SolidColorBrush x:Key="GlobalDimDark"
                      Color="#121212" />
     <SolidColorBrush x:Key="GlobalDim"
                      Color="#212121" />
-    <SolidColorBrush x:Key="GlobalLightDim"
+    <SolidColorBrush x:Key="GlobalDimLight"
                      Color="#535353" />
     <SolidColorBrush x:Key="GlobalLight"
                      Color="#b3b3b3" />
@@ -170,8 +168,8 @@
                                                             <ControlTemplate TargetType="RepeatButton">
                                                                 <Border  BorderThickness="1"
                                                                          CornerRadius="1"
-                                                                         BorderBrush="{StaticResource GlobalLightDim}"
-                                                                         Background="{StaticResource GlobalLightDim}"
+                                                                         BorderBrush="{StaticResource GlobalDimLight}"
+                                                                         Background="{StaticResource GlobalDimLight}"
                                                                          Height="3" />
                                                             </ControlTemplate>
                                                         </Setter.Value>

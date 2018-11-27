@@ -168,7 +168,7 @@
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Background"
-						Value="{StaticResource GlobalLightDim}" />
+						Value="{StaticResource GlobalDimLight}" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>

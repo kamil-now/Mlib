@@ -53,7 +53,7 @@
         {
             dropInfo.Effects = DragDropEffects.Move;
             var dragOverBrush = Application.Current.FindResource("GlobalAccent") as SolidColorBrush;
-            var defaultBrush = Application.Current.FindResource("GlobalLightDim") as SolidColorBrush;
+            var defaultBrush = Application.Current.FindResource("GlobalDimLight") as SolidColorBrush;
 
 
             var separator = AppWindowManager.FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
@@ -79,7 +79,7 @@
                 Tracks.RemoveAt(sourceIndex);
                 Tracks.Insert(targetIndex, sourceItem);
                 var separator = AppWindowManager.FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
-                separator.BorderBrush = Application.Current.FindResource("GlobalLightDim") as SolidColorBrush;
+                separator.BorderBrush = Application.Current.FindResource("GlobalDimLight") as SolidColorBrush;
                 if (AudioPlayer?.NowPlaying?.Id == sourceItem?.Id)
                 {
                     (dropInfo.VisualTarget as ListView).SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, sourceItem);

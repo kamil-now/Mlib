@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <conv:DebugConverter x:Key="debug" />
     </UserControl.Resources>
-    <Grid Background="{StaticResource GlobalDark}">
+    <Grid Background="{StaticResource GlobalDimDark}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="14*" />
@@ -117,7 +117,7 @@
                                        TextWrapping="NoWrap" />
                             <Separator BorderThickness="2"
                                        Grid.Row="2"
-                                       BorderBrush="{StaticResource GlobalLightDim}" />
+                                       BorderBrush="{StaticResource GlobalDimLight}" />
 
                         </Grid>
                     </Button>

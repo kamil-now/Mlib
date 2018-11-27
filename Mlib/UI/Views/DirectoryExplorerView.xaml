@@ -43,7 +43,7 @@
 
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

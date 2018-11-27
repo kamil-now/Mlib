@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <converters:BoolToHiddenConverter x:Key="boolToHiddenConverter" />
     </UserControl.Resources>
-    <Grid Background="{StaticResource GlobalDark}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
@@ -66,7 +66,7 @@
 
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type data:Track}">
@@ -87,7 +87,7 @@
                             </StackPanel>
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type data:Album}">
@@ -108,7 +108,7 @@
                             </StackPanel>
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type data:Artist}">
@@ -122,7 +122,7 @@
                                        TextWrapping="NoWrap" />
                         </Button>
                         <Separator BorderThickness="2"
-                                   BorderBrush="{StaticResource GlobalLightDim}" />
+                                   BorderBrush="{StaticResource GlobalDimLight}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.Resources>
