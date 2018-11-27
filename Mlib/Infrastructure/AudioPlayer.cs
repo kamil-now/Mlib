@@ -14,7 +14,6 @@
         private WaveStream audioFileReader;
 
         private IWavePlayer output;
-        private int trackNumber;
         private List<IPlaybackStateObserver> playbackStateObservers = new List<IPlaybackStateObserver>();
         private List<ICurrentTrackObserver> currentTrackObservers = new List<ICurrentTrackObserver>();
 
@@ -36,12 +35,12 @@
         private void SetNowPlaying(Track track)
         {
             NowPlaying = track;
-            trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(track) + 1 ?? -1;
             NotifyOfCurrentTrackChange();
         }
 
         public void PlayNextTrack()
         {
+            var trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(nowPlaying) + 1 ?? -1;
             if (trackNumber > 0)
             {
                 if (trackNumber == CurrentPlaylist.Tracks.Count)
@@ -55,6 +54,7 @@
         }
         public void PreviousTrack()
         {
+            var trackNumber = CurrentPlaylist?.Tracks?.ToList().IndexOf(nowPlaying) + 1 ?? -1;
             if (trackNumber > 0)
             {
                 if (trackNumber == 1)
