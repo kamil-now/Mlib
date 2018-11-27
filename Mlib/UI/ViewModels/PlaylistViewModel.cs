@@ -73,7 +73,7 @@
                 Tracks.Insert(targetIndex, sourceItem);
                 var separator = AppWindowManager.FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
                 separator.BorderBrush = Application.Current.FindResource("GlobalLightDim") as SolidColorBrush;
-                if (AudioPlayer.NowPlaying.Id == sourceItem.Id)
+                if (AudioPlayer?.NowPlaying?.Id == sourceItem?.Id)
                 {
                     (dropInfo.VisualTarget as ListView).SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, sourceItem);
                 }
