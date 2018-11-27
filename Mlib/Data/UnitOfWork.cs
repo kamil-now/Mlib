@@ -27,29 +27,20 @@ namespace Mlib.Data
             Artists = new ArtistRepository(dbContext);
             Albums = new AlbumRepository(dbContext);
         }
-        public IRepository GetRepository<T>() where T : class, IDataEntity, new()
+        public IRepository GetRepository<T>() where T : class, IDataEntity
         {
-            var entity = new T();
-            if (entity is Playlist)
+            Type type = typeof(T);
+            switch (type)
             {
-                return Playlists;
-            }
-            if (entity is Artist)
-            {
-                return Artists;
+                case Type playlist when playlist == typeof(Playlist): return Playlists;
+                case Type track when track == typeof(Track): return Tracks;
+                case Type artist when artist == typeof(Artist): return Artists;
+                case Type album when album == typeof(Album): return Albums;
 
-            }
-            if (entity is Album)
-            {
-                return Albums;
-            }
-            if (entity is Track)
-            {
-                return Tracks;
             }
             return null;
         }
-        public bool AddOrUpdate<T>(T entity, bool commit) where T : class, IDataEntity, new()
+        public bool AddOrUpdate<T>(T entity, bool commit) where T : class, IDataEntity
         {
             var repo = GetRepository<T>();
             var isValid = repo != null && ValidateRequiredProperties(entity);
