@@ -69,5 +69,40 @@
         public static void SetRightSidePanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().RightSidePanel = viewModel;
         public static void SetBottomPanel(IViewModel viewModel) => IoC.Get<IMainViewModel>().BottomPanel = viewModel;
 
+
+        public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        return (T)child;
+                    }
+
+                    T childItem = FindVisualChild<T>(child);
+                    if (childItem != null) return childItem;
+                }
+            }
+            return null;
+        }
+        public static T FindVisualParent<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                DependencyObject parent = VisualTreeHelper.GetParent(depObj);
+                if (parent != null && parent is T)
+                {
+                    return (T)parent;
+                }
+
+                T parentItem = FindVisualParent<T>(parent);
+                if (parentItem != null) return parentItem;
+
+            }
+            return null;
+        }
     }
 }

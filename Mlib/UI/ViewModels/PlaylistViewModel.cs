@@ -47,9 +47,9 @@
             dropInfo.Effects = DragDropEffects.Move;
             var dragOverBrush = Application.Current.FindResource("GlobalAccent") as SolidColorBrush;
             var defaultBrush = Application.Current.FindResource("GlobalLightDim") as SolidColorBrush;
-            Separator separator;
 
-            separator = FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
+
+            var separator = AppWindowManager.FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
             if (separator != null)
                 separator.BorderBrush = dragOverBrush;
             if (previous != null && previous != separator)
@@ -58,40 +58,7 @@
             }
             previous = separator;
         }
-        public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        return (T)child;
-                    }
 
-                    T childItem = FindVisualChild<T>(child);
-                    if (childItem != null) return childItem;
-                }
-            }
-            return null;
-        }
-        public static T FindVisualParent<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                DependencyObject parent = VisualTreeHelper.GetParent(depObj);
-                if (parent != null && parent is T)
-                {
-                    return (T)parent;
-                }
-
-                T parentItem = FindVisualParent<T>(parent);
-                if (parentItem != null) return parentItem;
-
-            }
-            return null;
-        }
         public void Drop(IDropInfo dropInfo)
         {
             Track sourceItem = dropInfo.Data as Track;
@@ -104,9 +71,14 @@
 
                 Tracks.RemoveAt(sourceIndex);
                 Tracks.Insert(targetIndex, sourceItem);
-                var separator = FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
+                var separator = AppWindowManager.FindVisualChild<Separator>(dropInfo.VisualTargetItem as ListViewItem);
                 separator.BorderBrush = Application.Current.FindResource("GlobalLightDim") as SolidColorBrush;
+                if (AudioPlayer.NowPlaying.Id == sourceItem.Id)
+                {
+                    (dropInfo.VisualTarget as ListView).SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, sourceItem);
+                }
             }
+
         }
         public void StartDrag(IDragInfo dragInfo)
         {
@@ -119,22 +91,20 @@
 
         public bool CanStartDrag(IDragInfo dragInfo)
         {
-            return true;//throw new NotImplementedException();
+            return true;
         }
 
         public void Dropped(IDropInfo dropInfo)
         {
-            //throw new NotImplementedException();
         }
 
         public void DragCancelled()
         {
-            //throw new NotImplementedException();
         }
 
         public bool TryCatchOccurredException(Exception exception)
         {
-            return false;//throw new NotImplementedException();
+            return false;
         }
     }
 }

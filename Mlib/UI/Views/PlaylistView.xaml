@@ -31,7 +31,6 @@
                   dd:DragDrop.IsDragSource="True"
                   dd:DragDrop.IsDropTarget="True"
                   dd:DragDrop.UseDefaultDragAdorner="True"
-                  
                   dd:DragDrop.DropHandler="{Binding }"
                   dd:DragDrop.DragHandler="{Binding}"
                   ItemsSource="{Binding Tracks}"
@@ -40,18 +39,62 @@
                 <DataTemplate>
                     <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.Select}"
                             CommandParameter="{Binding}"
-                            Margin="10,5">
+                            Margin="5">
                         <Button.Style>
                             <Style BasedOn="{StaticResource {x:Type Button}}"
                                    TargetType="Button">
-                                <Style.Triggers>
-                                    <Trigger Property="Selector.IsSelected"
-                                             Value="True">
-                                        <Setter Property="Foreground"
-                                                Value="{StaticResource GlobalAccent}" />
-                                    </Trigger>
-                                </Style.Triggers>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
 
+                                            <Border Background="{TemplateBinding Background}">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="14*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <ContentPresenter Margin="5,0" />
+                                                    <Rectangle x:Name="Rectangle"
+                                                               Grid.Column="1"
+                                                               Width="5"
+                                                               Height="25"
+                                                               Fill="{StaticResource GlobalAccent}" />
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding 
+                                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                                AncestorType={x:Type ListViewItem}},
+                                                Path=IsSelected}"
+                                                             Value="True">
+                                                    <Setter Property="Foreground"
+                                                            Value="{StaticResource GlobalBright}" />
+                                                    <Setter TargetName="Rectangle"
+                                                            Property="Visibility"
+                                                            Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding 
+                                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                                AncestorType={x:Type ListViewItem}},
+                                                Path=IsSelected}"
+                                                             Value="False">
+                                                    <Setter Property="Foreground"
+                                                            Value="{StaticResource GlobalLight}" />
+                                                    <Setter TargetName="Rectangle"
+                                                            Property="Visibility"
+                                                            Value="Hidden" />
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground"
+                                        Value="{StaticResource GlobalLight}" />
+                                <Style.Triggers>
+                               
+                                </Style.Triggers>
                             </Style>
                         </Button.Style>
                         <Grid HorizontalAlignment="Stretch">
@@ -75,6 +118,7 @@
                             <Separator BorderThickness="2"
                                        Grid.Row="2"
                                        BorderBrush="{StaticResource GlobalLightDim}" />
+
                         </Grid>
                     </Button>
                 </DataTemplate>
